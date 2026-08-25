@@ -22,8 +22,8 @@
 
             <div class="col-md-6">
                 <label class="form-label">Role / Designation <span class="text-danger">*</span></label>
-                <input type="text" name="role" class="form-control @error('role') is-invalid @enderror" value="{{ old('role', $teamMember->role) }}" required>
-                @error('role')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                <input type="text" name="designation" class="form-control @error('designation') is-invalid @enderror" value="{{ old('designation', $teamMember->designation) }}" required>
+                @error('designation')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
 
             <div class="col-md-6">

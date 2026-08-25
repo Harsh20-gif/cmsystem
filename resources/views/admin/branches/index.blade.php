@@ -54,7 +54,7 @@
                     </td>
                     <td class="text-end">
                         <a href="{{ route('admin.branches.edit', $branch) }}" class="btn btn-sm btn-primary">Edit</a>
-                        <form action="{{ route('admin.branches.destroy', $branch) }}" method="POST" class="d-inline" onsubmit="return confirm('Delete this branch?');">
+                        <form action="{{ route('admin.branches.destroy', $branch) }}" method="POST" class="d-inline" >
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-sm btn-danger">Delete</button>

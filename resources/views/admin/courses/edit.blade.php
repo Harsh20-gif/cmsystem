@@ -78,7 +78,12 @@
 
                     <div class="col-md-3">
                         <label class="form-label">Mode</label>
-                        <input type="text" name="mode" class="form-control @error('mode') is-invalid @enderror" value="{{ old('mode', $course->mode) }}" placeholder="e.g. Online, Offline, Hybrid">
+                        <select name="mode" class="form-select @error('mode') is-invalid @enderror">
+                            <option value="">Select Mode</option>
+                            <option value="Online" {{ old('mode', $course->mode) == 'Online' ? 'selected' : '' }}>Online</option>
+                            <option value="Offline" {{ old('mode', $course->mode) == 'Offline' ? 'selected' : '' }}>Offline</option>
+                            <option value="Hybrid" {{ old('mode', $course->mode) == 'Hybrid' ? 'selected' : '' }}>Hybrid</option>
+                        </select>
                         @error('mode')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
 
@@ -195,7 +200,7 @@
                         <td>{{ $module->description }}</td>
                         <td class="text-end">
                             <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editModuleModal{{ $module->id }}">Edit</button>
-                            <form action="{{ route('admin.modules.destroy', $module) }}" method="POST" class="d-inline" onsubmit="return confirm('Delete this module?');">
+                            <form action="{{ route('admin.modules.destroy', $module) }}" method="POST" class="d-inline" >
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-sm btn-danger">Delete</button>
@@ -282,7 +287,7 @@
                         </td>
                         <td class="text-end">
                             <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editFaqModal{{ $faq->id }}">Edit</button>
-                            <form action="{{ route('admin.faqs.destroy', $faq) }}" method="POST" class="d-inline" onsubmit="return confirm('Delete this FAQ?');">
+                            <form action="{{ route('admin.faqs.destroy', $faq) }}" method="POST" class="d-inline" >
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-sm btn-danger">Delete</button>

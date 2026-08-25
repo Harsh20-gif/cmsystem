@@ -1,0 +1,1 @@
+// Route::post('/login', [Admin\AuthController::class, 'login'])->name('login.submit');

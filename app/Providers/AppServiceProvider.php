@@ -19,6 +19,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        \Illuminate\Support\Facades\View::composer('frontend.*', function ($view) {
+            $view->with('courseCategories', \App\Models\CourseCategory::published()->orderBy('order_position')->get());
+        });
     }
 }

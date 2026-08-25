@@ -30,12 +30,20 @@
                 <div class="col-sm-9">{{ $enquiry->created_at->format('F d, Y h:i A') }}</div>
             </div>
             <div class="row mb-3">
-                <div class="col-sm-3 text-muted">Subject:</div>
-                <div class="col-sm-9 fw-bold">{{ $enquiry->subject }}</div>
+                <div class="col-sm-3 text-muted">Location:</div>
+                <div class="col-sm-9">{{ $enquiry->city ? $enquiry->city . ', ' : '' }}{{ $enquiry->state ?? 'N/A' }}</div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-3 text-muted">College/Org:</div>
+                <div class="col-sm-9">{{ $enquiry->college ?? 'N/A' }}</div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-3 text-muted">Type:</div>
+                <div class="col-sm-9 text-uppercase">{{ $enquiry->type ?? 'N/A' }}</div>
             </div>
             
             <div class="mt-4 pt-4 border-top">
-                <h6 class="fw-bold text-muted mb-3">Message:</h6>
+                <h6 class="fw-bold text-muted mb-3">Message / Query Details:</h6>
                 <div class="p-3 bg-light rounded" style="white-space: pre-line;">
                     {{ $enquiry->message }}
                 </div>
@@ -55,8 +63,9 @@
                     <label class="form-label">Status</label>
                     <select name="status" class="form-select @error('status') is-invalid @enderror">
                         <option value="new" {{ $enquiry->status == 'new' ? 'selected' : '' }}>New</option>
-                        <option value="read" {{ $enquiry->status == 'read' ? 'selected' : '' }}>Read (In Progress)</option>
-                        <option value="resolved" {{ $enquiry->status == 'resolved' ? 'selected' : '' }}>Resolved</option>
+                        <option value="contacted" {{ $enquiry->status == 'contacted' ? 'selected' : '' }}>Contacted (In Progress)</option>
+                        <option value="converted" {{ $enquiry->status == 'converted' ? 'selected' : '' }}>Converted (Admitted)</option>
+                        <option value="closed" {{ $enquiry->status == 'closed' ? 'selected' : '' }}>Closed (Not Interested)</option>
                     </select>
                     @error('status')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
@@ -71,7 +80,7 @@
             </form>
             
             <div class="mt-4 pt-4 border-top text-center">
-                <form action="{{ route('admin.enquiries.destroy', $enquiry) }}" method="POST" onsubmit="return confirm('Delete this enquiry permanently?');">
+                <form action="{{ route('admin.enquiries.destroy', $enquiry) }}" method="POST" >
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-outline-danger w-100">Delete Enquiry</button>

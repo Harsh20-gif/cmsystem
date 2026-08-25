@@ -19,9 +19,9 @@
             </div>
             
             <div class="col-md-6">
-                <label class="form-label">Icon (FontAwesome/SVG class)</label>
-                <input type="text" name="icon" class="form-control @error('icon') is-invalid @enderror" value="{{ old('icon') }}">
-                @error('icon')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                <label class="form-label">Category Icon (Image)</label>
+                <x-media-picker name="icon" id="icon" label="Select Icon Image" :value="old('icon')" />
+                @error('icon')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
             </div>
 
             <div class="col-md-6">

@@ -51,7 +51,7 @@
                     </td>
                     <td class="text-end">
                         <a href="{{ route('admin.course-categories.edit', $category) }}" class="btn btn-sm btn-primary">Edit</a>
-                        <form action="{{ route('admin.course-categories.destroy', $category) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this category?');">
+                        <form action="{{ route('admin.course-categories.destroy', $category) }}" method="POST" class="d-inline" >
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-sm btn-danger">Delete</button>

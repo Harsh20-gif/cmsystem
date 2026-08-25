@@ -50,7 +50,7 @@
                     </td>
                     <td class="text-end">
                         <a href="{{ route('admin.companies.edit', $company) }}" class="btn btn-sm btn-primary">Edit</a>
-                        <form action="{{ route('admin.companies.destroy', $company) }}" method="POST" class="d-inline" onsubmit="return confirm('Delete this company?');">
+                        <form action="{{ route('admin.companies.destroy', $company) }}" method="POST" class="d-inline" >
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-sm btn-danger">Delete</button>

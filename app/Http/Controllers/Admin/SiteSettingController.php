@@ -8,59 +8,29 @@ use Illuminate\Http\Request;
 
 class SiteSettingController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function home()
     {
-        //
+        $settings = SiteSetting::pluck('setting_value', 'setting_key')->toArray();
+        return view('admin.settings.home', compact('settings'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function updateHome(Request $request)
     {
-        //
-    }
+        $data = $request->except(['_token', 'hero_image']);
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        // Handle image upload
+        if ($request->hasFile('hero_image')) {
+            $path = $request->file('hero_image')->store('settings', 'public');
+            $data['home_hero_image'] = $path;
+        }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(SiteSetting $siteSetting)
-    {
-        //
-    }
+        foreach ($data as $key => $value) {
+            SiteSetting::updateOrCreate(
+                ['setting_key' => $key],
+                ['setting_value' => $value]
+            );
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(SiteSetting $siteSetting)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, SiteSetting $siteSetting)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(SiteSetting $siteSetting)
-    {
-        //
+        return redirect()->back()->with('success', 'Home page settings updated successfully!');
     }
 }

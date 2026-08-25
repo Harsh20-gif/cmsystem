@@ -30,6 +30,11 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(AdminSeeder::class);
 
+        // Optional CMS page seeders — run individually if needed:
+        //   php artisan db:seed --class=FooterSeeder
+        //   php artisan db:seed --class=HomeSeeder
+        // $this->call([FooterSeeder::class, HomeSeeder::class]);
+
         // Course Categories
         $cat1 = CourseCategory::create(['name' => 'Web Development', 'status' => 'published']);
         $cat2 = CourseCategory::create(['name' => 'Data Science', 'status' => 'published']);
@@ -109,7 +114,7 @@ class DatabaseSeeder extends Seeder
         TeamMember::create(['name' => 'Neha Gupta', 'designation' => 'Lead Instructor', 'status' => 'published']);
 
         // Testimonials
-        Testimonial::create(['name' => 'Sunil Kumar', 'course_id' => $createdCourses[0]->id, 'message' => 'Excellent teaching methodology and great placement support.', 'rating' => 5, 'status' => 'published']);
+        // Testimonial::create(['name' => 'Sunil Kumar', 'course_id' => $createdCourses[0]->id, 'message' => 'Excellent teaching methodology and great placement support.', 'rating' => 5, 'status' => 'published']);
 
         // Branches
         Branch::create(['name' => 'Head Office', 'address' => '123 Education Street, Tech City', 'phone' => '+91-9876543210', 'email' => 'info@eduskill.test', 'status' => 'published']);
@@ -120,7 +125,7 @@ class DatabaseSeeder extends Seeder
         // Pages
         $about = Page::create(['page_key' => 'about', 'title' => 'About Us']);
         PageSection::create(['page_id' => $about->id, 'section_key' => 'intro', 'heading' => 'Who We Are', 'content' => 'EduSkill is a premier training institute.']);
-        
+
         $contact = Page::create(['page_key' => 'contact', 'title' => 'Contact Us']);
 
         // Site Settings

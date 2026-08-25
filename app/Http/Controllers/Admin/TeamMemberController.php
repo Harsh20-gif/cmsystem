@@ -14,7 +14,7 @@ class TeamMemberController extends Controller
         $query = TeamMember::query();
         if ($request->filled('q')) {
             $query->where('name', 'like', '%' . $request->q . '%')
-                  ->orWhere('role', 'like', '%' . $request->q . '%');
+                  ->orWhere('designation', 'like', '%' . $request->q . '%');
         }
         
         $members = $query->orderBy('order_position')->paginate(15);
@@ -30,7 +30,7 @@ class TeamMemberController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'role' => ['required', 'string', 'max:255'],
+            'designation' => ['required', 'string', 'max:255'],
             'bio' => ['nullable', 'string'],
             'photo' => ['nullable', 'string'],
             'linkedin_url' => ['nullable', 'url', 'max:255'],
@@ -52,7 +52,7 @@ class TeamMemberController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'role' => ['required', 'string', 'max:255'],
+            'designation' => ['required', 'string', 'max:255'],
             'bio' => ['nullable', 'string'],
             'photo' => ['nullable', 'string'],
             'linkedin_url' => ['nullable', 'url', 'max:255'],

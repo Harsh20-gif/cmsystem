@@ -42,7 +42,7 @@
                 <div class="card-footer bg-white border-top-0 pt-0 pb-3">
                     <div class="d-flex justify-content-between">
                         <a href="{{ route('admin.gallery-albums.edit', $album) }}" class="btn btn-sm btn-primary w-100 me-2">Manage</a>
-                        <form action="{{ route('admin.gallery-albums.destroy', $album) }}" method="POST" class="d-inline" onsubmit="return confirm('Delete this album?');">
+                        <form action="{{ route('admin.gallery-albums.destroy', $album) }}" method="POST" class="d-inline" >
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-sm btn-danger px-3"><i class="fas fa-trash"></i></button>

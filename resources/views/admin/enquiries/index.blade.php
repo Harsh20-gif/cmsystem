@@ -16,8 +16,9 @@
             <select name="status" class="form-select" onchange="this.form.submit()">
                 <option value="">All Statuses</option>
                 <option value="new" {{ request('status') == 'new' ? 'selected' : '' }}>New</option>
-                <option value="read" {{ request('status') == 'read' ? 'selected' : '' }}>Read</option>
-                <option value="resolved" {{ request('status') == 'resolved' ? 'selected' : '' }}>Resolved</option>
+                <option value="contacted" {{ request('status') == 'contacted' ? 'selected' : '' }}>Contacted</option>
+                <option value="converted" {{ request('status') == 'converted' ? 'selected' : '' }}>Converted</option>
+                <option value="closed" {{ request('status') == 'closed' ? 'selected' : '' }}>Closed</option>
             </select>
         </div>
         <div class="col-md-3">
@@ -32,7 +33,7 @@
                     <th>Date</th>
                     <th>Name</th>
                     <th>Contact</th>
-                    <th>Subject</th>
+                    <th>Location & Type</th>
                     <th>Status</th>
                     <th class="text-end">Actions</th>
                 </tr>
@@ -46,19 +47,24 @@
                         <div><i class="fas fa-envelope text-muted me-1"></i> <a href="mailto:{{ $enquiry->email }}" class="text-decoration-none">{{ $enquiry->email }}</a></div>
                         <div><i class="fas fa-phone text-muted me-1"></i> {{ $enquiry->phone }}</div>
                     </td>
-                    <td>{{ Str::limit($enquiry->subject, 30) }}</td>
+                    <td>
+                        <div><i class="fas fa-map-marker-alt text-muted me-1"></i> {{ $enquiry->city ? $enquiry->city . ', ' : '' }}{{ $enquiry->state ?? 'N/A' }}</div>
+                        <div class="text-xs text-muted mt-1 text-uppercase">{{ $enquiry->type ?? 'N/A' }}</div>
+                    </td>
                     <td>
                         @if($enquiry->status == 'new')
                             <span class="badge bg-danger">New</span>
-                        @elseif($enquiry->status == 'read')
-                            <span class="badge bg-warning text-dark">Read</span>
+                        @elseif($enquiry->status == 'contacted')
+                            <span class="badge bg-warning text-dark">Contacted</span>
+                        @elseif($enquiry->status == 'converted')
+                            <span class="badge bg-success">Converted</span>
                         @else
-                            <span class="badge bg-success">Resolved</span>
+                            <span class="badge bg-secondary">Closed</span>
                         @endif
                     </td>
                     <td class="text-end">
                         <a href="{{ route('admin.enquiries.show', $enquiry) }}" class="btn btn-sm btn-primary">View</a>
-                        <form action="{{ route('admin.enquiries.destroy', $enquiry) }}" method="POST" class="d-inline" onsubmit="return confirm('Delete this enquiry?');">
+                        <form action="{{ route('admin.enquiries.destroy', $enquiry) }}" method="POST" class="d-inline" >
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-sm btn-danger">Delete</button>

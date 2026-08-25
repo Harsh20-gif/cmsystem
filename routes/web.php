@@ -5,7 +5,7 @@ use App\Http\Controllers\Admin;
 
 // Guest-only
 Route::prefix('admin')->name('admin.')->middleware('guest')->group(function () {
-    Route::get('/login', [Admin\AuthController::class, 'showLogin'])->name('login');
+    Route::get('/showlogin', [Admin\AuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [Admin\AuthController::class, 'login'])->name('login.submit');
 });
 
@@ -43,8 +43,12 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::delete('/newsletters/{newsletter}', [Admin\NewsletterController::class, 'destroy'])->name('newsletters.destroy');
 
     Route::resource('pages', Admin\PageController::class);
+    Route::resource('sliders', Admin\SliderController::class);
+    Route::resource('notices', Admin\NoticeController::class);
 
     Route::get('/settings', [Admin\SettingController::class, 'index'])->name('settings.index');
+    Route::get('/settings/home', [Admin\SiteSettingController::class, 'home'])->name('settings.home');
+    Route::post('/settings/home', [Admin\SiteSettingController::class, 'updateHome'])->name('settings.home.update');
     Route::put('/settings', [Admin\SettingController::class, 'update'])->name('settings.update');
 
     Route::get('/media', [Admin\MediaController::class, 'index'])->name('media.index');
@@ -52,4 +56,14 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::delete('/media/{medium}', [Admin\MediaController::class, 'destroy'])->name('media.destroy');
 });
 
-Route::get('/', fn () => redirect()->route('admin.login'));
+// Frontend Routes
+Route::get('/', [\App\Http\Controllers\FrontendController::class, 'index'])->name('home');
+Route::post('/submit-enquiry', [\App\Http\Controllers\FrontendController::class, 'submitEnquiry'])->name('submit-enquiry');
+Route::get('/about', [\App\Http\Controllers\FrontendController::class, 'about'])->name('about');
+Route::get('/contacts', [\App\Http\Controllers\FrontendController::class, 'contact'])->name('contact');
+Route::get('/courses', [\App\Http\Controllers\FrontendController::class, 'courses'])->name('courses');
+Route::view('/cs-it-courses', 'frontend.cs-it-courses')->name('cs-it-courses');
+Route::view('/core-engineering', 'frontend.core-engineering')->name('core-engineering');
+Route::get('/corporate-training', [\App\Http\Controllers\FrontendController::class, 'corporateTraining'])->name('corporate-training');
+Route::get('/gallery', [\App\Http\Controllers\FrontendController::class, 'gallery'])->name('gallery');
+Route::get('/placements', [\App\Http\Controllers\FrontendController::class, 'placements'])->name('placements');

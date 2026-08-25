@@ -67,7 +67,12 @@
 
             <div class="col-md-3">
                 <label class="form-label">Mode</label>
-                <input type="text" name="mode" class="form-control @error('mode') is-invalid @enderror" value="{{ old('mode') }}" placeholder="e.g. Online, Offline, Hybrid">
+                <select name="mode" class="form-select @error('mode') is-invalid @enderror">
+                    <option value="">Select Mode</option>
+                    <option value="Online" {{ old('mode') == 'Online' ? 'selected' : '' }}>Online</option>
+                    <option value="Offline" {{ old('mode') == 'Offline' ? 'selected' : '' }}>Offline</option>
+                    <option value="Hybrid" {{ old('mode') == 'Hybrid' ? 'selected' : '' }}>Hybrid</option>
+                </select>
                 @error('mode')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
 

@@ -29,7 +29,7 @@ class EnquiryController extends Controller
     public function show(Enquiry $enquiry)
     {
         if ($enquiry->status === 'new') {
-            $enquiry->update(['status' => 'read']);
+            $enquiry->update(['status' => 'contacted']);
         }
         return view('admin.enquiries.show', compact('enquiry'));
     }
@@ -37,7 +37,7 @@ class EnquiryController extends Controller
     public function updateStatus(Request $request, Enquiry $enquiry)
     {
         $validated = $request->validate([
-            'status' => ['required', \Illuminate\Validation\Rule::in(['new', 'read', 'resolved'])],
+            'status' => ['required', \Illuminate\Validation\Rule::in(['new', 'contacted', 'converted', 'closed'])],
             'notes' => ['nullable', 'string'],
         ]);
 

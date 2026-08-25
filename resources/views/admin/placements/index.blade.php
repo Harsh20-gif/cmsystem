@@ -77,7 +77,7 @@
                     </td>
                     <td class="text-end">
                         <a href="{{ route('admin.placements.edit', $placement) }}" class="btn btn-sm btn-primary">Edit</a>
-                        <form action="{{ route('admin.placements.destroy', $placement) }}" method="POST" class="d-inline" onsubmit="return confirm('Delete this placement?');">
+                        <form action="{{ route('admin.placements.destroy', $placement) }}" method="POST" class="d-inline" >
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-sm btn-danger">Delete</button>

@@ -19,7 +19,7 @@
                 <div class="card-body p-2 text-center">
                     <small class="text-truncate d-block" title="{{ $m->file_name }}">{{ $m->file_name }}</small>
                 </div>
-                <form action="{{ route('admin.media.destroy', $m) }}" method="POST" class="position-absolute top-0 end-0 m-1" onsubmit="return confirm('Are you sure you want to delete this image?');">
+                <form action="{{ route('admin.media.destroy', $m) }}" method="POST" class="position-absolute top-0 end-0 m-1" >
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-danger btn-sm p-1 lh-1" title="Delete">

@@ -66,7 +66,7 @@
                     </td>
                     <td class="text-end">
                         <a href="{{ route('admin.testimonials.edit', $testimonial) }}" class="btn btn-sm btn-primary">Edit</a>
-                        <form action="{{ route('admin.testimonials.destroy', $testimonial) }}" method="POST" class="d-inline" onsubmit="return confirm('Delete this testimonial?');">
+                        <form action="{{ route('admin.testimonials.destroy', $testimonial) }}" method="POST" class="d-inline" >
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-sm btn-danger">Delete</button>

@@ -11,7 +11,7 @@
 </div>
 
 <div class="row g-4 mb-4">
-    <div class="col-md-3 col-sm-6">
+    <div class="col-md-3 col-sm-6 col-12">
         <div class="admin-card p-3 border-start border-4 border-primary shadow-sm h-100">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
@@ -25,7 +25,7 @@
         </div>
     </div>
     
-    <div class="col-md-3 col-sm-6">
+    <div class="col-md-3 col-sm-6 col-12">
         <div class="admin-card p-3 border-start border-4 border-success shadow-sm h-100">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
@@ -39,7 +39,7 @@
         </div>
     </div>
 
-    <div class="col-md-3 col-sm-6">
+    <div class="col-md-3 col-sm-6 col-12">
         <div class="admin-card p-3 border-start border-4 border-info shadow-sm h-100">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
@@ -53,7 +53,7 @@
         </div>
     </div>
 
-    <div class="col-md-3 col-sm-6">
+    <div class="col-md-3 col-sm-6 col-12">
         <div class="admin-card p-3 border-start border-4 border-danger shadow-sm h-100">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
@@ -70,7 +70,7 @@
 
 <div class="row g-4">
     <!-- Recent Enquiries -->
-    <div class="col-lg-6">
+    <div class="col-lg-6 col-12">
         <div class="admin-card h-100">
             <div class="card-header bg-white border-bottom p-3 d-flex justify-content-between align-items-center">
                 <h6 class="fw-bold mb-0"><i class="fas fa-envelope text-primary me-2"></i> Recent Enquiries</h6>
@@ -98,7 +98,7 @@
     </div>
 
     <!-- Recent Students -->
-    <div class="col-lg-6">
+    <div class="col-lg-6 col-12">
         <div class="admin-card h-100">
             <div class="card-header bg-white border-bottom p-3 d-flex justify-content-between align-items-center">
                 <h6 class="fw-bold mb-0"><i class="fas fa-user-graduate text-success me-2"></i> Recently Added Students</h6>

@@ -46,7 +46,7 @@
                             </div>
                         </div>
                     </td>
-                    <td>{{ $member->role }}</td>
+                    <td>{{ $member->designation }}</td>
                     <td>{{ $member->order_position }}</td>
                     <td>
                         <span class="badge bg-{{ $member->status == 'published' ? 'success' : 'secondary' }}">
@@ -55,7 +55,7 @@
                     </td>
                     <td class="text-end">
                         <a href="{{ route('admin.team-members.edit', $member) }}" class="btn btn-sm btn-primary">Edit</a>
-                        <form action="{{ route('admin.team-members.destroy', $member) }}" method="POST" class="d-inline" onsubmit="return confirm('Delete this team member?');">
+                        <form action="{{ route('admin.team-members.destroy', $member) }}" method="POST" class="d-inline" >
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-sm btn-danger">Delete</button>

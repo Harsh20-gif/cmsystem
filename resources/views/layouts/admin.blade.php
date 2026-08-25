@@ -10,6 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('admin.css') }}">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     @stack('styles')
 </head>
 <body>
@@ -34,6 +36,8 @@
             <a href="{{ route('admin.placements.index') }}" class="nav-link {{ request()->routeIs('admin.placements.*') ? 'active' : '' }}">Placements</a>
             
             <div class="nav-group-title">Content & Media</div>
+            <a href="{{ route('admin.sliders.index') }}" class="nav-link {{ request()->routeIs('admin.sliders.*') ? 'active' : '' }}">Home Sliders</a>
+            <a href="{{ route('admin.notices.index') }}" class="nav-link {{ request()->routeIs('admin.notices.*') ? 'active' : '' }}">Notices & Marquee</a>
             <a href="{{ route('admin.gallery-albums.index') }}" class="nav-link {{ request()->routeIs('admin.gallery-albums.*') ? 'active' : '' }}">Gallery</a>
             <a href="{{ route('admin.pages.index') }}" class="nav-link {{ request()->is('admin/pages*') ? 'active' : '' }}">Pages</a>
             <a href="{{ route('admin.team-members.index') }}" class="nav-link {{ request()->routeIs('admin.team-members.*') ? 'active' : '' }}">Team</a>
@@ -46,7 +50,8 @@
             <a href="{{ route('admin.newsletters.index') }}" class="nav-link {{ request()->routeIs('admin.newsletters.*') ? 'active' : '' }}">Newsletters</a>
             
             <div class="nav-group-title">System</div>
-            <a href="{{ route('admin.settings.index') }}" class="nav-link {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">Settings</a>
+            <a href="{{ route('admin.settings.home') }}" class="nav-link {{ request()->routeIs('admin.settings.home*') ? 'active' : '' }}">Home Settings</a>
+            <a href="{{ route('admin.settings.index') }}" class="nav-link {{ request()->routeIs('admin.settings.index') ? 'active' : '' }}">Settings</a>
             <form action="{{ route('admin.logout') }}" method="POST" class="mt-3">
                 @csrf
                 <button type="submit" class="nav-link text-start w-100 bg-transparent border-0 text-danger">Logout</button>
@@ -59,7 +64,7 @@
         <!-- Topbar -->
         <header id="topbar">
             <button class="btn btn-outline-secondary d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar">
-                ☰
+                <i class="fas fa-bars"></i>
             </button>
             <div class="ms-auto d-flex align-items-center">
                 <span class="fw-bold">{{ auth()->user()->name ?? 'Admin' }}</span>
@@ -87,6 +92,20 @@
 
     <!-- Bootstrap 5 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('form').forEach(form => {
+                const methodInput = form.querySelector('input[name="_method"]');
+                if (methodInput && methodInput.value.toUpperCase() === 'DELETE') {
+                    form.addEventListener('submit', function (e) {
+                        if (!confirm('Are you sure you want to delete this item?')) {
+                            e.preventDefault();
+                        }
+                    });
+                }
+            });
+        });
+    </script>
     @stack('scripts')
 </body>
 </html>
