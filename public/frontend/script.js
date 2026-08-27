@@ -352,9 +352,25 @@ async function handleEnrollSubmit(event) {
       const result = await response.json();
       
       if (response.ok) {
-          closeModal("enrollModalOverlay");
-          triggerToast(result.message || "🎉 Registration Successful! Our career counselor will call you within 30 minutes.");
-          form.reset();
+          // Hide form and show success message inside modal
+          form.style.display = 'none';
+          const successMsg = document.getElementById('enrollSuccessMessage');
+          if (successMsg) {
+              successMsg.style.display = 'block';
+              
+              // Auto close and reset after 3 seconds
+              setTimeout(() => {
+                  closeModal("enrollModalOverlay");
+                  form.reset();
+                  form.style.display = 'block';
+                  successMsg.style.display = 'none';
+              }, 3000);
+          } else {
+              // Fallback if element not found
+              closeModal("enrollModalOverlay");
+              triggerToast(result.message || "Registration Successful!");
+              form.reset();
+          }
       } else {
           triggerToast("❌ Error: " + (result.message || "Failed to submit. Please try again."));
       }

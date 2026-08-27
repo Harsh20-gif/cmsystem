@@ -1,84 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Contact Skill Bridge India Technologies - Training centers in Lucknow, Noida, and Bhopal. Get in touch for BTech training, counseling, and placement drives.">
-  <title>Contact Us & Branch Locations | Skill Bridge India Technologies</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="{{ asset('frontend/styles.css') }}">
-</head>
-<body>
+@extends('layouts.app')
 
-  <!-- Top Bar -->
-  <div class="top-bar">
-    <div class="container top-bar-content">
-      <div class="top-info">
-        <div class="top-info-item"><i class="fas fa-phone-alt"></i> <span>Lucknow: <strong>+91 85428 41114</strong></span></div>
-        <div class="top-info-item"><i class="fas fa-phone-alt"></i> <span>Noida: <strong>+91 98385 03859</strong></span></div>
-        <div class="top-info-item"><i class="fas fa-envelope"></i> <span>info@skillbridgeindia.com</span></div>
-      </div>
-      <div class="top-links">
-        <a href="{{ route('placements') }}"><i class="fas fa-trophy"></i> Placement Wall</a>
-        <a href="{{ route('contact') }}" class="active"><i class="fas fa-map-marker-alt"></i> Centers: Lucknow • Noida • Bhopal</a>
-      </div>
-    </div>
-  </div>
+@section('title', isset($page) ? $page->title . ' | Skill Bridge India Technologies' : 'Contact Us & Branch Locations | Skill Bridge India Technologies')
 
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="container navbar-container">
-      <a href="{{ route('home') }}" class="logo-wrapper">
-        <img src="{{ asset('frontend/assets/logo.svg') }}" alt="Skill Bridge India Logo" class="logo-img">
-      </a>
-      <div class="nav-menu" id="navMenu">
-        <a href="{{ route('home') }}" class="nav-link">Home</a>
-        <div class="nav-dropdown">
-          <a href="{{ route('courses') }}" class="nav-link">Courses <i class="fas fa-chevron-down text-xs"></i></a>
-          <div class="dropdown-menu-custom">
-            @foreach($courseCategories as $category)
-            <a href="{{ route('courses') }}?category={{ $category->slug }}" class="dropdown-item-custom">
-              @if($category->icon && \Illuminate\Support\Str::contains($category->icon, ['/', '.png', '.jpg', '.jpeg', '.svg', '.webp']))
-              <img src="{{ \Illuminate\Support\Facades\Storage::url($category->icon) }}" alt="" style="width: 16px; height: 16px; object-fit: contain; display: inline-block; vertical-align: middle; margin-right: 0.2rem;">
-            @else
-              <i class="{{ $category->icon ?? 'fas fa-book' }}"></i>
-            @endif {{ $category->name }}
-            </a>
-            @endforeach
-          </div>
-        </div>
-        <a href="{{ route('corporate-training') }}" class="nav-link">Trainings</a>
-        <a href="{{ route('placements') }}" class="nav-link">Placements</a>
-        <a href="{{ route('gallery') }}" class="nav-link">Gallery</a>
-        <div class="nav-dropdown">
-          <a href="{{ route('about') }}" class="nav-link">About Us <i class="fas fa-chevron-down text-xs"></i></a>
-          <div class="dropdown-menu-custom">
-            <a href="{{ route('about') }}" class="dropdown-item-custom"><i class="fas fa-building"></i> About Our Institute</a>
-            <a href="{{ route('about') }}#team" class="dropdown-item-custom"><i class="fas fa-users-gear"></i> Leadership Team</a>
-            <a href="{{ route('about') }}#infra" class="dropdown-item-custom"><i class="fas fa-microchip"></i> Lab Infrastructure</a>
-          </div>
-        </div>
-        <a href="{{ route('contact') }}" class="nav-link active">Contact Us</a>
-      </div>
-      <div class="nav-actions">
-        <button class="btn btn-primary" onclick="openEnrollModal('Contact Counseling')">
-          <i class="fas fa-headset"></i> Call Center
-        </button>
-        <div class="mobile-toggle" id="mobileToggle"><i class="fas fa-bars"></i></div>
-      </div>
-    </div>
-  </nav>
+@section('content')
 
-  <!-- Page Hero Header -->
-  <section class="page-hero">
-    <div class="container">
-      <h1 class="page-hero-title">Contact Us & Virtual Support</h1>
-      <p class="page-hero-subtitle">Reach out for free virtual career counseling, seat booking, and online internship admissions.</p>
-      <div class="breadcrumb-list">
-        <a href="{{ route('home') }}">Home</a> <i class="fas fa-chevron-right" style="font-size: 0.75rem;"></i> <span>Contact Us</span>
-      </div>
-    </div>
-  </section>
+<x-page-hero 
+    title="{{ isset($page) ? $page->title : 'Contact Us & Virtual Support' }}"
+    subtitle="Reach out for free virtual career counseling, seat booking, and online internship admissions."
+    breadcrumbItem="Contact Us"
+/>
 
 
 
@@ -92,23 +22,52 @@
           <p style="color: var(--slate-body); margin-bottom: 2rem;">Fill out the form below to connect with a senior career counselor within 30 minutes.</p>
 
           <form id="contactPageForm" onsubmit="handleEnrollSubmit(event)" style="background: var(--bg-pure-white); padding: 2.2rem; border-radius: var(--radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-md);">
+            @csrf
+            <input type="hidden" name="type" value="contact">
             <div class="form-group">
               <label class="form-label">Full Name *</label>
-              <input type="text" class="form-control" placeholder="Enter your full name" required>
+              <input type="text" name="name" class="form-control" placeholder="Enter your full name" required>
             </div>
             <div class="form-grid">
               <div class="form-group">
                 <label class="form-label">Phone Number *</label>
-                <input type="tel" class="form-control" placeholder="+91 98765 43210" required>
+                <input type="tel" name="phone" class="form-control" placeholder="+91 98765 43210" required>
               </div>
               <div class="form-group">
                 <label class="form-label">Email Address *</label>
-                <input type="email" class="form-control" placeholder="name@domain.com" required>
+                <input type="email" name="email" class="form-control" placeholder="name@domain.com" required>
               </div>
             </div>
+            
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label">State *</label>
+                <select name="state" class="form-control" required>
+                    <option value="">Select State</option>
+                    <option value="Uttar Pradesh">Uttar Pradesh</option>
+                    <option value="Madhya Pradesh">Madhya Pradesh</option>
+                    <option value="Delhi">Delhi</option>
+                    <option value="Haryana">Haryana</option>
+                    <option value="Bihar">Bihar</option>
+                    <option value="Rajasthan">Rajasthan</option>
+                    <option value="Uttarakhand">Uttarakhand</option>
+                    <option value="Other">Other</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">City *</label>
+                <input type="text" name="city" class="form-control" placeholder="e.g. Lucknow" required>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">College/University & Passing Year *</label>
+              <input type="text" name="college" class="form-control" placeholder="e.g. BBD University, 2025" required>
+            </div>
+
             <div class="form-group">
               <label class="form-label">Engineering Branch / Stream *</label>
-              <select class="form-control" required>
+              <select name="course_name" class="form-control" required>
                 <option value="">Select Engineering Branch</option>
                 <option value="CS">Computer Science & IT</option>
                 <option value="EE">Electrical Engineering</option>
@@ -120,7 +79,7 @@
             </div>
             <div class="form-group">
               <label class="form-label">Your Message or Inquiry</label>
-              <textarea class="form-control" rows="4" placeholder="Tell us about your learning goals or batch queries..."></textarea>
+              <textarea name="message" class="form-control" rows="4" placeholder="Tell us about your learning goals or batch queries..."></textarea>
             </div>
             <button type="submit" class="btn btn-outline" style="width: 100%;"><i class="fas fa-paper-plane"></i> Submit Inquiry</button>
           </form>
@@ -165,17 +124,4 @@
     </div>
   </section>
 
-  <!-- Modals -->
-  @include('frontend.partials.enroll_modal')
-
-  <div class="toast-notification" id="toastNotification">
-    <i class="fas fa-check-circle" style="color: var(--accent-cyan); font-size: 1.4rem;"></i>
-    <span id="toastText">Action successful!</span>
-  </div>
-
-  <!-- Footer -->
-  @include('frontend.partials.footer')
-
-  <script src="{{ asset('frontend/script.js') }}"></script>
-</body>
-</html>
+  @endsection

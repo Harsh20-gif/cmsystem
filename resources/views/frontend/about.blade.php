@@ -1,81 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description"
-    content="{{ isset($page) && $page->seo_description ? $page->seo_description : 'About Skill Bridge India Technologies - Leader in BTech engineering training, practical lab skilling, and placement programs across Noida, Lucknow, and Bhopal.' }}">
-  <title>{{ isset($page) && $page->seo_title ? $page->seo_title : (isset($page) ? $page->title : 'About Us | Skill Bridge India Technologies') }}</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="{{ asset('frontend/styles.css') }}">
-</head>
+@section('title', isset($page) ? $page->title . ' | Skill Bridge India Technologies' : 'About Us | Skill Bridge India Technologies')
 
-<body>
+@section('content')
 
-  <!-- Top Bar -->
-  <div class="top-bar">
-    <div class="container top-bar-content">
-      <div class="top-info">
-        <div class="top-info-item"><i class="fas fa-phone-alt" style="color: #0ea5e9;"></i> <span>Helpline: <strong>+91 96492 40944</strong></span></div>
-        <div class="top-info-item"><i class="fas fa-envelope" style="color: #0ea5e9;"></i> <span>info@skillbridgeindiatechnologies.com</span></div>
-      </div>
-      <div class="top-links">
-        <a href="{{ route('placements') }}"><i class="fas fa-trophy"></i> Placement Wall</a>
-        <a href="{{ route('contact') }}"><i class="fas fa-map-marker-alt"></i> Branch Centers</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="container navbar-container">
-      <a href="{{ route('home') }}" class="logo-wrapper">
-        <img src="{{ asset('frontend/assets/logo_v1.png') }}" alt="Skill Bridge India Logo" class="logo-img">
-      </a>
-      <div class="nav-menu" id="navMenu">
-        <a href="{{ route('home') }}" class="nav-link">Home</a>
-        <div class="nav-dropdown">
-          <a href="{{ route('courses') }}" class="nav-link">Courses <i class="fas fa-chevron-down text-xs"></i></a>
-          <div class="dropdown-menu-custom">
-            @foreach($courseCategories as $category)
-            <a href="{{ route('courses') }}?category={{ $category->slug }}" class="dropdown-item-custom">
-              @if($category->icon && \Illuminate\Support\Str::contains($category->icon, ['/', '.png', '.jpg', '.jpeg', '.svg', '.webp']))
-              <img src="{{ \Illuminate\Support\Facades\Storage::url($category->icon) }}" alt="" style="width: 16px; height: 16px; object-fit: contain; display: inline-block; vertical-align: middle; margin-right: 0.2rem;">
-            @else
-              <i class="{{ $category->icon ?? 'fas fa-book' }}"></i>
-            @endif {{ $category->name }}
-            </a>
-            @endforeach
-          </div>
-        </div>
-        <a href="{{ route('corporate-training') }}" class="nav-link">Trainings</a>
-        <a href="{{ route('placements') }}" class="nav-link">Placements</a>
-        <a href="{{ route('gallery') }}" class="nav-link">Gallery</a>
-        <a href="{{ route('about') }}" class="nav-link active">About Us</a>
-        <a href="{{ route('contact') }}" class="nav-link">Contact Us</a>
-      </div>
-      <div class="nav-actions">
-        <button class="btn btn-primary" onclick="openEnrollModal('General Inquiry')">
-          <i class="fas fa-paper-plane"></i> <span class="btn-label">Quick Inquiry</span>
-        </button>
-        <div class="mobile-toggle" id="mobileToggle"><i class="fas fa-bars"></i></div>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Page Hero Header -->
-  <section class="page-hero">
-    <div class="container">
-      <h1 class="page-hero-title">{{ isset($page) ? $page->title : 'About Skill Bridge India' }}</h1>
-      <p class="page-hero-subtitle">Transforming engineering education into real industry capabilities through practical
-        labs, live projects, and 100% placement support.</p>
-      <div class="breadcrumb-list">
-        <a href="{{ route('home') }}">Home</a> <i class="fas fa-chevron-right text-xs"></i>
-        <span>About Us</span>
-      </div>
-    </div>
-  </section>
+<x-page-hero 
+    title="{{ isset($page) ? $page->title : 'About Skill Bridge India' }}"
+    subtitle="Transforming engineering education into real industry capabilities through practical labs, live projects, and 100% placement support."
+    breadcrumbItem="About Us"
+/>
 
   @if(isset($page) && $page->content)
   <section class="section-padding">
@@ -130,34 +63,6 @@
   </section>
   @endif
 
-  <!-- Leadership Team -->
-  <section class="section-padding bg-surface" id="team">
-    <div class="container">
-      <div class="section-header">
-        <div class="badge-tag"><i class="fas fa-users-gear"></i> Expert Leadership</div>
-        <h2 class="section-title">Our Directors & <span class="highlight">Industry Mentors</span></h2>
-        <p class="section-subtitle">Guiding engineering students toward career excellence with decades of corporate tech
-          experience.</p>
-      </div>
-
-      <div class="team-grid">
-        @forelse($teamMembers as $member)
-        <div class="team-card">
-          <img src="{{ $member->photo ? \Illuminate\Support\Facades\Storage::url($member->photo) : asset('frontend/assets/hero.jpg') }}" alt="{{ $member->name }}" class="team-avatar">
-          <div class="team-body">
-            <div class="team-name">{{ $member->name }}</div>
-            <div class="team-role">{{ $member->designation }}</div>
-            <p class="team-bio">{{ $member->bio }}</p>
-          </div>
-        </div>
-        @empty
-        <div class="col-12 text-center text-muted w-100" style="padding: 2rem;">
-          <p>No leadership team members available yet.</p>
-        </div>
-        @endforelse
-      </div>
-    </div>
-  </section>
 
   <!-- Lab Infrastructure Section -->
   <section class="section-padding" id="infra">
@@ -194,10 +99,49 @@
     </div>
   </section>
 
-  <!-- Footer -->
-  @include('frontend.partials.footer')
+  <!-- Team Section -->
+  @if($teamMembers->count() > 0)
+  <section class="section-padding bg-light" id="team">
+    <div class="container">
+      <div class="section-header text-center">
+        <div class="badge-tag"><i class="fas fa-users"></i> Mentorship & Leadership</div>
+        <h2 class="section-title">Meet Our <span class="highlight">Expert Team</span></h2>
+        <p class="section-subtitle">Learn from industry veterans, senior engineers, and experienced mentors.</p>
+      </div>
 
-  <script src="{{ asset('frontend/script.js') }}"></script>
-</body>
+      <div class="features-grid">
+        @foreach($teamMembers as $member)
+        <div class="feature-card" style="text-align: center; padding: 2rem 1.5rem;">
+          <div style="width: 120px; height: 120px; border-radius: 50%; overflow: hidden; margin: 0 auto 1.5rem auto; border: 3px solid var(--accent-cyan); box-shadow: var(--shadow-sm);">
+            @if($member->photo)
+              <img src="{{ \Illuminate\Support\Facades\Storage::url($member->photo) }}" alt="{{ $member->name }}" style="width: 100%; height: 100%; object-fit: cover;">
+            @else
+              <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: var(--bg-surface); color: var(--navy-dark); font-size: 2rem; font-weight: bold;">
+                {{ substr($member->name, 0, 1) }}
+              </div>
+            @endif
+          </div>
+          <h3 style="margin-bottom: 0.3rem;">{{ $member->name }}</h3>
+          <p class="text-accent-coral font-semibold text-sm" style="margin-bottom: 1rem;">{{ $member->designation }}</p>
+          
+          @if($member->bio)
+          <p class="text-sm text-slate-muted" style="margin-bottom: 1.5rem; line-height: 1.5;">{{ \Illuminate\Support\Str::limit($member->bio, 100) }}</p>
+          @endif
+          
+          <div style="display: flex; justify-content: center; gap: 1rem;">
+            @if($member->linkedin_url)
+            <a href="{{ $member->linkedin_url }}" target="_blank" style="color: #0A66C2; font-size: 1.2rem; transition: all 0.3s ease;"><i class="fab fa-linkedin"></i></a>
+            @endif
+            @if($member->twitter_url)
+            <a href="{{ $member->twitter_url }}" target="_blank" style="color: #1DA1F2; font-size: 1.2rem; transition: all 0.3s ease;"><i class="fab fa-twitter"></i></a>
+            @endif
+          </div>
+        </div>
+        @endforeach
+      </div>
+    </div>
+  </section>
+  @endif
 
-</html>
+  @endsection
+

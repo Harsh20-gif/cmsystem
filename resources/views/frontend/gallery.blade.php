@@ -1,309 +1,372 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description"
-    content="Skill Bridge India Technologies Photo Gallery - Practical Labs, Campus Seminars, Industrial Workshops, and On-Campus Placement Drives in Lucknow, Noida, and Bhopal.">
-  <title>Photo Gallery | Skill Bridge India Technologies</title>
+@section('title', 'Photo Gallery & Events | Skill Bridge India')
 
-  <!-- Font Awesome Icons & Google Fonts -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="{{ asset('frontend/styles.css') }}">
-  <style>
-    .gallery-filter-bar {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-      margin-bottom: 2.5rem;
+@push('styles')
+<style>
+  /* Gallery Grid Specific Styles */
+  .gallery-filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+  .filter-pill {
+    background: transparent;
+    border: 2px solid var(--accent-cyan);
+    color: var(--accent-cyan);
+    padding: 0.5rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+  .filter-pill:hover,
+  .filter-pill.active {
+    background: var(--accent-cyan);
+    color: var(--navy-dark);
+  }
+  
+  .gallery-img-wrapper {
+    position: relative;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .gallery-img-wrapper:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  }
+  .gallery-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .gallery-img-wrapper:hover img {
+    transform: scale(1.1);
+  }
+  .gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.4);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .gallery-img-wrapper:hover .gallery-overlay {
+    opacity: 1;
+  }
+  .gallery-overlay i {
+    color: white;
+    font-size: 2rem;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+    transform: scale(0.5);
+    transition: transform 0.3s ease;
+  }
+  .gallery-img-wrapper:hover .gallery-overlay i {
+    transform: scale(1);
+  }
+
+  /* Lightbox Styles */
+  .lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.95);
+    z-index: 1050;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .lightbox-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .lightbox-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 90vh;
+  }
+  .lightbox-content img {
+    max-width: 100%;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 4px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  }
+  .lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  .lightbox-close:hover { color: var(--accent-cyan); }
+  .lightbox-prev,
+  .lightbox-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.1);
+    border: none;
+    color: white;
+    font-size: 2rem;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+  }
+  .lightbox-prev:hover,
+  .lightbox-next:hover {
+    background: rgba(255,255,255,0.3);
+  }
+  .lightbox-prev { left: 20px; }
+  .lightbox-next { right: 20px; }
+  .lightbox-counter {
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-weight: bold;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+  }
+  
+  @media (max-width: 768px) {
+    .lightbox-prev, .lightbox-next {
+      width: 40px;
+      height: 40px;
+      font-size: 1.2rem;
     }
+    .lightbox-prev { left: 10px; }
+    .lightbox-next { right: 10px; }
+  }
+</style>
+@endpush
 
-    .filter-tab {
-      padding: 0.6rem 1.4rem;
-      border-radius: 30px;
-      background: var(--navy-surface);
-      color: var(--navy-dark);
-      border: 1px solid var(--border-light);
-      font-weight: 600;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: var(--transition-fast);
-    }
+@section('content')
 
-    .filter-tab.active,
-    .filter-tab:hover {
-      background: var(--primary-gradient);
-      color: white;
-      border-color: transparent;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .full-gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 1.8rem;
-    }
-
-    .gallery-item-card {
-      background: white;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: var(--shadow-sm);
-      border: 1px solid var(--border-light);
-      transition: var(--transition-normal);
-      display: flex;
-      flex-direction: column;
-    }
-
-    .gallery-item-card:hover {
-      transform: translateY(-6px);
-      box-shadow: var(--shadow-md);
-    }
-
-    .gallery-img-box {
-      position: relative;
-      height: 220px;
-      overflow: hidden;
-    }
-
-    .gallery-img-box img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.5s ease;
-    }
-
-    .gallery-item-card:hover .gallery-img-box img {
-      transform: scale(1.08);
-    }
-
-    .gallery-badge {
-      position: absolute;
-      top: 12px;
-      left: 12px;
-      background: rgba(15, 23, 42, 0.85);
-      color: white;
-      padding: 0.35rem 0.8rem;
-      border-radius: 20px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      backdrop-filter: blur(4px);
-    }
-
-    .gallery-body {
-      padding: 1.2rem;
-    }
-
-    .gallery-title {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--navy-dark);
-      margin-bottom: 0.4rem;
-    }
-
-    .gallery-desc {
-      font-size: 0.88rem;
-      color: var(--slate-body);
-      line-height: 1.5;
-    }
-  </style>
-</head>
-
-<body>
-
-  <!-- Top Contact Bar -->
-  <div class="top-bar">
-    <div class="container top-bar-content">
-      <div class="top-info">
-        <div class="top-info-item"><i class="fas fa-phone-alt" style="color: #0ea5e9;"></i> <span>Helpline: <strong>+91 96492 40944</strong></span></div>
-        <div class="top-info-item"><i class="fas fa-envelope" style="color: #0ea5e9;"></i> <span>info@skillbridgeindiatechnologies.com</span></div>
-      </div>
-      <div class="top-links">
-        <a href="{{ route('placements') }}"><i class="fas fa-trophy"></i> 100% Placement Wall</a>
-        <a href="javascript:void(0)" onclick="openEnrollModal('Gallery Inquiry')"><i class="fas fa-headset"></i> Student
-          Helpdesk</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Sticky Navigation Bar -->
-  <nav class="navbar">
-    <div class="container navbar-container">
-      <a href="{{ route('home') }}" class="logo-wrapper">
-        <img src="{{ asset('frontend/assets/logo_v1.png') }}" alt="Skill Bridge India Logo" class="logo-img">
-      </a>
-      <div class="nav-menu" id="navMenu">
-        <a href="{{ route('home') }}" class="nav-link">Home</a>
-        <div class="nav-dropdown">
-          <a href="{{ route('courses') }}" class="nav-link">Courses <i class="fas fa-chevron-down text-xs"></i></a>
-          <div class="dropdown-menu-custom">
-            @foreach($courseCategories as $category)
-            <a href="{{ route('courses') }}?category={{ $category->slug }}" class="dropdown-item-custom">
-              @if($category->icon && \Illuminate\Support\Str::contains($category->icon, ['/', '.png', '.jpg', '.jpeg', '.svg', '.webp']))
-              <img src="{{ \Illuminate\Support\Facades\Storage::url($category->icon) }}" alt="" style="width: 16px; height: 16px; object-fit: contain; display: inline-block; vertical-align: middle; margin-right: 0.2rem;">
-            @else
-              <i class="{{ $category->icon ?? 'fas fa-book' }}"></i>
-            @endif {{ $category->name }}
-            </a>
-            @endforeach
-          </div>
-        </div>
-        <a href="{{ route('corporate-training') }}" class="nav-link">Trainings</a>
-        <a href="{{ route('placements') }}" class="nav-link">Placements</a>
-        <a href="{{ route('gallery') }}" class="nav-link active">Gallery</a>
-        <div class="nav-dropdown">
-          <a href="{{ route('about') }}" class="nav-link">About Us <i class="fas fa-chevron-down text-xs"></i></a>
-          <div class="dropdown-menu-custom">
-            <a href="{{ route('about') }}" class="dropdown-item-custom"><i class="fas fa-building"></i> About Our
-              Institute</a>
-            <a href="about.html#team" class="dropdown-item-custom"><i class="fas fa-users-gear"></i> Leadership Team</a>
-            <a href="about.html#infra" class="dropdown-item-custom"><i class="fas fa-microchip"></i> Lab
-              Infrastructure</a>
-          </div>
-        </div>
-        <a href="{{ route('contact') }}" class="nav-link">Contact Us</a>
-      </div>
-      <div class="nav-actions">
-        <button class="btn btn-primary" onclick="openEnrollModal('Gallery Page Booking')">
-          <i class="fas fa-images"></i> <span class="btn-label">Visit Campus</span>
-        </button>
-        <div class="mobile-toggle" id="mobileToggle"><i class="fas fa-bars"></i></div>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Page Hero Header -->
-  <section class="page-hero">
-    <div class="container">
-      <h1 class="page-hero-title">Campus & Training Photo Gallery</h1>
-      <p class="page-hero-subtitle">Explore live practical lab sessions, university MOU campus drives, industrial
-        workshops, and student success celebrations at Skill Bridge India.</p>
-    </div>
-  </section>
+<x-page-hero 
+    title="Life at Skill Bridge"
+    subtitle="Explore our campus events, technical workshops, placement drives, and student life."
+    breadcrumbItem="Gallery"
+/>
 
   <!-- Main Gallery Section -->
-  <section class="bg-navy-alt" style="padding: 4rem 0;">
+  <section class="bg-navy-alt" style="padding: 4rem 0; min-height: 60vh;">
     <div class="container">
 
-      <!-- Filter Tabs -->
-      <div class="gallery-filter-bar">
-        <button class="filter-tab active" onclick="filterGallery('all', this)">All Photos</button>
-        @php
-            $categories = $albums->pluck('category')->unique()->filter();
-        @endphp
-        @foreach($categories as $category)
-            <button class="filter-tab" onclick="filterGallery('{{ Str::slug($category) }}', this)">{{ $category }}</button>
-        @endforeach
-      </div>
+      @php
+          // Only show albums that have images
+          $validAlbums = $albums->filter(function($album) {
+              return $album->images->count() > 0;
+          });
+      @endphp
 
-      <!-- Gallery Grid -->
-      <div class="full-gallery-grid" id="galleryGrid">
-        @forelse($albums as $album)
-        <div class="gallery-item-card" data-category="{{ Str::slug($album->category) }}">
-          <div class="gallery-img-box">
-            <img src="{{ $album->cover_image ? \Illuminate\Support\Facades\Storage::url($album->cover_image) : asset('frontend/assets/logo_v1.png') }}" alt="{{ $album->title }}">
-            <span class="gallery-badge"><i class="fas fa-camera"></i> {{ $album->category ?? 'Gallery' }}</span>
+      @if($validAlbums->count() > 0)
+          <!-- Filter Tabs -->
+          <div class="gallery-filter-bar">
+            <button class="filter-pill active" data-filter="all">All Photos</button>
+            @foreach($validAlbums as $album)
+                <button class="filter-pill" data-filter="{{ $album->id }}">{{ $album->title }}</button>
+            @endforeach
           </div>
-          <div class="gallery-body">
-            <h3 class="gallery-title">{{ $album->title }}</h3>
-            <p class="gallery-desc">{{ Str::limit(strip_tags($album->description), 100) }}</p>
+
+          <!-- Gallery Grid -->
+          <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-4 g-4" id="galleryGrid">
+            @foreach($validAlbums as $album)
+                @foreach($album->images as $image)
+                    <div class="col gallery-image-item" data-album-id="{{ $album->id }}">
+                        <div class="gallery-img-wrapper" data-img-src="{{ Str::startsWith($image->image_path, 'http') ? $image->image_path : Storage::url($image->image_path) }}">
+                            <img src="{{ Str::startsWith($image->image_path, 'http') ? $image->image_path : Storage::url($image->image_path) }}" alt="{{ $album->title }} photo" loading="lazy">
+                            <div class="gallery-overlay">
+                                <i class="fas fa-search-plus"></i>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            @endforeach
           </div>
-        </div>
-        @empty
-        <div class="col-12 text-center py-5">
-            <p class="text-muted">No gallery albums available at the moment.</p>
-        </div>
-        @endforelse
-      </div>
+      @else
+          <div class="text-center py-5">
+              <p class="text-muted fs-5"><i class="fas fa-camera text-secondary me-2"></i> No photos available at the moment.</p>
+          </div>
+      @endif
+
     </div>
   </section>
 
   <!-- CTA Banner Section -->
   <section class="text-white bg-primary-gradient" style="padding: 4rem 0; text-align: center;">
     <div class="container">
-      <h2 class="heading-lg font-extrabold" style="margin-bottom: 1rem;">Experience Live Labs at Our Campus Centers
-      </h2>
-      <p class="text-lg" style="max-width: 700px; margin: 0 auto 2rem auto; opacity: 0.95;">Visit our training
-        centers in Lucknow, Noida, or Bhopal for a free hands-on demo class and lab orientation before enrolling.</p>
+      <h2 class="heading-lg font-extrabold" style="margin-bottom: 1rem;">Experience Live Labs at Our Campus Centers</h2>
+      <p class="text-lg" style="max-width: 700px; margin: 0 auto 2rem auto; opacity: 0.95;">Visit our training centers in Lucknow, Noida, or Bhopal for a free hands-on demo class and lab orientation before enrolling.</p>
       <button class="btn btn-secondary font-bold text-navy-dark bg-white" onclick="openEnrollModal('Campus Tour Request')">
         <i class="fas fa-calendar-check"></i> Book a Free Campus Tour
       </button>
     </div>
   </section>
 
-  <!-- Enrollment Modal -->
-  <div class="modal-overlay" id="enrollModal">
-    <div class="modal-card">
-      <button class="modal-close" onclick="closeEnrollModal()"><i class="fas fa-times"></i></button>
-      <h3 class="heading-md font-extrabold text-navy-dark" style="margin-bottom: 0.5rem;" id="modalTitle">
-        Book Demo / Inquiry</h3>
-      <p class="text-sm text-slate-body" style="margin-bottom: 1.5rem;">Fill out the form below to connect
-        with our academic counselors.</p>
-
-      <form onsubmit="handleFormSubmit(event, 'enrollModal')">
-        <div class="form-group">
-          <label class="form-label">Full Name *</label>
-          <input type="text" class="form-control" placeholder="e.g. Rahul Sharma" required>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Mobile Number *</label>
-            <input type="tel" class="form-control" placeholder="+91 98765 43210" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Branch Center *</label>
-            <select class="form-control" required>
-              <option value="Lucknow">Lucknow Center</option>
-              <option value="Noida">Noida Center</option>
-              <option value="Bhopal">Bhopal Center</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Interested Field</label>
-          <select class="form-control">
-            <option value="CS & IT">Computer Science & IT (Fullstack / AI)</option>
-            <option value="Electrical">Electrical & Automation (PLC SCADA)</option>
-            <option value="Mechanical">Mechanical & MEP / HVAC Design</option>
-            <option value="Electronics">Electronics & Embedded / IoT</option>
-            <option value="Civil">Civil & AutoCad / Revit</option>
-          </select>
-        </div>
-        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
-          <i class="fas fa-paper-plane"></i> Submit Request
-        </button>
-      </form>
+  <!-- Fullscreen Lightbox Modal -->
+  <div class="lightbox-overlay" id="lightboxModal">
+    <button class="lightbox-close" id="lbClose"><i class="fas fa-times"></i></button>
+    <button class="lightbox-prev" id="lbPrev"><i class="fas fa-chevron-left"></i></button>
+    <button class="lightbox-next" id="lbNext"><i class="fas fa-chevron-right"></i></button>
+    
+    <div class="lightbox-content">
+      <img src="" alt="Gallery Preview" id="lightboxImage">
+      <div class="lightbox-counter" id="lightboxCounter">1 / 10</div>
     </div>
   </div>
 
-  <!-- Toast Notification -->
-  <div class="toast-notification" id="toastNotification">
-    <i class="fas fa-check-circle heading-md text-accent-cyan"></i>
-    <span id="toastText">Action successful!</span>
-  </div>
+@endsection
 
-  <!-- Footer -->
-  @include('frontend.partials.footer')
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    
+    const filterBtns = document.querySelectorAll('.filter-pill');
+    const galleryItems = document.querySelectorAll('.gallery-image-item');
+    
+    // Lightbox Elements
+    const lightboxModal = document.getElementById('lightboxModal');
+    const lightboxImg = document.getElementById('lightboxImage');
+    const lightboxCounter = document.getElementById('lightboxCounter');
+    const lbClose = document.getElementById('lbClose');
+    const lbNext = document.getElementById('lbNext');
+    const lbPrev = document.getElementById('lbPrev');
+    
+    let visibleImages = [];
+    let currentImageIndex = 0;
 
-  <script src="{{ asset('frontend/script.js') }}"></script>
-  <script>
-    function filterGallery(category, btn) {
-      const tabs = document.querySelectorAll('.filter-tab');
-      tabs.forEach(t => t.classList.remove('active'));
-      if (btn) btn.classList.add('active');
+    // Filter Logic
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Update active state
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            const filterValue = btn.getAttribute('data-filter');
+            
+            // Show/Hide items based on filter
+            galleryItems.forEach(item => {
+                if (filterValue === 'all' || item.getAttribute('data-album-id') === filterValue) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    });
 
-      const items = document.querySelectorAll('.gallery-item-card');
-      items.forEach(item => {
-        if (category === 'all' || item.getAttribute('data-category') === category) {
-          item.style.display = 'flex';
-        } else {
-          item.style.display = 'none';
+    // Lightbox Logic
+    const openLightbox = (index) => {
+        // Collect currently visible image elements dynamically
+        visibleImages = Array.from(document.querySelectorAll('.gallery-image-item')).filter(el => el.style.display !== 'none');
+        
+        // Find the index of the clicked item within the visible array
+        // The index passed here is the absolute index across ALL items, so we match by src instead.
+        // Or better yet, we just attach a click listener to the wrapper and build the visible array on click.
+    };
+
+    // Attach click to image wrappers
+    document.querySelectorAll('.gallery-img-wrapper').forEach(wrapper => {
+        wrapper.addEventListener('click', function() {
+            // On click, gather only currently visible items
+            visibleImages = Array.from(document.querySelectorAll('.gallery-image-item')).filter(el => el.style.display !== 'none');
+            
+            // Find which index we just clicked within the visible array
+            const parentItem = this.closest('.gallery-image-item');
+            currentImageIndex = visibleImages.indexOf(parentItem);
+            
+            updateLightbox();
+            lightboxModal.classList.add('active');
+        });
+    });
+
+    const updateLightbox = () => {
+        if (visibleImages.length === 0) return;
+        
+        // Wrap around logic
+        if (currentImageIndex >= visibleImages.length) currentImageIndex = 0;
+        if (currentImageIndex < 0) currentImageIndex = visibleImages.length - 1;
+        
+        // Get image source from the data attribute of the wrapper
+        const wrapper = visibleImages[currentImageIndex].querySelector('.gallery-img-wrapper');
+        const src = wrapper.getAttribute('data-img-src');
+        
+        lightboxImg.src = src;
+        lightboxCounter.textContent = (currentImageIndex + 1) + " / " + visibleImages.length;
+    };
+
+    const closeLightbox = () => {
+        lightboxModal.classList.remove('active');
+    };
+
+    const nextImage = () => {
+        currentImageIndex++;
+        updateLightbox();
+    };
+
+    const prevImage = () => {
+        currentImageIndex--;
+        updateLightbox();
+    };
+
+    // Event Listeners for controls
+    lbClose.addEventListener('click', closeLightbox);
+    lbNext.addEventListener('click', nextImage);
+    lbPrev.addEventListener('click', prevImage);
+    lightboxModal.addEventListener('click', (e) => {
+        if(e.target === lightboxModal) closeLightbox(); // Click outside to close
+    });
+
+    // Keyboard support
+    document.addEventListener('keydown', (e) => {
+        if (!lightboxModal.classList.contains('active')) return;
+        
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowRight') nextImage();
+        if (e.key === 'ArrowLeft') prevImage();
+    });
+
+    // Basic swipe support for mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    lightboxModal.addEventListener('touchstart', e => {
+        touchStartX = e.changedTouches[0].screenX;
+    });
+    
+    lightboxModal.addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    });
+    
+    function handleSwipe() {
+        const diff = touchStartX - touchEndX;
+        if (Math.abs(diff) > 50) { // Threshold
+            if (diff > 0) nextImage();
+            else prevImage();
         }
-      });
     }
-  </script>
-</body>
-
-</html>
+});
+</script>
+@endpush

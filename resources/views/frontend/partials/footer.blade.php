@@ -6,54 +6,57 @@
     {!! $footerPage->content !!}
 @else
     <!-- Fallback Footer -->
-    <footer class="footer">
+    <footer class="footer py-5">
         <div class="container">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <img src="{{ asset('frontend/assets/logo_v1.png') }}" alt="Skill Bridge India Logo"
-                        style="height: 60px; filter: brightness(0) invert(1);">
-                    <p>
-                        Skill Bridge India Technologies Pvt Ltd is a premier job-oriented BTech training and industrial placement
-                        institute delivering job-guaranteed skill transformation across CS/IT, Electrical, Mechanical, Electronics,
-                        and Civil branches in Noida, Lucknow, and Bhopal.
+            <!-- Main Footer Content -->
+            <div class="row gy-5 gx-lg-5 mb-5">
+                
+                <!-- Brand & About -->
+                <div class="col-12 col-lg-5 col-md-12">
+                    <img src="{{ asset('frontend/assets/logo_v1.png') }}" alt="Skill Bridge India Logo" class="mb-4" style="height: 60px;">
+                    <p class="text-start pe-lg-4 mb-0" style="line-height: 1.8; opacity: 0.9;">
+                        Skill Bridge India Technologies is a premier virtual job-oriented BTech training and industrial placement institute delivering job-guaranteed skill transformation across CS/IT, Electrical, Mechanical, Electronics, and Civil branches through online programs and virtual placement support.
                     </p>
                 </div>
 
-                <div>
-                    <h4 class="footer-title">Quick Links</h4>
-                    <ul class="footer-links">
-                        <li><a href="{{ route('courses') }}"><i class="fas fa-angle-right"></i> Courses</a></li>
-                        <li><a href="{{ route('corporate-training') }}"><i class="fas fa-angle-right"></i> Trainings</a></li>
-                        <li><a href="{{ route('placements') }}"><i class="fas fa-angle-right"></i> Placements</a></li>
-                        <li><a href="{{ route('gallery') }}"><i class="fas fa-angle-right"></i> Gallery</a></li>
-                        <li><a href="{{ route('about') }}"><i class="fas fa-angle-right"></i> About Us</a></li>
-                        <li><a href="{{ route('contact') }}"><i class="fas fa-angle-right"></i> Contact Us</a></li>
+                <!-- Quick Links -->
+                <div class="col-12 col-lg-3 col-md-6">
+                    <h4 class="footer-title mb-4 pb-2" style="border-bottom: 2px solid rgba(255,255,255,0.1); display: inline-block;">Quick Links</h4>
+                    <ul class="footer-links list-unstyled d-flex flex-column gap-3 mb-0">
+                        <li><a href="{{ route('courses') }}" class="text-decoration-none"><i class="fas fa-angle-right me-2 text-accent-cyan"></i> Courses</a></li>
+                        <li><a href="{{ route('corporate-training') }}" class="text-decoration-none"><i class="fas fa-angle-right me-2 text-accent-cyan"></i> Trainings</a></li>
+                        <li><a href="{{ route('placements') }}" class="text-decoration-none"><i class="fas fa-angle-right me-2 text-accent-cyan"></i> Placements</a></li>
+                        <li><a href="{{ route('gallery') }}" class="text-decoration-none"><i class="fas fa-angle-right me-2 text-accent-cyan"></i> Gallery</a></li>
+                        <li><a href="{{ route('about') }}" class="text-decoration-none"><i class="fas fa-angle-right me-2 text-accent-cyan"></i> About Us</a></li>
+                        <li><a href="{{ route('contact') }}" class="text-decoration-none"><i class="fas fa-angle-right me-2 text-accent-cyan"></i> Contact Us</a></li>
                     </ul>
                 </div>
 
-                <div>
-                    <h4 class="footer-title">Training Tracks</h4>
-                    <ul class="footer-links">
-                        <li><a href="{{ route('cs-it-courses') }}"><i class="fas fa-code"></i> Fullstack Web Dev</a></li>
-                        <li><a href="{{ route('cs-it-courses') }}"><i class="fas fa-brain"></i> Data Science & AI</a></li>
-                        <li><a href="core-engineering.html#electrical"><i class="fas fa-bolt"></i> PLC SCADA & Automation</a></li>
-                        <li><a href="core-engineering.html#mechanical"><i class="fas fa-cogs"></i> MEP & HVAC Design</a></li>
-                        <li><a href="core-engineering.html#electronics"><i class="fas fa-microchip"></i> Embedded Systems & IoT</a></li>
-                        <li><a href="core-engineering.html#civil"><i class="fas fa-drafting-compass"></i> AutoCad & Revit</a></li>
-                    </ul>
+                <!-- Contact Us -->
+                <div class="col-12 col-lg-4 col-md-6">
+                    <h4 class="footer-title mb-4 pb-2" style="border-bottom: 2px solid rgba(255,255,255,0.1); display: inline-block;">Contact Us</h4>
+                    <div class="d-flex flex-column gap-3 mb-0">
+                        <p class="mb-0 d-flex align-items-center">
+                            <i class="fas fa-phone text-accent-cyan me-3 fs-5" style="width: 20px; text-align: center;"></i> 
+                            <span><strong>8467912807</strong></span>
+                        </p>
+                        <p class="mb-0 d-flex align-items-center">
+                            <i class="fas fa-envelope text-accent-cyan me-3 fs-5" style="width: 20px; text-align: center;"></i> 
+                            <span>info@skillbridgeindia.com</span>
+                        </p>
+                    </div>
                 </div>
 
-                <div>
-                    <h4 class="footer-title">Contact Us</h4>
-                    <p class="text-sm" style="margin-bottom: 0.6rem;"><i class="fas fa-headset text-accent-cyan"></i> <strong>Helpdesk:</strong> +91 85428 41114</p>
-                    <p class="text-sm" style="margin-top: 1rem;"><i class="fas fa-envelope text-accent-cyan"></i> info@skillbridgeindia.com</p>
-                </div>
             </div>
 
-            <div class="footer-bottom">
-                <div>© 2026 Skill Bridge India Technologies Pvt Ltd. All Rights Reserved.</div>
-                <div>Modeled for BTech Engineering Skilling & Industrial Placement.</div>
+            <!-- Bottom Bar -->
+            <div class="pt-4" style="border-top: 1px solid rgba(255,255,255,0.1);">
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3 text-center text-md-start" style="font-size: 0.9rem; opacity: 0.8;">
+                    <div>&copy; 2026 Skill Bridge India Technologies Pvt Ltd. All Rights Reserved.</div>
+                    <div>Powered by <a href="https://dashandots.com/" class="text-white text-decoration-none fw-bold hover-cyan">Dashandots Technology</a></div>
+                </div>
             </div>
+            
         </div>
     </footer>
 @endif

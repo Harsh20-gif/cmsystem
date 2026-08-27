@@ -1988,3 +1988,257 @@ img {
 .text-warning { color: #FFB800; }
 .text-blue-400 { color: #60A5FA; }
 .text-yellow-400 { color: #FBBF24; }
+/* ==========================================================================
+   Gallery Album & Lightbox UI
+   ========================================================================== */
+
+/* Folder effect for Album Cards */
+.album-folder {
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+}
+.album-folder:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+}
+.folder-effect {
+  position: relative;
+}
+.folder-effect::after {
+  content: '';
+  position: absolute;
+  top: 5px;
+  right: -5px;
+  bottom: -5px;
+  left: 5px;
+  background: var(--bg-surface);
+  z-index: -1;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
+}
+.folder-effect::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  right: -10px;
+  bottom: -10px;
+  left: 10px;
+  background: var(--bg-pure-white);
+  z-index: -2;
+  border-radius: inherit;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
+}
+.album-folder:hover .folder-effect::after {
+  transform: translate(3px, 3px) rotate(2deg);
+}
+.album-folder:hover .folder-effect::before {
+  transform: translate(6px, 6px) rotate(4deg);
+}
+
+/* Album Images Grid inside Modal */
+.album-images-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+}
+.album-thumb-wrapper {
+  position: relative;
+  aspect-ratio: 1/1;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+}
+.album-thumb-wrapper::after {
+  content: '\f00e';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(7, 22, 56, 0.6);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.album-thumb-wrapper:hover::after {
+  opacity: 1;
+}
+.album-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.album-thumb-wrapper:hover .album-thumb {
+  transform: scale(1.1);
+}
+
+/* Fullscreen Lightbox */
+.lightbox-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+}
+.lightbox-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+.lightbox-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.lightbox-content img {
+  max-width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  border: 2px solid rgba(255,255,255,0.1);
+  user-select: none;
+}
+.lightbox-caption {
+  color: white;
+  margin-top: 1rem;
+  font-size: 1.1rem;
+  text-align: center;
+}
+.lightbox-close, .lightbox-prev, .lightbox-next {
+  position: absolute;
+  background: rgba(255,255,255,0.1);
+  border: none;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+.lightbox-close:hover, .lightbox-prev:hover, .lightbox-next:hover {
+  background: rgba(255,255,255,0.3);
+  transform: scale(1.1);
+}
+.lightbox-close {
+  top: 20px;
+  right: 20px;
+}
+.lightbox-prev {
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.lightbox-next {
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.lightbox-prev:hover, .lightbox-next:hover {
+  transform: translateY(-50%) scale(1.1);
+}
+@media (max-width: 768px) {
+  .lightbox-prev, .lightbox-next {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+}
+
+/* ============================================================
+   FRONTEND MICRO-INTERACTION PATCHES
+   ============================================================ */
+
+/* Buttons - tactile click feel */
+.btn-primary,
+.btn,
+button {
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.2s ease !important;
+}
+.btn-primary:hover, .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15) !important;
+}
+.btn-primary:active, .btn:active {
+    transform: scale(0.98) !important;
+    transition-duration: 0.07s !important;
+}
+
+/* Nav links */
+.nav-link, .nav-link-item {
+    transition: color 0.2s ease, background-color 0.2s ease !important;
+}
+
+/* Course cards */
+.course-card, .training-card {
+    transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+}
+.course-card:hover, .training-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12) !important;
+}
+
+/* Student / Placement cards */
+.student-card {
+    transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+}
+.student-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Filter buttons / pills */
+.filter-btn, .gallery-filter-btn {
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease !important;
+}
+.filter-btn:hover, .gallery-filter-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+.filter-btn:active, .gallery-filter-btn:active {
+    transform: scale(0.97) !important;
+}
+
+/* Gallery grid items */
+.gallery-item {
+    overflow: hidden;
+    transition: box-shadow 0.25s ease;
+}
+.gallery-item:hover {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+.gallery-item img {
+    transition: transform 0.35s ease !important;
+}
+.gallery-item:hover img {
+    transform: scale(1.05);
+}
+
+/* Footer links */
+footer a, .footer a {
+    transition: color 0.2s ease, padding-left 0.2s ease !important;
+}
+footer a:hover, .footer a:hover {
+    padding-left: 4px;
+}

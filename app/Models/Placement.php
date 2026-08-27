@@ -11,6 +11,7 @@ class Placement extends Model
 
     protected $guarded = [];
 
+    
 
     protected $casts = [
         'placement_date' => 'date',
@@ -32,3 +33,4 @@ class Placement extends Model
         return $query->where('published', true);
     }
 }
+

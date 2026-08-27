@@ -20,7 +20,7 @@
                 
                 <div class="mb-3">
                     <label class="form-label">Site Name</label>
-                    <input type="text" name="site_name" class="form-control" value="{{ $settings['site_name'] ?? 'EduSkill CMS' }}">
+                    <input type="text" name="site_name" class="form-control" value="{{ $settings['site_name'] ?? 'Skill Bridge India Technologies CMS' }}">
                 </div>
                 
                 <div class="mb-3">

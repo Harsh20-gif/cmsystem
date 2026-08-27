@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class GalleryImageController extends Controller
 {
-    public function store(Request $request, GalleryAlbum $album)
+    public function store(Request $request, GalleryAlbum $galleryAlbum)
     {
         $validated = $request->validate([
             'image_path' => ['required', 'string'],
@@ -17,9 +17,9 @@ class GalleryImageController extends Controller
             'order_position' => ['required', 'integer'],
         ]);
 
-        $album->images()->create($validated);
+        $galleryAlbum->images()->create($validated);
         
-        return redirect()->route('admin.gallery-albums.edit', $album)->with('success', 'Image added to album.');
+        return redirect()->route('admin.gallery-albums.edit', $galleryAlbum)->with('success', 'Image added to album.');
     }
 
     public function update(Request $request, GalleryImage $image)

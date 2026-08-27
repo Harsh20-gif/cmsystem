@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Media Library - EduSkill Admin')
+@section('title', 'Media Library - Skill Bridge India Technologies Admin')
 
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-4">

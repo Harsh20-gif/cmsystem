@@ -7,6 +7,7 @@ use App\Models\Placement;
 use App\Models\Student;
 use App\Models\Company;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PlacementController extends Controller
 {
@@ -45,7 +46,16 @@ class PlacementController extends Controller
             'package' => ['nullable', 'string', 'max:255'],
             'placement_date' => ['nullable', 'date'],
             'testimonial_text' => ['nullable', 'string'],
+            'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ]);
+
+        if ($request->hasFile('image')) {
+            $validated['image_path'] = $request->file('image')->store('placements', 'public');
+        }
+        unset($validated['image']);
+        
+        $validated['job_role'] = $validated['position'];
+        $validated['published'] = true;
 
         Placement::create($validated);
         return redirect()->route('admin.placements.index')->with('success', 'Placement created successfully.');
@@ -67,7 +77,19 @@ class PlacementController extends Controller
             'package' => ['nullable', 'string', 'max:255'],
             'placement_date' => ['nullable', 'date'],
             'testimonial_text' => ['nullable', 'string'],
+            'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ]);
+
+        if ($request->hasFile('image')) {
+            if ($placement->image_path) {
+                Storage::disk('public')->delete($placement->image_path);
+            }
+            $validated['image_path'] = $request->file('image')->store('placements', 'public');
+        }
+        unset($validated['image']);
+        
+        $validated['job_role'] = $validated['position'];
+        $validated['published'] = true;
 
         $placement->update($validated);
         return redirect()->route('admin.placements.index')->with('success', 'Placement updated successfully.');
@@ -75,6 +97,9 @@ class PlacementController extends Controller
 
     public function destroy(Placement $placement)
     {
+        if ($placement->image_path) {
+            Storage::disk('public')->delete($placement->image_path);
+        }
         $placement->delete();
         return redirect()->route('admin.placements.index')->with('success', 'Placement deleted successfully.');
     }

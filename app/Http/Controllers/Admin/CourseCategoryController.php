@@ -62,6 +62,10 @@ class CourseCategoryController extends Controller
 
     public function destroy(CourseCategory $courseCategory)
     {
+        if ($courseCategory->courses()->exists()) {
+            return redirect()->route('admin.course-categories.index')->with('error', 'Cannot delete this category because it has active courses assigned to it. Please reassign or delete the courses first.');
+        }
+
         $courseCategory->delete();
         return redirect()->route('admin.course-categories.index')->with('success', 'Category deleted successfully.');
     }

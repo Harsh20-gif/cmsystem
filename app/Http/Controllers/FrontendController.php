@@ -9,6 +9,7 @@ class FrontendController extends Controller
 {
     public function courses()
     {
+        $courseCategories = \App\Models\CourseCategory::published()->orderBy('order_position')->get();
         $courses = Course::with(['category', 'modules'])->where('status', 'published')->get();
 
         $formattedCourses = $courses->map(function ($course) {
@@ -33,12 +34,12 @@ class FrontendController extends Controller
             ];
         });
 
-        return view('frontend.courses', compact('formattedCourses'));
+        return view('frontend.courses', compact('courseCategories', 'formattedCourses'));
     }
 
     public function gallery()
     {
-        $albums = \App\Models\GalleryAlbum::published()->orderBy('event_date', 'desc')->get();
+        $albums = \App\Models\GalleryAlbum::with('images')->published()->orderBy('event_date', 'desc')->get();
         return view('frontend.gallery', compact('albums'));
     }
 
@@ -51,7 +52,7 @@ class FrontendController extends Controller
         $homePage = \App\Models\Page::where('page_key', 'home')->first();
         $siteSettings = \App\Models\SiteSetting::pluck('setting_value', 'setting_key')->toArray();
         
-        $courseCategories = \App\Models\CourseCategory::where('status', 'active')->get();
+        $courseCategories = \App\Models\CourseCategory::published()->orderBy('order_position')->get();
         
         $courses = Course::with(['category', 'modules'])->where('status', 'published')->get();
         $formattedCourses = $courses->map(function ($course) {
@@ -111,9 +112,7 @@ class FrontendController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'phone' => 'required|string|max:20',
-            'state' => 'required|string|max:255',
-            'city' => 'required|string|max:255',
-            'college' => 'required|string|max:255',
+            'location' => 'required|string|max:255',
             'course_name' => 'nullable|string|max:255',
             'message' => 'nullable|string',
             'type' => 'nullable|string'
@@ -123,9 +122,9 @@ class FrontendController extends Controller
             'name' => $validated['name'],
             'email' => $validated['email'],
             'phone' => $validated['phone'],
-            'state' => $validated['state'],
-            'city' => $validated['city'],
-            'college' => $validated['college'],
+            'state' => $validated['location'],
+            'city' => '',
+            'college' => '',
             'message' => 'Interested in: ' . ($validated['course_name'] ?? 'General') . "\n\nMessage: " . ($validated['message'] ?? ''),
             'type' => $validated['type'] ?? 'registration',
             'status' => 'new'
@@ -134,3 +133,4 @@ class FrontendController extends Controller
         return response()->json(['success' => true, 'message' => 'Registration Successful! Our career counselor will call you within 30 minutes.']);
     }
 }
+

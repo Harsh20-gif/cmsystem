@@ -1,97 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description"
-    content="Skill Bridge India Technologies - premier job-oriented BTech training & placement institute in Noida, Lucknow, and Bhopal. Offering Fullstack, AI, Data Science, Industrial Automation, PLC SCADA, MEP, HVAC, Embedded Systems, and Robotics.">
-  <title>Skill Bridge India Technologies | BTech Training & Placement in Lucknow, Noida, Bhopal</title>
+@section('title', 'Skill Bridge India Technologies | BTech Training & Placement')
 
-  <!-- Font Awesome Icons & Google Fonts -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="{{ asset('frontend/styles.css') }}">
-</head>
-
-<body>
-
-  <!-- ==========================================================================
-       Top Contact Bar (Scortek India Multi-Branch Format)
-       ========================================================================== -->
-  <div class="top-bar">
-    <div class="container top-bar-content">
-      <div class="top-info">
-        <div class="top-info-item"><i class="fas fa-phone-alt" style="color: #0ea5e9;"></i> <span>Helpline: <strong>+91 96492 40944</strong></span></div>
-        <div class="top-info-item"><i class="fas fa-envelope" style="color: #0ea5e9;"></i> <span>info@skillbridgeindiatechnologies.com</span></div>
-      </div>
-      <div class="top-links">
-        <a href="{{ route('placements') }}"><i class="fas fa-trophy"></i> 100% Placement Wall</a>
-        <a href="javascript:void(0)" onclick="openEnrollModal('Free Counseling Call')"><i class="fas fa-headset"></i>
-          Student Helpdesk</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- ==========================================================================
-       Sticky Navigation Bar with Custom Dropdowns
-       ========================================================================== -->
-  <nav class="navbar">
-    <div class="container navbar-container">
-      <a href="{{ route('home') }}" class="logo-wrapper">
-        <img src="{{ asset('frontend/assets/logo_v1.png') }}" alt="Skill Bridge India Technologies Logo"
-          class="logo-img">
-      </a>
-
-      <div class="nav-menu" id="navMenu">
-        <a href="{{ route('home') }}" class="nav-link active">Home</a>
-        <div class="nav-dropdown">
-          <a href="{{ route('courses') }}" class="nav-link">Courses <i class="fas fa-chevron-down text-xs"
-              style="margin-left: 0.2rem;"></i></a>
-          <div class="dropdown-menu-custom">
-            @foreach($courseCategories as $category)
-            <a href="{{ route('courses') }}?category={{ $category->slug }}" class="dropdown-item-custom">
-              @if($category->icon && \Illuminate\Support\Str::contains($category->icon, ['/', '.png', '.jpg', '.jpeg', '.svg', '.webp']))
-              <img src="{{ \Illuminate\Support\Facades\Storage::url($category->icon) }}" alt="" style="width: 16px; height: 16px; object-fit: contain; display: inline-block; vertical-align: middle; margin-right: 0.2rem;">
-            @else
-              <i class="{{ $category->icon ?? 'fas fa-book' }}"></i>
-            @endif {{ $category->name }}
-            </a>
-            @endforeach
-            <div class="dropdown-divider-custom"></div>
-            <a href="{{ route('courses') }}" class="dropdown-item-custom text-accent-coral"><i
-                class="fas fa-th-large"></i> Explore All Courses</a>
-          </div>
-        </div>
-
-        <a href="{{ route('corporate-training') }}" class="nav-link">Trainings</a>
-        <a href="{{ route('placements') }}" class="nav-link">Placements</a>
-        <a href="{{ route('gallery') }}" class="nav-link">Gallery</a>
-
-        <div class="nav-dropdown">
-          <a href="{{ route('about') }}" class="nav-link">About Us <i class="fas fa-chevron-down text-xs"
-              style="margin-left: 0.2rem;"></i></a>
-          <div class="dropdown-menu-custom">
-            <a href="{{ route('about') }}" class="dropdown-item-custom"><i class="fas fa-building"></i> About Our
-              Institute</a>
-            <a href="about.html#team" class="dropdown-item-custom"><i class="fas fa-users-gear"></i> Leadership Team</a>
-            <a href="about.html#infra" class="dropdown-item-custom"><i class="fas fa-microchip"></i> Lab
-              Infrastructure</a>
-          </div>
-        </div>
-
-        <a href="{{ route('contact') }}" class="nav-link">Contact Us</a>
-      </div>
-
-      <div class="nav-actions">
-        <button class="btn btn-primary" onclick="openEnrollModal('Free Demo Class')">
-          <i class="fas fa-briefcase"></i> <span class="btn-label">100% Job Track</span>
-        </button>
-        <div class="mobile-toggle" id="mobileToggle">
-          <i class="fas fa-bars"></i>
-        </div>
-      </div>
-    </div>
-  </nav>
+@section('content')
 
   @if($marqueeNotices->count() > 0)
   <div class="marquee-wrapper" style="background: var(--navy); color: white; padding: 5px 0; font-size: 0.9rem; overflow: hidden; display: flex; align-items: center;">
@@ -113,7 +24,7 @@
   <!-- ==========================================================================
        Hero Section
        ========================================================================== -->
-    <section class="hero" id="home" style="position: relative;">
+  <section class="hero" id="home" style="position: relative;">
     <div class="hero-bg-grid"></div>
 
     @if($sliders->count() > 0)
@@ -341,7 +252,7 @@
     <div class="container">
       <div class="section-header">
         <div class="badge-tag"><i class="fas fa-th-large"></i> Explore Learning Tracks</div>
-        <h2 class="section-title">Specialized <span class="highlight">Training Centers</span></h2>
+        <h2 class="section-title text-white">Specialized <span class="highlight">Training Centers</span></h2>
         <p class="section-subtitle">Discover our branch-specific training departments, industrial internship programs,
           and placement records.</p>
       </div>
@@ -679,37 +590,10 @@
     </div>
   </section>
 
-  <!-- ==========================================================================
-       Modals (Course Detail & Registration)
-       ========================================================================== -->
-  <div class="modal-overlay" id="courseModalOverlay">
-    <div class="modal-card">
-      <button class="modal-close" onclick="closeModal('courseModalOverlay')"><i class="fas fa-times"></i></button>
-      <div class="modal-header">
-        <h3 id="courseModalTitle">Course Title</h3>
-      </div>
-      <div class="modal-body" id="courseModalBody">
-        <!-- Dynamic Content injected via script.js -->
-      </div>
-    </div>
-  </div>
+  @endsection
 
-    @include('frontend.partials.enroll_modal')
-
-  <div class="toast-notification" id="toastNotification">
-    <i class="fas fa-check-circle heading-md text-accent-cyan"></i>
-    <span id="toastText">Action successful!</span>
-  </div>
-
-  <!-- ==========================================================================
-       Footer Section
-       ========================================================================== -->
-  @include('frontend.partials.footer')
-
-  <script>
-      window.coursesData = {!! json_encode($formattedCourses) !!};
-  </script>
-  <script src="{{ asset('frontend/script.js') }}"></script>
-</body>
-
-</html>
+@push('scripts')
+<script>
+  window.coursesData = {!! json_encode($formattedCourses) !!};
+</script>
+@endpush
