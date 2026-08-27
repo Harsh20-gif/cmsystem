@@ -5,8 +5,8 @@
 @section('content')
 
 <x-page-hero 
-    title="{{ isset($page) ? $page->title : 'About Skill Bridge India' }}"
-    subtitle="Transforming engineering education into real industry capabilities through practical labs, live projects, and 100% placement support."
+    title="{{ $siteSettings['about_hero_title'] ?? (isset($page) ? $page->title : 'About Skill Bridge India') }}"
+    subtitle="{{ $siteSettings['about_hero_subtitle'] ?? 'Transforming engineering education into real industry capabilities through practical labs, live projects, and 100% placement support.' }}"
     breadcrumbItem="About Us"
 />
 
@@ -22,41 +22,47 @@
     <div class="container">
       <div class="hero-grid" style="align-items: center; gap: 3.5rem;">
         <div>
-          <span class="badge-tag"><i class="fas fa-shield-alt"></i> ISO 9001:2015 Certified Institute</span>
-          <h2 class="section-title" style="text-align: left;">Bridging Academic Knowledge & <span
-              class="highlight">Corporate Execution</span></h2>
+          <span class="badge-tag"><i class="fas fa-shield-alt"></i> {{ $siteSettings['about_intro_badge'] ?? 'ISO 9001:2015 Certified Institute' }}</span>
+          <h2 class="section-title" style="text-align: left;">{{ $siteSettings['about_intro_heading_1'] ?? 'Bridging Academic Knowledge &' }} <span
+              class="highlight">{{ $siteSettings['about_intro_heading_2'] ?? 'Corporate Execution' }}</span></h2>
           <p class="text-lg text-slate-body" style="margin-bottom: 1.2rem;">
-            Established with a vision to eliminate the skill gap among engineering graduates, Skill Bridge India
-            Technologies Pvt Ltd delivers industry-aligned training across CS/IT, Electrical, Mechanical, Electronics,
-            and Civil streams.
+            {{ $siteSettings['about_intro_p1'] ?? 'Established with a vision to eliminate the skill gap among engineering graduates, Skill Bridge India Technologies Pvt Ltd delivers industry-aligned training across CS/IT, Electrical, Mechanical, Electronics, and Civil streams.' }}
           </p>
           <p class="text-base text-slate-muted" style="margin-bottom: 2rem;">
-            With state-of-the-art training centers in Noida, Lucknow, and Bhopal, we equip students with real-world
-            project exposure, hands-on PLC SCADA & MEP hardware labs, cloud computing pipelines, and AI frameworks.
+            {{ $siteSettings['about_intro_p2'] ?? 'With state-of-the-art training centers in Noida, Lucknow, and Bhopal, we equip students with real-world project exposure, hands-on PLC SCADA & MEP hardware labs, cloud computing pipelines, and AI frameworks.' }}
           </p>
 
           <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem;">
-            <div style="display: flex; gap: 0.8rem; align-items: center;">
-              <i class="fas fa-check-circle text-accent-cyan-dark heading-md"></i>
-              <strong class="text-navy-dark">350+ Hiring Tie-ups</strong>
-            </div>
-            <div style="display: flex; gap: 0.8rem; align-items: center;">
-              <i class="fas fa-check-circle text-accent-cyan-dark heading-md"></i>
-              <strong class="text-navy-dark">12,500+ Alumni Placed</strong>
-            </div>
-            <div style="display: flex; gap: 0.8rem; align-items: center;">
-              <i class="fas fa-check-circle text-accent-cyan-dark heading-md"></i>
-              <strong class="text-navy-dark">1-on-1 Mentor Support</strong>
-            </div>
-            <div style="display: flex; gap: 0.8rem; align-items: center;">
-              <i class="fas fa-check-circle text-accent-cyan-dark heading-md"></i>
-              <strong class="text-navy-dark">Summer & Winter Batches</strong>
-            </div>
+            @if(isset($aboutFeatures) && $aboutFeatures->count() > 0)
+                @foreach($aboutFeatures as $feature)
+                <div style="display: flex; gap: 0.8rem; align-items: center;">
+                  <i class="{{ $feature->icon_class }} text-accent-cyan-dark heading-md"></i>
+                  <strong class="text-navy-dark">{{ $feature->title }}</strong>
+                </div>
+                @endforeach
+            @else
+                <div style="display: flex; gap: 0.8rem; align-items: center;">
+                  <i class="fas fa-check-circle text-accent-cyan-dark heading-md"></i>
+                  <strong class="text-navy-dark">350+ Hiring Tie-ups</strong>
+                </div>
+                <div style="display: flex; gap: 0.8rem; align-items: center;">
+                  <i class="fas fa-check-circle text-accent-cyan-dark heading-md"></i>
+                  <strong class="text-navy-dark">12,500+ Alumni Placed</strong>
+                </div>
+                <div style="display: flex; gap: 0.8rem; align-items: center;">
+                  <i class="fas fa-check-circle text-accent-cyan-dark heading-md"></i>
+                  <strong class="text-navy-dark">1-on-1 Mentor Support</strong>
+                </div>
+                <div style="display: flex; gap: 0.8rem; align-items: center;">
+                  <i class="fas fa-check-circle text-accent-cyan-dark heading-md"></i>
+                  <strong class="text-navy-dark">Summer & Winter Batches</strong>
+                </div>
+            @endif
           </div>
         </div>
 
         <div class="hero-image-card">
-          <img src="{{ asset('frontend/assets/hero.jpg') }}" alt="Scortek Inspired Skill Bridge India Lab Facility">
+          <img src="{{ !empty($siteSettings['about_intro_image']) ? \Illuminate\Support\Facades\Storage::url($siteSettings['about_intro_image']) : asset('frontend/assets/hero.jpg') }}" alt="Skill Bridge India Facility">
         </div>
       </div>
     </div>
@@ -68,45 +74,52 @@
   <section class="section-padding" id="infra">
     <div class="container">
       <div class="section-header">
-        <div class="badge-tag"><i class="fas fa-microchip"></i> Hands-On Facilities</div>
-        <h2 class="section-title">State-of-the-Art <span class="highlight">Lab Infrastructure</span></h2>
-        <p class="section-subtitle">Modern practical workstations equipped for software development, cloud computing,
-          and core engineering setups.</p>
+        <div class="badge-tag"><i class="fas fa-microchip"></i> {{ $siteSettings['about_lab_badge'] ?? 'Hands-On Facilities' }}</div>
+        <h2 class="section-title">{{ $siteSettings['about_lab_heading_1'] ?? 'State-of-the-Art' }} <span class="highlight">{{ $siteSettings['about_lab_heading_2'] ?? 'Lab Infrastructure' }}</span></h2>
+        <p class="section-subtitle">{{ $siteSettings['about_lab_subtitle'] ?? 'Modern practical workstations equipped for software development, cloud computing, and core engineering setups.' }}</p>
       </div>
 
       <div class="features-grid">
-        <div class="feature-card">
-          <div class="feature-icon-wrapper navy"><i class="fas fa-desktop"></i></div>
-          <h3>Fullstack & AI High-End Computer Labs</h3>
-          <p>High-performance workstations with cloud sandbox environments, GPU acceleration for AI/ML models, and
-            fullstack dev suites.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon-wrapper orange"><i class="fas fa-bolt"></i></div>
-          <h3>Siemens & Allen Bradley PLC SCADA Stations</h3>
-          <p>Industrial automation training hardware with real PLC panels, SCADA monitors, sensors, and pneumatic
-            actuators.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon-wrapper green"><i class="fas fa-building-gear"></i></div>
-          <h3>HVAC & MEP Engineering Workstations</h3>
-          <p>Complete MEP design tools, HVAC chiller systems, duct sizing software, and building management system (BMS)
-            hardware.</p>
-        </div>
+        @if(isset($aboutFacilityCards) && $aboutFacilityCards->count() > 0)
+            @foreach($aboutFacilityCards as $card)
+            <div class="feature-card">
+              <div class="feature-icon-wrapper {{ $card->color_class }}"><i class="{{ $card->icon_class }}"></i></div>
+              <h3>{{ $card->title }}</h3>
+              <p>{{ $card->description }}</p>
+            </div>
+            @endforeach
+        @else
+            <div class="feature-card">
+              <div class="feature-icon-wrapper navy"><i class="fas fa-desktop"></i></div>
+              <h3>Fullstack & AI High-End Computer Labs</h3>
+              <p>High-performance workstations with cloud sandbox environments, GPU acceleration for AI/ML models, and
+                fullstack dev suites.</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon-wrapper orange"><i class="fas fa-bolt"></i></div>
+              <h3>Siemens & Allen Bradley PLC SCADA Stations</h3>
+              <p>Industrial automation training hardware with real PLC panels, SCADA monitors, sensors, and pneumatic
+                actuators.</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon-wrapper green"><i class="fas fa-building-gear"></i></div>
+              <h3>HVAC & MEP Engineering Workstations</h3>
+              <p>Complete MEP design tools, HVAC chiller systems, duct sizing software, and building management system (BMS)
+                hardware.</p>
+            </div>
+        @endif
       </div>
     </div>
   </section>
 
   <!-- Team Section -->
-  @if($teamMembers->count() > 0)
+  @if(isset($teamMembers) && $teamMembers->count() > 0)
   <section class="section-padding bg-light" id="team">
     <div class="container">
       <div class="section-header text-center">
-        <div class="badge-tag"><i class="fas fa-users"></i> Mentorship & Leadership</div>
-        <h2 class="section-title">Meet Our <span class="highlight">Expert Team</span></h2>
-        <p class="section-subtitle">Learn from industry veterans, senior engineers, and experienced mentors.</p>
+        <div class="badge-tag"><i class="fas fa-users"></i> {{ $siteSettings['about_team_badge'] ?? 'Mentorship & Leadership' }}</div>
+        <h2 class="section-title">{{ $siteSettings['about_team_heading_1'] ?? 'Meet Our' }} <span class="highlight">{{ $siteSettings['about_team_heading_2'] ?? 'Expert Team' }}</span></h2>
+        <p class="section-subtitle">{{ $siteSettings['about_team_subtitle'] ?? 'Learn from industry veterans, senior engineers, and experienced mentors.' }}</p>
       </div>
 
       <div class="features-grid">

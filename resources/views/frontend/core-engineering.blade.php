@@ -45,7 +45,7 @@
               <div class="course-price"><span class="fee-amount">₹44,000</span><span class="fee-emi">EMI at
                   ₹3,666/mo</span></div>
               <div class="course-actions">
-                <button class="btn btn-outline" onclick="openCourseModal('robotics-auto')">Syllabus</button>
+
                 <button class="btn btn-primary"
                   onclick="openEnrollModal('Industrial Automation PLC SCADA')">Enroll</button>
               </div>
@@ -91,7 +91,7 @@
               <div class="course-price"><span class="fee-amount">₹42,000</span><span class="fee-emi">EMI at
                   ₹3,500/mo</span></div>
               <div class="course-actions">
-                <button class="btn btn-outline" onclick="openCourseModal('robotics-auto')">Syllabus</button>
+
                 <button class="btn btn-primary" onclick="openEnrollModal('MEP & HVAC Design')">Enroll</button>
               </div>
             </div>
@@ -136,7 +136,7 @@
               <div class="course-price"><span class="fee-amount">₹46,000</span><span class="fee-emi">EMI at
                   ₹3,833/mo</span></div>
               <div class="course-actions">
-                <button class="btn btn-outline" onclick="openCourseModal('robotics-auto')">Syllabus</button>
+
                 <button class="btn btn-primary" onclick="openEnrollModal('Embedded Systems & IoT')">Enroll</button>
               </div>
             </div>
@@ -181,7 +181,7 @@
               <div class="course-price"><span class="fee-amount">₹38,000</span><span class="fee-emi">EMI at
                   ₹3,166/mo</span></div>
               <div class="course-actions">
-                <button class="btn btn-outline" onclick="openCourseModal('robotics-auto')">Syllabus</button>
+
                 <button class="btn btn-primary" onclick="openEnrollModal('Civil Design Revit')">Enroll</button>
               </div>
             </div>

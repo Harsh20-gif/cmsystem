@@ -4,8 +4,8 @@
 <div class="top-bar">
   <div class="container top-bar-content" style="justify-content: flex-end;">
     <div class="top-info">
-      <div class="top-info-item"><i class="fas fa-phone" style="color: #0ea5e9;"></i> <span><strong>8467912807</strong></span></div>
-      <div class="top-info-item"><i class="fas fa-envelope" style="color: #0ea5e9;"></i> <span>Info@skillbridgeindiatechnology.com</span></div>
+      <div class="top-info-item"><i class="fas fa-phone" style="color: #0ea5e9;"></i> <span><strong>+91 8467912807</strong></span></div>
+      <div class="top-info-item"><i class="fas fa-envelope" style="color: #0ea5e9;"></i> <span>info@skillbridgeindiatechnology.com</span></div>
     </div>
   </div>
 </div>
@@ -46,8 +46,8 @@
     </div>
 
     <div class="nav-actions">
-      <button class="btn btn-primary" onclick="openEnrollModal('Free Demo Class')">
-        <i class="fas fa-briefcase"></i> <span class="btn-label">Enquire know</span>
+      <button type="button" class="btn btn-primary" onclick="openEnquiryModal('Free Demo Class')">
+        <i class="fas fa-briefcase"></i> <span class="btn-label">Enquire Now</span>
       </button>
       <div class="mobile-toggle" id="mobileToggle">
         <i class="fas fa-bars"></i>

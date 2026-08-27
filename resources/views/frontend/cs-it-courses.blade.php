@@ -49,7 +49,7 @@
                 <span class="fee-emi">EMI at ₹3,750/mo</span>
               </div>
               <div class="course-actions">
-                <button class="btn btn-outline" onclick="openCourseModal('web-dev')">Syllabus</button>
+
                 <button class="btn btn-primary" onclick="openEnrollModal('Full Stack Web Development')">Enroll</button>
               </div>
             </div>
@@ -84,7 +84,7 @@
                 <span class="fee-emi">EMI at ₹4,333/mo</span>
               </div>
               <div class="course-actions">
-                <button class="btn btn-outline" onclick="openCourseModal('data-science')">Syllabus</button>
+
                 <button class="btn btn-primary" onclick="openEnrollModal('Data Science & AI')">Enroll</button>
               </div>
             </div>
@@ -119,7 +119,7 @@
                 <span class="fee-emi">EMI at ₹4,000/mo</span>
               </div>
               <div class="course-actions">
-                <button class="btn btn-outline" onclick="openCourseModal('cloud-devops')">Syllabus</button>
+
                 <button class="btn btn-primary" onclick="openEnrollModal('Cloud & DevOps Engineer')">Enroll</button>
               </div>
             </div>
@@ -153,7 +153,7 @@
                 <span class="fee-emi">EMI at ₹4,160/mo</span>
               </div>
               <div class="course-actions">
-                <button class="btn btn-outline" onclick="openCourseModal('cyber-security')">Syllabus</button>
+
                 <button class="btn btn-primary" onclick="openEnrollModal('Cyber Security')">Enroll</button>
               </div>
             </div>

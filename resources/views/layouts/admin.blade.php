@@ -169,6 +169,9 @@
                         <a href="{{ route('admin.courses.index') }}" class="nav-link {{ request()->routeIs('admin.courses.*') ? 'active' : '' }}">
                             <i class="fas fa-book-open fa-fw"></i> Course List
                         </a>
+                        <a href="{{ route('admin.engineering-branches.index') }}" class="nav-link {{ request()->routeIs('admin.engineering-branches.*') ? 'active' : '' }}">
+                            <i class="fas fa-cogs fa-fw"></i> Engineering Branches
+                        </a>
                     </div>
                 </div>
 
@@ -257,6 +260,15 @@
                     <div class="sub-nav">
                         <a href="{{ route('admin.settings.home') }}" class="nav-link {{ request()->routeIs('admin.settings.home*') ? 'active' : '' }}">
                             <i class="fas fa-home fa-fw"></i> Home Settings
+                        </a>
+                        <a href="{{ route('admin.settings.contact') }}" class="nav-link {{ request()->routeIs('admin.settings.contact*') ? 'active' : '' }}">
+                            <i class="fas fa-address-book fa-fw"></i> Contact Settings
+                        </a>
+                        <a href="{{ route('admin.settings.footer') }}" class="nav-link {{ request()->routeIs('admin.settings.footer*') ? 'active' : '' }}">
+                            <i class="fas fa-shoe-prints fa-fw"></i> Footer Settings
+                        </a>
+                        <a href="{{ route('admin.settings.about') }}" class="nav-link {{ request()->routeIs('admin.settings.about*') ? 'active' : '' }}">
+                            <i class="fas fa-info-circle fa-fw"></i> About Settings
                         </a>
                         <a href="{{ route('admin.settings.index') }}" class="nav-link {{ request()->routeIs('admin.settings.index') ? 'active' : '' }}">
                             <i class="fas fa-sliders-h fa-fw"></i> Global Settings

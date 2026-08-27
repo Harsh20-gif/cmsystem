@@ -13,7 +13,7 @@
   <!-- Institutional Collaboration Overview -->
   <section class="section-padding">
     <div class="container">
-      <div class="aktu-box" style="margin-bottom: 3.5rem;">
+      <!-- <div class="aktu-box" style="margin-bottom: 3.5rem;">
         <div class="aktu-header">
           <div>
             <span class="aktu-badge"><i class="fas fa-university"></i> University & College MOUs</span>
@@ -50,7 +50,7 @@
               calls.</p>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <!-- Training Tracks for Engineering Branches -->
       <div class="section-header">

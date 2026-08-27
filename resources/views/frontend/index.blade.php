@@ -90,7 +90,7 @@
               {{ $siteSettings['home_hero_title1'] ?? 'Build Technical Skills' }} <br><span class="text-orange">{{ $siteSettings['home_hero_title2_orange'] ?? 'Get Certified.' }}</span> <span class="text-emerald">{{ $siteSettings['home_hero_title3_blue'] ?? 'Get Placed.' }}</span>
             </h1>
             <p class="hero-description">
-              {{ $siteSettings['home_hero_desc'] ?? 'Skill Bridge India delivers practical Summer & Winter Industrial Training with live projects, expert mentorship, and guaranteed placement drives across BTech CS/IT, Electrical, Mechanical, Electronics, and Civil branches.' }}
+              {{ $siteSettings['home_hero_desc'] ?? 'Skill Bridge India delivers practical Summer & Winter Industrial Training with live projects, expert mentorship, and guaranteed placement drives.' }}
             </p>
     
             <div class="hero-features">
@@ -199,7 +199,7 @@
   <!-- ==========================================================================
        Stats Counter Bar
        ========================================================================== -->
-  <section class="stats-bar" id="statsBar">
+  <!-- <section class="stats-bar" id="statsBar">
     <div class="container">
       <div class="stats-card">
         <div class="stat-item">
@@ -243,7 +243,7 @@
         </div>
       </div>
     </div>
-  </section>
+  </section> -->
 
   <!-- ==========================================================================
        Institute Departments & Learning Hub Gateways
@@ -253,7 +253,7 @@
       <div class="section-header">
         <div class="badge-tag"><i class="fas fa-th-large"></i> Explore Learning Tracks</div>
         <h2 class="section-title text-white">Specialized <span class="highlight">Training Centers</span></h2>
-        <p class="section-subtitle">Discover our branch-specific training departments, industrial internship programs,
+        <p class="section-subtitle" style="color: white;">Discover our branch-specific training departments, industrial internship programs,
           and placement records.</p>
       </div>
 
@@ -341,7 +341,7 @@
     <div class="container">
       <div class="section-header">
         <div class="badge-tag"><i class="fas fa-star"></i> Top Featured Courses</div>
-        <h2 class="section-title">Popular <span class="highlight">Job-Oriented Programs</span></h2>
+        <h2 class="section-title"><span class="highlight">Job-Oriented Programs</span></h2>
         <p class="section-subtitle">Top rated BTech skilling tracks with live hands-on practical labs and 100% placement
           support.</p>
       </div>

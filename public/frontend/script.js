@@ -212,9 +212,7 @@ function renderCourses(courses) {
             <span class="fee-emi">${course.emi}</span>
           </div>
           <div class="course-actions">
-            <button class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="openCourseModal('${course.id}')">
-              Syllabus
-            </button>
+
             <button class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="openEnrollModal('${course.title}')">
               Enroll
             </button>
@@ -251,7 +249,7 @@ function setupLiveSearch() {
 
   searchInput.addEventListener("input", (e) => {
     const query = e.target.value.toLowerCase().trim();
-    const filtered = coursesData.filter(c => 
+    const filtered = coursesData.filter(c =>
       c.title.toLowerCase().includes(query) ||
       c.desc.toLowerCase().includes(query) ||
       c.tools.some(t => t.toLowerCase().includes(query))
@@ -310,76 +308,76 @@ function openCourseModal(courseId) {
   modalOverlay.classList.add("active");
 }
 
-// Generic Enrollment Modal
-function openEnrollModal(courseName = "Free Career Demo") {
-  const modalOverlay = document.getElementById("enrollModalOverlay");
-  const courseInput = document.getElementById("enrollCourseInput");
-  if (courseInput) {
-    courseInput.value = courseName;
+// Generic Enrollment Modal — now delegates to the new Bootstrap 5 Quick Enquiry modal.
+// Kept for backward compatibility with call sites on course cards, quiz, gallery, etc.
+function openEnrollModal(courseName) {
+  if (typeof window.openEnquiryModal === 'function') {
+    window.openEnquiryModal(courseName || 'Free Career Demo');
   }
-  modalOverlay.classList.add("active");
 }
 
 function closeModal(modalId) {
-  const modal = document.getElementById(modalId);
+  // Legacy custom overlay close (course detail modal still uses the old overlay)
+  var modal = document.getElementById(modalId);
   if (modal) {
-    modal.classList.remove("active");
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
   }
 }
 
 // Handle Form Submission
 async function handleEnrollSubmit(event) {
   event.preventDefault();
-  
+
   const form = event.target;
   const formData = new FormData(form);
   const submitBtn = form.querySelector('button[type="submit"]');
   const originalBtnText = submitBtn.innerHTML;
-  
+
   try {
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
-      
-      const response = await fetch('/submit-enquiry', {
-          method: 'POST',
-          body: formData,
-          headers: {
-              'X-Requested-With': 'XMLHttpRequest',
-              // Add CSRF token if not included in form, but it is in the form as @csrf
-          }
-      });
-      
-      const result = await response.json();
-      
-      if (response.ok) {
-          // Hide form and show success message inside modal
-          form.style.display = 'none';
-          const successMsg = document.getElementById('enrollSuccessMessage');
-          if (successMsg) {
-              successMsg.style.display = 'block';
-              
-              // Auto close and reset after 3 seconds
-              setTimeout(() => {
-                  closeModal("enrollModalOverlay");
-                  form.reset();
-                  form.style.display = 'block';
-                  successMsg.style.display = 'none';
-              }, 3000);
-          } else {
-              // Fallback if element not found
-              closeModal("enrollModalOverlay");
-              triggerToast(result.message || "Registration Successful!");
-              form.reset();
-          }
-      } else {
-          triggerToast("❌ Error: " + (result.message || "Failed to submit. Please try again."));
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+
+    const response = await fetch('/submit-enquiry', {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+        // Add CSRF token if not included in form, but it is in the form as @csrf
       }
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      // Hide form and show success message inside modal
+      form.style.display = 'none';
+      const successMsg = document.getElementById('enrollSuccessMessage');
+      if (successMsg) {
+        successMsg.style.display = 'block';
+
+        // Auto close and reset after 3 seconds
+        setTimeout(() => {
+          closeModal("enrollModalOverlay");
+          form.reset();
+          form.style.display = 'block';
+          successMsg.style.display = 'none';
+        }, 3000);
+      } else {
+        // Fallback if element not found
+        closeModal("enrollModalOverlay");
+        triggerToast(result.message || "Registration Successful!");
+        form.reset();
+      }
+    } else {
+      triggerToast("❌ Error: " + (result.message || "Failed to submit. Please try again."));
+    }
   } catch (error) {
-      console.error('Error submitting form:', error);
-      triggerToast("❌ Error: Could not connect to server.");
+    console.error('Error submitting form:', error);
+    triggerToast("❌ Error: Could not connect to server.");
   } finally {
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = originalBtnText;
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = originalBtnText;
   }
 }
 
@@ -450,7 +448,7 @@ function setupFAQAccordion() {
     q.addEventListener("click", () => {
       const parent = q.parentElement;
       const isActive = parent.classList.contains("active");
-      
+
       document.querySelectorAll(".faq-item").forEach(item => item.classList.remove("active"));
 
       if (!isActive) {

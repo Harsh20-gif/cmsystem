@@ -84,13 +84,19 @@ class FrontendController extends Controller
     {
         $page = \App\Models\Page::where('page_key', 'about')->first();
         $teamMembers = \App\Models\TeamMember::published()->orderBy('order_position')->get();
-        return view('frontend.about', compact('page', 'teamMembers'));
+        $siteSettings = \App\Models\SiteSetting::pluck('setting_value', 'setting_key')->toArray();
+        $aboutFeatures = \App\Models\AboutFeature::published()->orderBy('order_position')->get();
+        $aboutFacilityCards = \App\Models\AboutFacilityCard::published()->orderBy('order_position')->get();
+        return view('frontend.about', compact('page', 'teamMembers', 'siteSettings', 'aboutFeatures', 'aboutFacilityCards'));
     }
 
     public function contact()
     {
         $page = \App\Models\Page::where('page_key', 'contact')->first();
-        return view('frontend.contact', compact('page'));
+        $siteSettings = \App\Models\SiteSetting::pluck('setting_value', 'setting_key')->toArray();
+        $states = config('states');
+        $branches = \App\Models\EngineeringBranch::published()->orderBy('order_position')->get();
+        return view('frontend.contact', compact('page', 'siteSettings', 'states', 'branches'));
     }
 
     public function corporateTraining()

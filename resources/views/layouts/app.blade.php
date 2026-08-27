@@ -7,8 +7,9 @@
   <meta name="description" content="@yield('meta_description', 'Skill Bridge India Technologies - premier job-oriented BTech training & placement institute in Noida, Lucknow, and Bhopal. Offering Fullstack, AI, Data Science, Industrial Automation, PLC SCADA, MEP, HVAC, Embedded Systems, and Robotics.')">
   <title>@yield('title', 'Skill Bridge India Technologies | BTech Training & Placement in Lucknow, Noida, Bhopal')</title>
 
-  <!-- Bootstrap 5 CSS -->
+  <!-- Bootstrap 5 CSS + JS (JS in head so Bootstrap is available before body scripts run) -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <!-- Font Awesome Icons & Google Fonts -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="{{ asset('frontend/styles.css') }}">
@@ -27,6 +28,8 @@
   @include('frontend.partials.modals')
 
   @include('frontend.partials.footer')
+
+  {{-- Bootstrap 5 JS already loaded in <head> --}}
 
   @stack('scripts')
   <script src="{{ asset('frontend/script.js') }}"></script>

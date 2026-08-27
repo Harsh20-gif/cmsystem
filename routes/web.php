@@ -19,6 +19,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::resource('courses', Admin\CourseController::class);
     Route::resource('courses.modules', Admin\CourseModuleController::class)->shallow();
     Route::resource('courses.faqs', Admin\CourseFaqController::class)->shallow();
+    Route::resource('engineering-branches', Admin\EngineeringBranchController::class);
 
     Route::resource('trainings', Admin\TrainingController::class);
 
@@ -49,6 +50,12 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('/settings', [Admin\SettingController::class, 'index'])->name('settings.index');
     Route::get('/settings/home', [Admin\SiteSettingController::class, 'home'])->name('settings.home');
     Route::post('/settings/home', [Admin\SiteSettingController::class, 'updateHome'])->name('settings.home.update');
+    Route::get('/settings/contact', [Admin\SiteSettingController::class, 'contact'])->name('settings.contact');
+    Route::post('/settings/contact', [Admin\SiteSettingController::class, 'updateContact'])->name('settings.contact.update');
+    Route::get('/settings/footer', [Admin\SiteSettingController::class, 'footer'])->name('settings.footer');
+    Route::post('/settings/footer', [Admin\SiteSettingController::class, 'updateFooter'])->name('settings.footer.update');
+    Route::get('/settings/about', [Admin\SiteSettingController::class, 'about'])->name('settings.about');
+    Route::post('/settings/about', [Admin\SiteSettingController::class, 'updateAbout'])->name('settings.about.update');
     Route::put('/settings', [Admin\SettingController::class, 'update'])->name('settings.update');
 
     Route::get('/media', [Admin\MediaController::class, 'index'])->name('media.index');
