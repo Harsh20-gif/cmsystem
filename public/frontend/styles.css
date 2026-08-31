@@ -314,6 +314,8 @@ img {
 .logo-img {
   height: 60px;
   width: auto;
+  transform: scale(1.5);
+  transform-origin: left center;
 }
 
 .nav-menu {

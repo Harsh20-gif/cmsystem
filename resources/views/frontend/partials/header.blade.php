@@ -21,6 +21,7 @@
 
     <div class="nav-menu" id="navMenu">
       <a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">Home</a>
+      <a href="{{ route('about') }}" class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}">About Us</a>
       <div class="nav-dropdown">
         <a href="{{ route('courses') }}" class="nav-link {{ request()->routeIs('courses') ? 'active' : '' }}">Courses <i class="fas fa-chevron-down text-xs" style="margin-left: 0.2rem;"></i></a>
         <div class="dropdown-menu-custom">
@@ -41,7 +42,6 @@
       <a href="{{ route('corporate-training') }}" class="nav-link {{ request()->routeIs('corporate-training') ? 'active' : '' }}">Trainings</a>
       <a href="{{ route('placements') }}" class="nav-link {{ request()->routeIs('placements') ? 'active' : '' }}">Placements</a>
       <a href="{{ route('gallery') }}" class="nav-link {{ request()->routeIs('gallery') ? 'active' : '' }}">Gallery</a>
-      <a href="{{ route('about') }}" class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}">About Us</a>
       <a href="{{ route('contact') }}" class="nav-link {{ request()->routeIs('contact') ? 'active' : '' }}">Contact Us</a>
     </div>
 

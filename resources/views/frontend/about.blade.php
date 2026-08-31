@@ -18,7 +18,7 @@
   </section>
   @else
   <!-- Company Overview -->
-  <section class="section-padding">
+  <!-- <section class="section-padding">
     <div class="container">
       <div class="hero-grid" style="align-items: center; gap: 3.5rem;">
         <div>
@@ -67,11 +67,11 @@
       </div>
     </div>
   </section>
-  @endif
+  @endif -->
 
 
   <!-- Lab Infrastructure Section -->
-  <section class="section-padding" id="infra">
+  <!-- <section class="section-padding" id="infra">
     <div class="container">
       <div class="section-header">
         <div class="badge-tag"><i class="fas fa-microchip"></i> {{ $siteSettings['about_lab_badge'] ?? 'Hands-On Facilities' }}</div>
@@ -108,6 +108,44 @@
                 hardware.</p>
             </div>
         @endif
+      </div>
+    </div>
+  </section> -->
+  <!-- ==========================================================================
+       Mission and Vision Section
+       ========================================================================== -->
+  <section class="section-padding bg-navy-alt text-white" id="mission-vision">
+    <div class="container">
+      <div class="row g-5">
+        <!-- Mission -->
+        <div class="col-md-6">
+          <div class="p-4 p-lg-5 h-100 rounded" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
+            <div class="d-flex align-items-center mb-4">
+              <div style="width: 60px; height: 60px; background: var(--accent-orange); color: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin-right: 1.5rem;">
+                <i class="fas fa-rocket"></i>
+              </div>
+              <h2 class="mb-0" style="font-size: 2rem; font-weight: 700;">{{ $siteSettings['home_mission_title'] ?? 'Our Mission' }}</h2>
+            </div>
+            <p style="font-size: 1.1rem; line-height: 1.8; color: rgba(255,255,255,0.85); margin-bottom: 0;">
+              {{ $siteSettings['home_mission_text'] ?? '' }}
+            </p>
+          </div>
+        </div>
+        
+        <!-- Vision -->
+        <div class="col-md-6">
+          <div class="p-4 p-lg-5 h-100 rounded" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
+            <div class="d-flex align-items-center mb-4">
+              <div style="width: 60px; height: 60px; background: var(--accent-cyan); color: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin-right: 1.5rem;">
+                <i class="fas fa-eye"></i>
+              </div>
+              <h2 class="mb-0" style="font-size: 2rem; font-weight: 700;">{{ $siteSettings['home_vision_title'] ?? 'Our Vision' }}</h2>
+            </div>
+            <p style="font-size: 1.1rem; line-height: 1.8; color: rgba(255,255,255,0.85); margin-bottom: 0;">
+              {{ $siteSettings['home_vision_text'] ?? '' }}
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </section>

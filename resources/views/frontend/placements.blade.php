@@ -53,11 +53,13 @@
         @forelse($placements as $placement)
         <div class="student-card marquee-card">
           <div class="student-header">
+            {{-- 
             @if($placement->student && $placement->student->photo)
             <img src="{{ Storage::url($placement->student->photo) }}" alt="{{ $placement->student->name }}" class="student-avatar" style="object-fit: cover;">
             @else
             <img src="{{ asset('frontend/assets/hero.jpg') }}" alt="{{ $placement->student->name ?? 'Student' }}" class="student-avatar" style="object-fit: cover;">
             @endif
+            --}}
             <div class="student-info">
               <h4>{{ $placement->student->name ?? 'Unknown Student' }}</h4>
               <p>Placed at: <strong>{{ $placement->company->name ?? 'Unknown Company' }}</strong></p>

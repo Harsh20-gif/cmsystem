@@ -11,17 +11,23 @@ class SiteSettingController extends Controller
     public function home()
     {
         $settings = SiteSetting::pluck('setting_value', 'setting_key')->toArray();
-        return view('admin.settings.home', compact('settings'));
+        $aboutHighlights = \App\Models\HomeAboutHighlight::orderBy('order_position')->get();
+        $trainingFeatures = \App\Models\HomeTrainingFeature::orderBy('order_position')->get();
+        return view('admin.settings.home', compact('settings', 'aboutHighlights', 'trainingFeatures'));
     }
 
     public function updateHome(Request $request)
     {
-        $data = $request->except(['_token', 'hero_image']);
+        $data = $request->except(['_token', 'hero_image', 'about_image', 'about_highlights', 'training_features']);
 
-        // Handle image upload
+        // Handle image uploads
         if ($request->hasFile('hero_image')) {
             $path = $request->file('hero_image')->store('settings', 'public');
             $data['home_hero_image'] = $path;
+        }
+        if ($request->hasFile('about_image')) {
+            $path = $request->file('about_image')->store('settings', 'public');
+            $data['home_about_image'] = $path;
         }
 
         foreach ($data as $key => $value) {
@@ -30,6 +36,45 @@ class SiteSettingController extends Controller
                 ['setting_value' => $value]
             );
         }
+
+        // Handle Home About Highlights
+        $highlights = $request->input('about_highlights', []);
+        $keepHighlightIds = [];
+        foreach ($highlights as $index => $item) {
+            if (empty($item['title'])) continue;
+            
+            $highlight = \App\Models\HomeAboutHighlight::updateOrCreate(
+                ['id' => $item['id'] ?? null],
+                [
+                    'title' => $item['title'],
+                    'icon_class' => $item['icon_class'] ?? 'fas fa-check-circle',
+                    'order_position' => $index,
+                    'status' => $item['status'] ?? 'published'
+                ]
+            );
+            $keepHighlightIds[] = $highlight->id;
+        }
+        \App\Models\HomeAboutHighlight::whereNotIn('id', $keepHighlightIds)->delete();
+
+        // Handle Home Training Features
+        $features = $request->input('training_features', []);
+        $keepFeatureIds = [];
+        foreach ($features as $index => $item) {
+            if (empty($item['title'])) continue;
+            
+            $feature = \App\Models\HomeTrainingFeature::updateOrCreate(
+                ['id' => $item['id'] ?? null],
+                [
+                    'title' => $item['title'],
+                    'description' => $item['description'] ?? null,
+                    'icon_class' => $item['icon_class'] ?? 'fas fa-star',
+                    'order_position' => $index,
+                    'status' => $item['status'] ?? 'published'
+                ]
+            );
+            $keepFeatureIds[] = $feature->id;
+        }
+        \App\Models\HomeTrainingFeature::whereNotIn('id', $keepFeatureIds)->delete();
 
         return redirect()->back()->with('success', 'Home page settings updated successfully!');
     }

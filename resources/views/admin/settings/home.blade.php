@@ -40,6 +40,21 @@
                         <i class="fas fa-chart-line me-1"></i> Stats Counter
                     </button>
                 </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link fw-bold px-4 py-3 border-0 border-bottom border-3 border-transparent text-muted" id="about-tab" data-bs-toggle="tab" data-bs-target="#about" type="button" role="tab" aria-controls="about" aria-selected="false" style="border-radius: 0;">
+                        <i class="fas fa-info-circle me-1"></i> About Section
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link fw-bold px-4 py-3 border-0 border-bottom border-3 border-transparent text-muted" id="training-tab" data-bs-toggle="tab" data-bs-target="#training" type="button" role="tab" aria-controls="training" aria-selected="false" style="border-radius: 0;">
+                        <i class="fas fa-laptop-code me-1"></i> Training Section
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link fw-bold px-4 py-3 border-0 border-bottom border-3 border-transparent text-muted" id="mission-tab" data-bs-toggle="tab" data-bs-target="#mission" type="button" role="tab" aria-controls="mission" aria-selected="false" style="border-radius: 0;">
+                        <i class="fas fa-bullseye me-1"></i> Mission & Vision
+                    </button>
+                </li>
             </ul>
         </div>
         
@@ -225,6 +240,159 @@
                 </div>
             </div>
             
+            <!-- ABOUT SECTION TAB -->
+            <div class="tab-pane fade" id="about" role="tabpanel" aria-labelledby="about-tab">
+                <x-form-section title="About Section Content" icon="fas fa-info-circle">
+                    <div class="row gy-4">
+                        <div class="col-md-12">
+                            <label class="form-label fw-semibold">Section Heading</label>
+                            <input type="text" name="home_about_title" class="form-control" value="{{ $settings['home_about_title'] ?? 'About Skill Bridge India Technologies' }}">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label fw-semibold">Short Intro Paragraph</label>
+                            <textarea name="home_about_text" class="form-control" rows="3">{{ $settings['home_about_text'] ?? '' }}</textarea>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Button Text</label>
+                            <input type="text" name="home_about_btn_text" class="form-control" value="{{ $settings['home_about_btn_text'] ?? 'Read More' }}">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Button Link</label>
+                            <input type="text" name="home_about_btn_link" class="form-control" value="{{ $settings['home_about_btn_link'] ?? '/about' }}">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label fw-semibold">About Image (Optional)</label>
+                            @if(!empty($settings['home_about_image']))
+                                <div class="mb-2">
+                                    <img src="{{ \Illuminate\Support\Facades\Storage::url($settings['home_about_image']) }}" alt="About Image" class="img-thumbnail" style="max-height: 150px;">
+                                </div>
+                            @endif
+                            <input type="file" name="about_image" class="form-control" accept="image/*">
+                        </div>
+                    </div>
+                </x-form-section>
+                
+                <x-form-section title="About Highlights (Checkmarks)" icon="fas fa-list-ul">
+                    <div id="aboutHighlightsContainer">
+                        @if(isset($aboutHighlights) && count($aboutHighlights) > 0)
+                            @foreach($aboutHighlights as $index => $highlight)
+                            <div class="card mb-3 highlight-item">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <h6 class="mb-0 fw-bold">Highlight #{{ $index + 1 }}</h6>
+                                        <button type="button" class="btn btn-sm btn-danger remove-highlight"><i class="fas fa-trash"></i> Remove</button>
+                                    </div>
+                                    <input type="hidden" name="about_highlights[{{ $index }}][id]" value="{{ $highlight->id }}">
+                                    <div class="row">
+                                        <div class="col-md-8 mb-2">
+                                            <label class="form-label">Title</label>
+                                            <input type="text" name="about_highlights[{{ $index }}][title]" class="form-control" value="{{ $highlight->title }}" required>
+                                        </div>
+                                        <div class="col-md-4 mb-2">
+                                            <label class="form-label">Icon Class</label>
+                                            <input type="text" name="about_highlights[{{ $index }}][icon_class]" class="form-control" value="{{ $highlight->icon_class ?? 'fas fa-check-circle' }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach
+                        @endif
+                    </div>
+                    <button type="button" class="btn btn-sm btn-success" id="addHighlightBtn"><i class="fas fa-plus"></i> Add Highlight</button>
+                </x-form-section>
+            </div>
+
+            <!-- TRAINING SECTION TAB -->
+            <div class="tab-pane fade" id="training" role="tabpanel" aria-labelledby="training-tab">
+                <x-form-section title="Training Section Header" icon="fas fa-laptop-code">
+                    <div class="row gy-4">
+                        <div class="col-md-12">
+                            <label class="form-label fw-semibold">Section Heading</label>
+                            <input type="text" name="home_training_title" class="form-control" value="{{ $settings['home_training_title'] ?? 'Hands-on Training with 100% Placement Assistance' }}">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label fw-semibold">Short Description</label>
+                            <textarea name="home_training_text" class="form-control" rows="2">{{ $settings['home_training_text'] ?? '' }}</textarea>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">CTA Button Text</label>
+                            <input type="text" name="home_training_btn_text" class="form-control" value="{{ $settings['home_training_btn_text'] ?? 'Explore Courses' }}">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">CTA Button Link</label>
+                            <input type="text" name="home_training_btn_link" class="form-control" value="{{ $settings['home_training_btn_link'] ?? '/courses' }}">
+                        </div>
+                    </div>
+                </x-form-section>
+
+                <x-form-section title="Training Feature Cards" icon="fas fa-th-large">
+                    <div id="trainingFeaturesContainer">
+                        @if(isset($trainingFeatures) && count($trainingFeatures) > 0)
+                            @foreach($trainingFeatures as $index => $feature)
+                            <div class="card mb-3 t-feature-item">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <h6 class="mb-0 fw-bold">Card #{{ $index + 1 }}</h6>
+                                        <button type="button" class="btn btn-sm btn-danger remove-t-feature"><i class="fas fa-trash"></i> Remove</button>
+                                    </div>
+                                    <input type="hidden" name="training_features[{{ $index }}][id]" value="{{ $feature->id }}">
+                                    <div class="row">
+                                        <div class="col-md-6 mb-2">
+                                            <label class="form-label">Title</label>
+                                            <input type="text" name="training_features[{{ $index }}][title]" class="form-control" value="{{ $feature->title }}" required>
+                                        </div>
+                                        <div class="col-md-6 mb-2">
+                                            <label class="form-label">Icon Class</label>
+                                            <input type="text" name="training_features[{{ $index }}][icon_class]" class="form-control" value="{{ $feature->icon_class ?? 'fas fa-star' }}">
+                                        </div>
+                                        <div class="col-12 mb-2">
+                                            <label class="form-label">Description</label>
+                                            <textarea name="training_features[{{ $index }}][description]" class="form-control" rows="2">{{ $feature->description }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach
+                        @endif
+                    </div>
+                    <button type="button" class="btn btn-sm btn-success" id="addTFeatureBtn"><i class="fas fa-plus"></i> Add Card</button>
+                </x-form-section>
+            </div>
+
+            <!-- MISSION & VISION TAB -->
+            <div class="tab-pane fade" id="mission" role="tabpanel" aria-labelledby="mission-tab">
+                <x-form-section title="Mission & Vision" icon="fas fa-bullseye">
+                    <div class="row gy-4">
+                        <div class="col-md-6">
+                            <div class="p-3 border rounded bg-light">
+                                <h5 class="fw-bold mb-3 text-navy"><i class="fas fa-rocket me-2 text-orange"></i>Mission</h5>
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold">Heading</label>
+                                    <input type="text" name="home_mission_title" class="form-control" value="{{ $settings['home_mission_title'] ?? 'Our Mission' }}">
+                                </div>
+                                <div>
+                                    <label class="form-label fw-semibold">Mission Statement</label>
+                                    <textarea name="home_mission_text" class="form-control" rows="4">{{ $settings['home_mission_text'] ?? '' }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="p-3 border rounded bg-light">
+                                <h5 class="fw-bold mb-3 text-navy"><i class="fas fa-eye me-2 text-primary"></i>Vision</h5>
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold">Heading</label>
+                                    <input type="text" name="home_vision_title" class="form-control" value="{{ $settings['home_vision_title'] ?? 'Our Vision' }}">
+                                </div>
+                                <div>
+                                    <label class="form-label fw-semibold">Vision Statement</label>
+                                    <textarea name="home_vision_text" class="form-control" rows="4">{{ $settings['home_vision_text'] ?? '' }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </x-form-section>
+            </div>
+            
         </div>
 
         <div class="p-4 bg-light border-top d-flex justify-content-end position-sticky bottom-0" style="z-index: 10;">
@@ -332,6 +500,89 @@
             normalState.classList.add('d-none');
             loadingState.classList.remove('d-none');
         });
+
+        // -----------------------------------------
+        // REPEATABLE FIELDS LOGIC
+        // -----------------------------------------
+        let highlightIndex = {{ isset($aboutHighlights) ? count($aboutHighlights) : 0 }};
+        const highlightsContainer = document.getElementById('aboutHighlightsContainer');
+        const addHighlightBtn = document.getElementById('addHighlightBtn');
+        if(addHighlightBtn) {
+            addHighlightBtn.addEventListener('click', function() {
+                const html = `
+                    <div class="card mb-3 highlight-item">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h6 class="mb-0 fw-bold">New Highlight</h6>
+                                <button type="button" class="btn btn-sm btn-danger remove-highlight"><i class="fas fa-trash"></i> Remove</button>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8 mb-2">
+                                    <label class="form-label">Title</label>
+                                    <input type="text" name="about_highlights[${highlightIndex}][title]" class="form-control" required>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <label class="form-label">Icon Class</label>
+                                    <input type="text" name="about_highlights[${highlightIndex}][icon_class]" class="form-control" value="fas fa-check-circle">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                highlightsContainer.insertAdjacentHTML('beforeend', html);
+                highlightIndex++;
+            });
+        }
+        
+        if (highlightsContainer) {
+            highlightsContainer.addEventListener('click', function(e) {
+                if(e.target.closest('.remove-highlight')) {
+                    e.target.closest('.highlight-item').remove();
+                }
+            });
+        }
+
+        let tFeatureIndex = {{ isset($trainingFeatures) ? count($trainingFeatures) : 0 }};
+        const tFeaturesContainer = document.getElementById('trainingFeaturesContainer');
+        const addTFeatureBtn = document.getElementById('addTFeatureBtn');
+        if(addTFeatureBtn) {
+            addTFeatureBtn.addEventListener('click', function() {
+                const html = `
+                    <div class="card mb-3 t-feature-item">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h6 class="mb-0 fw-bold">New Card</h6>
+                                <button type="button" class="btn btn-sm btn-danger remove-t-feature"><i class="fas fa-trash"></i> Remove</button>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-2">
+                                    <label class="form-label">Title</label>
+                                    <input type="text" name="training_features[${tFeatureIndex}][title]" class="form-control" required>
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <label class="form-label">Icon Class</label>
+                                    <input type="text" name="training_features[${tFeatureIndex}][icon_class]" class="form-control" value="fas fa-star">
+                                </div>
+                                <div class="col-12 mb-2">
+                                    <label class="form-label">Description</label>
+                                    <textarea name="training_features[${tFeatureIndex}][description]" class="form-control" rows="2"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                tFeaturesContainer.insertAdjacentHTML('beforeend', html);
+                tFeatureIndex++;
+            });
+        }
+        
+        if (tFeaturesContainer) {
+            tFeaturesContainer.addEventListener('click', function(e) {
+                if(e.target.closest('.remove-t-feature')) {
+                    e.target.closest('.t-feature-item').remove();
+                }
+            });
+        }
 
         // Initialize Toast if present
         const toastEl = document.getElementById('liveToast');

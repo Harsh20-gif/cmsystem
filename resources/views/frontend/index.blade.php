@@ -145,6 +145,120 @@
   </section>
 
   <!-- ==========================================================================
+       About Section
+       ========================================================================== -->
+  <section class="section-padding bg-light" id="about-us">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 mb-4 mb-lg-0">
+          <div class="badge-tag"><i class="fas fa-info-circle"></i> Discover Who We Are</div>
+          <h2 class="section-title"><span class="highlight">{{ $siteSettings['home_about_title'] ?? 'About Skill Bridge India Technologies' }}</span></h2>
+          <p class="text-slate-body mb-4" style="font-size: 1.1rem; line-height: 1.7;">
+            {{ $siteSettings['home_about_text'] ?? '' }}
+          </p>
+          
+          <ul class="list-unstyled mb-4">
+            @foreach($aboutHighlights as $highlight)
+            <li class="mb-3 d-flex align-items-center" style="font-size: 1.05rem; font-weight: 500;">
+              <i class="{{ $highlight->icon_class ?? 'fas fa-check-circle' }} text-success me-3" style="font-size: 1.3rem;"></i>
+              {{ $highlight->title }}
+            </li>
+            @endforeach
+          </ul>
+
+          <a href="{{ $siteSettings['home_about_btn_link'] ?? '/about' }}" class="btn btn-primary">
+            {{ $siteSettings['home_about_btn_text'] ?? 'Read More' }} <i class="fas fa-arrow-right ms-2"></i>
+          </a>
+        </div>
+        <div class="col-lg-6">
+          <div class="position-relative">
+            <img src="{{ isset($siteSettings['home_about_image']) && !empty($siteSettings['home_about_image']) ? \Illuminate\Support\Facades\Storage::url($siteSettings['home_about_image']) : asset('frontend/assets/about.jpg') }}" alt="About Skill Bridge" class="img-fluid rounded shadow-lg" style="width: 100%; border: 8px solid white;">
+            <!-- Decorative elements -->
+            <div style="position: absolute; bottom: -20px; right: -20px; background: var(--accent-orange); width: 100px; height: 100px; border-radius: 50%; z-index: -1;"></div>
+            <div style="position: absolute; top: -20px; left: -20px; background: var(--navy); width: 80px; height: 80px; border-radius: 10px; z-index: -1; transform: rotate(15deg);"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       Training & Placement Features Section
+       ========================================================================== -->
+  <section class="section-padding" id="training-features">
+    <div class="container">
+      <div class="section-header text-center mx-auto" style="max-width: 700px;">
+        <div class="badge-tag d-inline-block"><i class="fas fa-laptop-code"></i> Accelerate Your Career</div>
+        <h2 class="section-title"><span class="highlight">{{ $siteSettings['home_training_title'] ?? 'Hands-on Training with 100% Placement Assistance' }}</span></h2>
+        <p class="section-subtitle">
+          {{ $siteSettings['home_training_text'] ?? '' }}
+        </p>
+      </div>
+
+      <div class="row g-4 mt-2">
+        @foreach($trainingFeatures as $index => $feature)
+        <div class="col-lg-3 col-md-6">
+          <div class="feature-card h-100 text-center" style="padding: 2rem 1.5rem; transition: transform 0.3s; border-top: 4px solid {{ ['var(--navy)', 'var(--accent-orange)', 'var(--accent-green)', 'var(--accent-cyan)'][$index % 4] }};">
+            <div class="feature-icon-wrapper mx-auto mb-4" style="width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 1.8rem; background: rgba(0,0,0,0.05); color: {{ ['var(--navy)', 'var(--accent-orange)', 'var(--accent-green)', 'var(--accent-cyan)'][$index % 4] }};">
+              <i class="{{ $feature->icon_class ?? 'fas fa-star' }}"></i>
+            </div>
+            <h3 class="heading-sm mb-3">{{ $feature->title }}</h3>
+            <p class="text-sm text-slate-body mb-0" style="line-height: 1.6;">
+              {{ $feature->description }}
+            </p>
+          </div>
+        </div>
+        @endforeach
+      </div>
+
+      <div class="text-center mt-5">
+        <a href="{{ $siteSettings['home_training_btn_link'] ?? '/courses' }}" class="btn btn-secondary">
+          {{ $siteSettings['home_training_btn_text'] ?? 'Explore Courses' }} <i class="fas fa-graduation-cap ms-2"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       Mission and Vision Section
+       ========================================================================== -->
+  <section class="section-padding bg-navy-alt text-white" id="mission-vision">
+    <div class="container">
+      <div class="row g-5">
+        <!-- Mission -->
+        <div class="col-md-6">
+          <div class="p-4 p-lg-5 h-100 rounded" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
+            <div class="d-flex align-items-center mb-4">
+              <div style="width: 60px; height: 60px; background: var(--accent-orange); color: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin-right: 1.5rem;">
+                <i class="fas fa-rocket"></i>
+              </div>
+              <h2 class="mb-0" style="font-size: 2rem; font-weight: 700;">{{ $siteSettings['home_mission_title'] ?? 'Our Mission' }}</h2>
+            </div>
+            <p style="font-size: 1.1rem; line-height: 1.8; color: rgba(255,255,255,0.85); margin-bottom: 0;">
+              {{ $siteSettings['home_mission_text'] ?? '' }}
+            </p>
+          </div>
+        </div>
+        
+        <!-- Vision -->
+        <div class="col-md-6">
+          <div class="p-4 p-lg-5 h-100 rounded" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
+            <div class="d-flex align-items-center mb-4">
+              <div style="width: 60px; height: 60px; background: var(--accent-cyan); color: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin-right: 1.5rem;">
+                <i class="fas fa-eye"></i>
+              </div>
+              <h2 class="mb-0" style="font-size: 2rem; font-weight: 700;">{{ $siteSettings['home_vision_title'] ?? 'Our Vision' }}</h2>
+            </div>
+            <p style="font-size: 1.1rem; line-height: 1.8; color: rgba(255,255,255,0.85); margin-bottom: 0;">
+              {{ $siteSettings['home_vision_text'] ?? '' }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
        Virtual Internship Registration Banner Strip (Scortek Inspired)
        ========================================================================== -->
     <section class="registration-strip">

@@ -53,6 +53,8 @@ class FrontendController extends Controller
         $siteSettings = \App\Models\SiteSetting::pluck('setting_value', 'setting_key')->toArray();
         
         $courseCategories = \App\Models\CourseCategory::published()->orderBy('order_position')->get();
+        $aboutHighlights = \App\Models\HomeAboutHighlight::published()->orderBy('order_position')->get();
+        $trainingFeatures = \App\Models\HomeTrainingFeature::published()->orderBy('order_position')->get();
         
         $courses = Course::with(['category', 'modules'])->where('status', 'published')->get();
         $formattedCourses = $courses->map(function ($course) {
@@ -77,7 +79,7 @@ class FrontendController extends Controller
             ];
         });
 
-        return view('frontend.index', compact('companies', 'sliders', 'marqueeNotices', 'boardNotices', 'homePage', 'courseCategories', 'formattedCourses', 'siteSettings'));
+        return view('frontend.index', compact('companies', 'sliders', 'marqueeNotices', 'boardNotices', 'homePage', 'courseCategories', 'formattedCourses', 'siteSettings', 'aboutHighlights', 'trainingFeatures'));
     }
 
     public function about()
