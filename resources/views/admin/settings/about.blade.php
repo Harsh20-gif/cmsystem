@@ -22,6 +22,9 @@
             <li class="nav-item">
                 <a class="nav-link text-dark" id="team-tab" data-bs-toggle="tab" href="#team" role="tab">Team Section</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" id="overview-tab" data-bs-toggle="tab" href="#overview" role="tab">Company Overview</a>
+            </li>
         </ul>
     </div>
     
@@ -195,6 +198,83 @@
                     <div class="mb-3">
                         <label class="form-label fw-bold">Subheading</label>
                         <textarea name="about_team_subtitle" class="form-control" rows="2">{{ $settings['about_team_subtitle'] ?? 'Learn from industry veterans, senior engineers, and experienced mentors.' }}</textarea>
+                    </div>
+                <!-- Company Overview Tab -->
+                <div class="tab-pane fade" id="overview" role="tabpanel">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Section Heading</label>
+                        <input type="text" name="about_overview_heading" class="form-control" value="{{ $settings['about_overview_heading'] ?? 'About Us — Skill Bridge India Technologies' }}">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Tagline / Highlight Line</label>
+                        <input type="text" name="about_overview_tagline" class="form-control" value="{{ $settings['about_overview_tagline'] ?? 'At Skill Bridge India Technologies, we believe talent + opportunity = growth' }}">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Main Paragraph</label>
+                        <textarea name="about_overview_paragraph" class="form-control" rows="5">{{ $settings['about_overview_paragraph'] ?? 'Skill Bridge India Technologies is committed to empowering students with practical, industry-relevant skills through hands-on training and exposure to the latest technologies. Company aim is to bridge the gap between academic learning and real-world industry requirements by providing career-focused programs that enhance technical knowledge, confidence, and employability. We believe in learning by doing, so our training approach is designed to give students valuable experience, updated technical skills, and placement support that helps them step confidently into the professional world.' }}</textarea>
+                    </div>
+
+                    <hr>
+                    <h5 class="fw-bold mb-3">Sub-section: What We Do</h5>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label fw-bold">Item 1 Title</label>
+                            <input type="text" name="about_overview_what_title_1" class="form-control" value="{{ $settings['about_overview_what_title_1'] ?? 'Skill Training' }}">
+                            <label class="form-label mt-2">Item 1 Description</label>
+                            <textarea name="about_overview_what_desc_1" class="form-control" rows="3">{{ $settings['about_overview_what_desc_1'] ?? 'Hands-on programs in IT, software development, data, digital marketing, cloud, and emerging tech. Less theory, more projects and portfolio work.' }}</textarea>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label fw-bold">Item 2 Title</label>
+                            <input type="text" name="about_overview_what_title_2" class="form-control" value="{{ $settings['about_overview_what_title_2'] ?? 'Corporate & Campus Solutions' }}">
+                            <label class="form-label mt-2">Item 2 Description</label>
+                            <textarea name="about_overview_what_desc_2" class="form-control" rows="3">{{ $settings['about_overview_what_desc_2'] ?? 'Upskilling programs, bootcamps, and hiring drives for colleges and companies across India.' }}</textarea>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label fw-bold">Item 3 Title</label>
+                            <input type="text" name="about_overview_what_title_3" class="form-control" value="{{ $settings['about_overview_what_title_3'] ?? 'Career Bridge' }}">
+                            <label class="form-label mt-2">Item 3 Description</label>
+                            <textarea name="about_overview_what_desc_3" class="form-control" rows="3">{{ $settings['about_overview_what_desc_3'] ?? 'Resume building, mock interviews, and direct placement support so learners don\'t just learn skills — they land roles.' }}</textarea>
+                        </div>
+                    </div>
+
+                    <hr>
+                    <h5 class="fw-bold mb-3">Sub-section: Why Skill Bridge</h5>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Pull-quote Line</label>
+                        <input type="text" name="about_overview_why_quote" class="form-control" value="{{ $settings['about_overview_why_quote'] ?? 'India has incredible talent. What it needs are more bridges.' }}">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Paragraph</label>
+                        <textarea name="about_overview_why_paragraph" class="form-control" rows="3">{{ $settings['about_overview_why_paragraph'] ?? 'We partner with industry mentors, hiring partners, and educational institutions to design curriculum that matches today\'s job market. Every course is built around real tools, real problems, and real outcomes.' }}</textarea>
+                    </div>
+
+                    <hr>
+                    <h5 class="fw-bold mb-3">Sub-section: Our Values</h5>
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <label class="form-label fw-bold">Value 1 Title</label>
+                            <input type="text" name="about_overview_value_title_1" class="form-control" value="{{ $settings['about_overview_value_title_1'] ?? 'Practical First' }}">
+                            <label class="form-label mt-2">Value 1 Desc</label>
+                            <textarea name="about_overview_value_desc_1" class="form-control" rows="2">{{ $settings['about_overview_value_desc_1'] ?? 'Learn by building' }}</textarea>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label class="form-label fw-bold">Value 2 Title</label>
+                            <input type="text" name="about_overview_value_title_2" class="form-control" value="{{ $settings['about_overview_value_title_2'] ?? 'Access' }}">
+                            <label class="form-label mt-2">Value 2 Desc</label>
+                            <textarea name="about_overview_value_desc_2" class="form-control" rows="2">{{ $settings['about_overview_value_desc_2'] ?? 'Quality training shouldn\'t depend on your pin code' }}</textarea>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label class="form-label fw-bold">Value 3 Title</label>
+                            <input type="text" name="about_overview_value_title_3" class="form-control" value="{{ $settings['about_overview_value_title_3'] ?? 'Integrity' }}">
+                            <label class="form-label mt-2">Value 3 Desc</label>
+                            <textarea name="about_overview_value_desc_3" class="form-control" rows="2">{{ $settings['about_overview_value_desc_3'] ?? 'Transparent outcomes, no false promises' }}</textarea>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label class="form-label fw-bold">Value 4 Title</label>
+                            <input type="text" name="about_overview_value_title_4" class="form-control" value="{{ $settings['about_overview_value_title_4'] ?? 'Student Success' }}">
+                            <label class="form-label mt-2">Value 4 Desc</label>
+                            <textarea name="about_overview_value_desc_4" class="form-control" rows="2">{{ $settings['about_overview_value_desc_4'] ?? 'Your career growth is our ultimate metric' }}</textarea>
+                        </div>
                     </div>
                 </div>
                 

@@ -270,6 +270,18 @@
                         <a href="{{ route('admin.settings.about') }}" class="nav-link {{ request()->routeIs('admin.settings.about*') ? 'active' : '' }}">
                             <i class="fas fa-info-circle fa-fw"></i> About Settings
                         </a>
+                        <a href="{{ route('admin.settings.courses') }}" class="nav-link {{ request()->routeIs('admin.settings.courses*') ? 'active' : '' }}">
+                            <i class="fas fa-graduation-cap fa-fw"></i> Courses Settings
+                        </a>
+                        <a href="{{ route('admin.settings.trainings') }}" class="nav-link {{ request()->routeIs('admin.settings.trainings*') ? 'active' : '' }}">
+                            <i class="fas fa-chalkboard-teacher fa-fw"></i> Trainings Settings
+                        </a>
+                        <a href="{{ route('admin.settings.placements') }}" class="nav-link {{ request()->routeIs('admin.settings.placements*') ? 'active' : '' }}">
+                            <i class="fas fa-award fa-fw"></i> Placements Settings
+                        </a>
+                        <a href="{{ route('admin.settings.gallery') }}" class="nav-link {{ request()->routeIs('admin.settings.gallery*') ? 'active' : '' }}">
+                            <i class="fas fa-camera-retro fa-fw"></i> Gallery Settings
+                        </a>
                         <a href="{{ route('admin.settings.index') }}" class="nav-link {{ request()->routeIs('admin.settings.index') ? 'active' : '' }}">
                             <i class="fas fa-sliders-h fa-fw"></i> Global Settings
                         </a>

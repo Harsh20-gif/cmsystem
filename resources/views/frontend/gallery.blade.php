@@ -164,9 +164,9 @@
 @section('content')
 
 <x-page-hero 
-    title="Life at Skill Bridge"
-    subtitle="Explore our campus events, technical workshops, placement drives, and student life."
-    breadcrumbItem="Gallery"
+    title="{{ $siteSettings['gallery_hero_title'] ?? 'Campus & Training Gallery' }}"
+    subtitle="{{ $siteSettings['gallery_hero_subtitle'] ?? 'Take a glimpse into our state-of-the-art infrastructure, classroom sessions, hardware labs, and student life.' }}"
+    breadcrumbItem="{{ $siteSettings['gallery_hero_breadcrumb'] ?? 'Gallery' }}"
 />
 
   <!-- Main Gallery Section -->
@@ -183,7 +183,7 @@
       @if($validAlbums->count() > 0)
           <!-- Filter Tabs -->
           <div class="gallery-filter-bar">
-            <button class="filter-pill active" data-filter="all">All Photos</button>
+            <button class="filter-pill active" data-filter="all">{{ $siteSettings['gallery_filter_all_label'] ?? 'All Photos' }}</button>
             @foreach($validAlbums as $album)
                 <button class="filter-pill" data-filter="{{ $album->id }}">{{ $album->title }}</button>
             @endforeach
@@ -206,7 +206,7 @@
           </div>
       @else
           <div class="text-center py-5">
-              <p class="text-muted fs-5"><i class="fas fa-camera text-secondary me-2"></i> No photos available at the moment.</p>
+              <p class="text-muted fs-5"><i class="fas fa-camera text-secondary me-2"></i> {{ $siteSettings['gallery_empty_text'] ?? 'No gallery albums found. Check back later for updates.' }}</p>
           </div>
       @endif
 
@@ -216,10 +216,10 @@
   <!-- CTA Banner Section -->
   <section class="text-white bg-primary-gradient" style="padding: 4rem 0; text-align: center;">
     <div class="container">
-      <h2 class="heading-lg font-extrabold" style="margin-bottom: 1rem;">Experience Live Labs at Our Campus Centers</h2>
-      <p class="text-lg" style="max-width: 700px; margin: 0 auto 2rem auto; opacity: 0.95;">Visit our training centers in Lucknow, Noida, or Bhopal for a free hands-on demo class and lab orientation before enrolling.</p>
+      <h2 class="heading-lg font-extrabold" style="margin-bottom: 1rem;">{{ $siteSettings['gallery_cta_title'] ?? 'Experience Live Labs at Our Campus Centers' }}</h2>
+      <p class="text-lg" style="max-width: 700px; margin: 0 auto 2rem auto; opacity: 0.95;">{{ $siteSettings['gallery_cta_subtitle'] ?? 'Visit our training centers in Lucknow, Noida, or Bhopal for a free hands-on demo class and lab orientation before enrolling.' }}</p>
       <button class="btn btn-secondary font-bold text-navy-dark bg-white" onclick="openEnrollModal('Campus Tour Request')">
-        <i class="fas fa-calendar-check"></i> Book a Free Campus Tour
+        <i class="fas fa-calendar-check"></i> {{ $siteSettings['gallery_cta_button_label'] ?? 'Book a Free Campus Tour' }}
       </button>
     </div>
   </section>

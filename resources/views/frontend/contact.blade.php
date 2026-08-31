@@ -5,9 +5,9 @@
 @section('content')
 
 <x-page-hero 
-    title="{{ isset($page) ? $page->title : 'Contact Us & Virtual Support' }}"
-    subtitle="Reach out for free virtual career counseling, seat booking, and online internship admissions."
-    breadcrumbItem="Contact Us"
+    title="{{ isset($page) ? $page->title : ($siteSettings['contact_hero_title'] ?? 'Contact Us & Virtual Support') }}"
+    subtitle="{{ $siteSettings['contact_hero_subtitle'] ?? 'Reach out for free virtual career counseling, seat booking, and online internship admissions.' }}"
+    breadcrumbItem="{{ $siteSettings['contact_hero_breadcrumb'] ?? 'Contact Us' }}"
 />
 
 

@@ -5,19 +5,18 @@
 @section('content')
 
 <x-page-hero 
-    title="Placement Wall & Corporate Network"
-    subtitle="Meet our successful alumni working in top MNCs and explore our extensive hiring network."
-    breadcrumbItem="Placements"
+    title="{{ $siteSettings['placements_hero_title'] ?? 'Placement Wall & Corporate Network' }}"
+    subtitle="{{ $siteSettings['placements_hero_subtitle'] ?? 'Meet our successful alumni working in top MNCs and explore our extensive hiring network.' }}"
+    breadcrumbItem="{{ $siteSettings['placements_hero_breadcrumb'] ?? 'Placements' }}"
 />
 
   <!-- Corporate Partners Showcase -->
   <section class="section-padding">
     <div class="container">
       <div class="section-header">
-        <div class="badge-tag"><i class="fas fa-building"></i> Hiring Ecosystem</div>
-        <h2 class="section-title">350+ Corporate <span class="highlight">Hiring Network</span></h2>
-        <p class="section-subtitle">Our students are hired directly through on-campus drives, pooled placement sessions,
-          and referral networks.</p>
+        <div class="badge-tag"><i class="fas fa-building"></i> {{ $siteSettings['placements_partners_badge'] ?? 'Hiring Ecosystem' }}</div>
+        <h2 class="section-title">{!! $siteSettings['placements_partners_title'] ?? 'Our Top <span class="highlight">Recruiting Partners</span>' !!}</h2>
+        <p class="section-subtitle">{{ $siteSettings['placements_partners_subtitle'] ?? 'Our students are hired directly through on-campus drives, pooled placement sessions, and referral networks.' }}</p>
       </div>
 
       <div class="partners-ticker" style="margin-bottom: 2rem;">
@@ -41,9 +40,9 @@
   <section class="overflow-hidden pb-5">
     <div class="container">
       <div class="section-header">
-        <div class="badge-tag coral-tag"><i class="fas fa-trophy"></i> Alumni Achievements</div>
-        <h2 class="section-title">Recent Student <span class="highlight">Placement Wall</span></h2>
-        <p class="section-subtitle">Verified alumni placements with company details, designation, and salary packages.</p>
+        <div class="badge-tag coral-tag"><i class="fas fa-trophy"></i> {{ $siteSettings['placements_marquee_badge'] ?? 'Alumni Achievements' }}</div>
+        <h2 class="section-title">{!! $siteSettings['placements_marquee_title'] ?? 'Recent Student <span class="highlight">Placement Wall</span>' !!}</h2>
+        <p class="section-subtitle">{{ $siteSettings['placements_marquee_subtitle'] ?? 'Verified alumni placements with company details, designation, and salary packages.' }}</p>
       </div>
     </div>
 
@@ -77,7 +76,7 @@
         </div>
         @empty
         <div class="col-12 text-center py-5 no-placements">
-            <p>No placements available at the moment.</p>
+            <p>{{ $siteSettings['placements_empty_text'] ?? 'New placement records will be updated soon.' }}</p>
         </div>
         @endforelse
       </div>

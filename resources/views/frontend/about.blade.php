@@ -69,6 +69,85 @@
   </section>
   @endif -->
 
+  <!-- ==========================================================================
+       Detailed Company Overview Section
+       ========================================================================== -->
+  <section class="section-padding bg-light" id="company-overview">
+    <div class="container">
+      <div class="row mb-5">
+        <div class="col-12 text-center mx-auto" style="max-width: 800px;">
+          <h2 class="section-title mb-4">{{ $siteSettings['about_overview_heading'] ?? 'About Us — Skill Bridge India Technologies' }}</h2>
+          <div class="badge-tag d-inline-block text-accent-orange bg-orange-transparent mb-4" style="font-size: 1.1rem; padding: 0.8rem 1.5rem; text-transform: none; font-weight: 600;">
+            <i class="fas fa-quote-left me-2"></i> 
+            {{ $siteSettings['about_overview_tagline'] ?? 'At Skill Bridge India Technologies, we believe talent + opportunity = growth' }}
+            <i class="fas fa-quote-right ms-2"></i>
+          </div>
+          <p class="text-slate-body text-lg" style="line-height: 1.8;">
+            {{ $siteSettings['about_overview_paragraph'] ?? 'Skill Bridge India Technologies is committed to empowering students with practical, industry-relevant skills through hands-on training and exposure to the latest technologies. Company aim is to bridge the gap between academic learning and real-world industry requirements by providing career-focused programs that enhance technical knowledge, confidence, and employability. We believe in learning by doing, so our training approach is designed to give students valuable experience, updated technical skills, and placement support that helps them step confidently into the professional world.' }}
+          </p>
+        </div>
+      </div>
+
+      <!-- What We Do -->
+      <div class="mb-5 pb-4 border-bottom">
+        <div class="text-center mb-4">
+          <h3 class="fw-bold"><span class="highlight">What We Do</span></h3>
+        </div>
+        <div class="row g-4">
+          @for($i = 1; $i <= 3; $i++)
+          <div class="col-md-4">
+            <div class="feature-card h-100 text-center" style="padding: 2rem 1.5rem;">
+              <h4 class="mb-3 text-navy">{{ $siteSettings["about_overview_what_title_$i"] ?? ['Skill Training', 'Corporate & Campus Solutions', 'Career Bridge'][$i-1] }}</h4>
+              <p class="text-sm text-slate-body mb-0">
+                {{ $siteSettings["about_overview_what_desc_$i"] ?? ['Hands-on programs in IT, software development, data, digital marketing, cloud, and emerging tech. Less theory, more projects and portfolio work.', 'Upskilling programs, bootcamps, and hiring drives for colleges and companies across India.', 'Resume building, mock interviews, and direct placement support so learners don\'t just learn skills — they land roles.'][$i-1] }}
+              </p>
+            </div>
+          </div>
+          @endfor
+        </div>
+      </div>
+
+      <!-- Why Skill Bridge -->
+      <div class="row align-items-center mb-5 pb-4 border-bottom">
+        <div class="col-lg-5 mb-4 mb-lg-0">
+          <h3 class="fw-bold mb-3"><span class="highlight">Why Skill Bridge</span></h3>
+          <div class="p-4 rounded" style="background: var(--navy); color: white; border-left: 4px solid var(--accent-orange);">
+            <i class="fas fa-quote-left text-accent-orange fs-4 mb-2"></i>
+            <p class="fst-italic fs-5 mb-0" style="line-height: 1.6;">{{ $siteSettings['about_overview_why_quote'] ?? 'India has incredible talent. What it needs are more bridges.' }}</p>
+          </div>
+        </div>
+        <div class="col-lg-7">
+          <p class="text-slate-body text-lg mb-0" style="line-height: 1.8;">
+            {{ $siteSettings['about_overview_why_paragraph'] ?? 'We partner with industry mentors, hiring partners, and educational institutions to design curriculum that matches today\'s job market. Every course is built around real tools, real problems, and real outcomes.' }}
+          </p>
+        </div>
+      </div>
+
+      <!-- Our Values -->
+      <div>
+        <div class="text-center mb-4">
+          <h3 class="fw-bold"><span class="highlight">Our Values</span></h3>
+        </div>
+        <div class="row g-4">
+          @for($i = 1; $i <= 4; $i++)
+          <div class="col-md-6 col-lg-3">
+            <div class="feature-card h-100 d-flex flex-column align-items-center text-center">
+              <div class="feature-icon-wrapper mb-3" style="width: 50px; height: 50px; background: rgba(var(--accent-cyan-rgb), 0.1); color: var(--accent-cyan);">
+                <i class="fas fa-check-circle fs-4"></i>
+              </div>
+              <h4 class="mb-2 text-navy">{{ $siteSettings["about_overview_value_title_$i"] ?? ['Practical First', 'Access', 'Integrity', 'Student Success'][$i-1] }}</h4>
+              <p class="text-sm text-slate-body mb-0">
+                {{ $siteSettings["about_overview_value_desc_$i"] ?? ['Learn by building', 'Quality training shouldn\'t depend on your pin code', 'Transparent outcomes, no false promises', 'Your career growth is our ultimate metric'][$i-1] }}
+              </p>
+            </div>
+          </div>
+          @endfor
+        </div>
+      </div>
+
+    </div>
+  </section>
+
 
   <!-- Lab Infrastructure Section -->
   <!-- <section class="section-padding" id="infra">

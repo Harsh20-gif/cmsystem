@@ -29,6 +29,23 @@
         
         <div class="p-4">
             
+            <x-form-section title="Hero Banner Section" icon="fas fa-image">
+                <div class="row gy-4">
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Hero Title</label>
+                        <input type="text" name="contact_hero_title" class="form-control" value="{{ $settings['contact_hero_title'] ?? 'Contact Us & Virtual Support' }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Breadcrumb Text</label>
+                        <input type="text" name="contact_hero_breadcrumb" class="form-control" value="{{ $settings['contact_hero_breadcrumb'] ?? 'Contact Us' }}">
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label fw-semibold">Hero Subtitle</label>
+                        <textarea name="contact_hero_subtitle" class="form-control" rows="2">{{ $settings['contact_hero_subtitle'] ?? 'Reach out for free virtual career counseling, seat booking, and online internship admissions.' }}</textarea>
+                    </div>
+                </div>
+            </x-form-section>
+
             <x-form-section title="Page Content" icon="fas fa-align-left">
                 <div class="row gy-4">
                     <div class="col-12">

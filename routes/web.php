@@ -56,6 +56,14 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::post('/settings/footer', [Admin\SiteSettingController::class, 'updateFooter'])->name('settings.footer.update');
     Route::get('/settings/about', [Admin\SiteSettingController::class, 'about'])->name('settings.about');
     Route::post('/settings/about', [Admin\SiteSettingController::class, 'updateAbout'])->name('settings.about.update');
+    Route::get('/settings/courses', [Admin\SiteSettingController::class, 'courses'])->name('settings.courses');
+    Route::post('/settings/courses', [Admin\SiteSettingController::class, 'updateCourses'])->name('settings.courses.update');
+    Route::get('/settings/trainings', [Admin\SiteSettingController::class, 'trainings'])->name('settings.trainings');
+    Route::post('/settings/trainings', [Admin\SiteSettingController::class, 'updateTrainings'])->name('settings.trainings.update');
+    Route::get('/settings/placements', [Admin\SiteSettingController::class, 'placements'])->name('settings.placements');
+    Route::post('/settings/placements', [Admin\SiteSettingController::class, 'updatePlacements'])->name('settings.placements.update');
+    Route::get('/settings/gallery', [Admin\SiteSettingController::class, 'gallery'])->name('settings.gallery');
+    Route::post('/settings/gallery', [Admin\SiteSettingController::class, 'updateGallery'])->name('settings.gallery.update');
     Route::put('/settings', [Admin\SettingController::class, 'update'])->name('settings.update');
 
     Route::get('/media', [Admin\MediaController::class, 'index'])->name('media.index');

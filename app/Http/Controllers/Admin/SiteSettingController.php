@@ -222,4 +222,64 @@ class SiteSettingController extends Controller
 
         return redirect()->back()->with('success', 'About page settings updated successfully!');
     }
+
+    public function courses()
+    {
+        $settings = SiteSetting::pluck('setting_value', 'setting_key')->toArray();
+        return view('admin.settings.courses', compact('settings'));
+    }
+
+    public function updateCourses(Request $request)
+    {
+        $data = $request->except(['_token']);
+        foreach ($data as $key => $value) {
+            SiteSetting::updateOrCreate(['setting_key' => $key], ['setting_value' => $value]);
+        }
+        return redirect()->back()->with('success', 'Courses page settings updated successfully!');
+    }
+
+    public function trainings()
+    {
+        $settings = SiteSetting::pluck('setting_value', 'setting_key')->toArray();
+        return view('admin.settings.trainings', compact('settings'));
+    }
+
+    public function updateTrainings(Request $request)
+    {
+        $data = $request->except(['_token']);
+        foreach ($data as $key => $value) {
+            SiteSetting::updateOrCreate(['setting_key' => $key], ['setting_value' => $value]);
+        }
+        return redirect()->back()->with('success', 'Trainings page settings updated successfully!');
+    }
+
+    public function placements()
+    {
+        $settings = SiteSetting::pluck('setting_value', 'setting_key')->toArray();
+        return view('admin.settings.placements', compact('settings'));
+    }
+
+    public function updatePlacements(Request $request)
+    {
+        $data = $request->except(['_token']);
+        foreach ($data as $key => $value) {
+            SiteSetting::updateOrCreate(['setting_key' => $key], ['setting_value' => $value]);
+        }
+        return redirect()->back()->with('success', 'Placements page settings updated successfully!');
+    }
+
+    public function gallery()
+    {
+        $settings = SiteSetting::pluck('setting_value', 'setting_key')->toArray();
+        return view('admin.settings.gallery', compact('settings'));
+    }
+
+    public function updateGallery(Request $request)
+    {
+        $data = $request->except(['_token']);
+        foreach ($data as $key => $value) {
+            SiteSetting::updateOrCreate(['setting_key' => $key], ['setting_value' => $value]);
+        }
+        return redirect()->back()->with('success', 'Gallery page settings updated successfully!');
+    }
 }

@@ -5,9 +5,9 @@
 @section('content')
 
 <x-page-hero 
-    title="Industrial Training & Summer Internships"
-    subtitle="4-Week & 6-Week ISO Certified Project-based Training for B.Tech/Diploma Students."
-    breadcrumbItem="Trainings"
+    title="{{ $siteSettings['trainings_hero_title'] ?? 'Corporate & Industrial Trainings' }}"
+    subtitle="{{ $siteSettings['trainings_hero_subtitle'] ?? 'We offer customized training solutions to help your workforce stay ahead in the fast-paced tech world.' }}"
+    breadcrumbItem="{{ $siteSettings['trainings_hero_breadcrumb'] ?? 'Corporate Training' }}"
 />
 
   <!-- Institutional Collaboration Overview -->
@@ -54,10 +54,9 @@
 
       <!-- Training Tracks for Engineering Branches -->
       <div class="section-header">
-        <div class="badge-tag"><i class="fas fa-graduation-cap"></i> Internship Tracks</div>
-        <h2 class="section-title">Seasonal Training <span class="highlight">Tracks (2026 Batch)</span></h2>
-        <p class="section-subtitle">Select your branch specialization for 4-Week, 6-Week, or 6-Month industrial
-          internship modules.</p>
+        <div class="badge-tag"><i class="fas fa-graduation-cap"></i> {{ $siteSettings['trainings_section_badge'] ?? 'Internship Tracks' }}</div>
+        <h2 class="section-title">{{ $siteSettings['trainings_section_title'] ?? 'Seasonal Training Tracks (2026 Batch)' }}</h2>
+        <p class="section-subtitle">Select your branch specialization for 4-Week, 6-Week, or 6-Month industrial internship modules.</p>
       </div>
 
       <div class="courses-grid">
@@ -66,7 +65,7 @@
 
         @empty
         <div class="col-12 text-center py-5">
-            <p>No trainings available at the moment.</p>
+            <p>{{ $siteSettings['trainings_empty_text'] ?? 'No trainings available at the moment. Please check back later.' }}</p>
         </div>
         @endforelse
       </div>
