@@ -172,7 +172,7 @@
         </div>
         <div class="col-lg-6">
           <div class="position-relative">
-            <img src="{{ isset($siteSettings['home_about_image']) && !empty($siteSettings['home_about_image']) ? \Illuminate\Support\Facades\Storage::url($siteSettings['home_about_image']) : asset('frontend/assets/about.jpg') }}" alt="About Skill Bridge" class="img-fluid rounded shadow-lg" style="width: 100%; border: 8px solid white;">
+            <img src="{{ isset($siteSettings['home_about_image']) && !empty($siteSettings['home_about_image']) ? \Illuminate\Support\Facades\Storage::url($siteSettings['home_about_image']) : asset('frontend/assets/hero.jpg') }}" alt="About Skill Bridge" class="img-fluid rounded shadow-lg" style="width: 100%; border: 8px solid white;">
             <!-- Decorative elements -->
             <div style="position: absolute; bottom: -20px; right: -20px; background: var(--accent-orange); width: 100px; height: 100px; border-radius: 50%; z-index: -1;"></div>
             <div style="position: absolute; top: -20px; left: -20px; background: var(--navy); width: 80px; height: 80px; border-radius: 10px; z-index: -1; transform: rotate(15deg);"></div>
