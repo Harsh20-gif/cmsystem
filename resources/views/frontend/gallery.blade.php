@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Photo Gallery & Events | Skill Bridge India')
+@section('title', $siteSettings['gallery_page_title'] ?? 'Photo Gallery & Events | Skill Bridge India')
 
 @push('styles')
 <style>
@@ -218,7 +218,7 @@
     <div class="container">
       <h2 class="heading-lg font-extrabold" style="margin-bottom: 1rem;">{{ $siteSettings['gallery_cta_title'] ?? 'Experience Live Labs at Our Campus Centers' }}</h2>
       <p class="text-lg" style="max-width: 700px; margin: 0 auto 2rem auto; opacity: 0.95;">{{ $siteSettings['gallery_cta_subtitle'] ?? 'Visit our training centers in Lucknow, Noida, or Bhopal for a free hands-on demo class and lab orientation before enrolling.' }}</p>
-      <button class="btn btn-secondary font-bold text-navy-dark bg-white" onclick="openEnrollModal('Campus Tour Request')">
+      <button class="btn btn-secondary font-bold text-navy-dark bg-white" onclick="openEnrollModal('{{ $siteSettings['gallery_cta_modal_context'] ?? 'Campus Tour Request' }}')">
         <i class="fas fa-calendar-check"></i> {{ $siteSettings['gallery_cta_button_label'] ?? 'Book a Free Campus Tour' }}
       </button>
     </div>

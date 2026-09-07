@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Alumni Placement Wall | Skill Bridge India Technologies')
+@section('title', $siteSettings['placements_page_title'] ?? 'Alumni Placement Wall | Skill Bridge India Technologies')
 
 @section('content')
 
@@ -27,10 +27,7 @@
             <span class="partner-logo">{{ $company->name }}</span>
           @endif
         @empty
-            <span class="partner-logo">TCS</span>
-            <span class="partner-logo">INFOSYS</span>
-            <span class="partner-logo">WIPRO</span>
-            <span class="partner-logo">HCL TECH</span>
+            <p class="text-muted text-center w-100">Partner logos will appear here once added from the admin panel.</p>
         @endforelse
       </div>
     </div>
@@ -61,7 +58,7 @@
             --}}
             <div class="student-info">
               <h4>{{ $placement->student->name ?? 'Unknown Student' }}</h4>
-              <p>Placed at: <strong>{{ $placement->company->name ?? 'Unknown Company' }}</strong></p>
+              <p>{{ $siteSettings['placements_placed_at_label'] ?? 'Placed at:' }} <strong>{{ $placement->company->name ?? 'Unknown Company' }}</strong></p>
             </div>
           </div>
           <div class="placement-badge">

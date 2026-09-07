@@ -77,8 +77,8 @@ Route::post('/submit-enquiry', [\App\Http\Controllers\FrontendController::class,
 Route::get('/about', [\App\Http\Controllers\FrontendController::class, 'about'])->name('about');
 Route::get('/contacts', [\App\Http\Controllers\FrontendController::class, 'contact'])->name('contact');
 Route::get('/courses', [\App\Http\Controllers\FrontendController::class, 'courses'])->name('courses');
-Route::view('/cs-it-courses', 'frontend.cs-it-courses')->name('cs-it-courses');
-Route::view('/core-engineering', 'frontend.core-engineering')->name('core-engineering');
+Route::get('/cs-it-courses', [\App\Http\Controllers\FrontendController::class, 'csItCourses'])->name('cs-it-courses');
+Route::get('/core-engineering', [\App\Http\Controllers\FrontendController::class, 'coreEngineering'])->name('core-engineering');
 Route::get('/corporate-training', [\App\Http\Controllers\FrontendController::class, 'corporateTraining'])->name('corporate-training');
 Route::get('/gallery', [\App\Http\Controllers\FrontendController::class, 'gallery'])->name('gallery');
 Route::get('/placements', [\App\Http\Controllers\FrontendController::class, 'placements'])->name('placements');

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'All Courses Catalog | Skill Bridge India Technologies')
+@section('title', $siteSettings['courses_page_title'] ?? 'All Courses Catalog | Skill Bridge India Technologies')
 
 @section('content')
 

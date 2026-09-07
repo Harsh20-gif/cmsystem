@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Corporate Training & Summer Internships | Skill Bridge India')
+@section('title', $siteSettings['trainings_page_title'] ?? 'Corporate Training & Summer Internships | Skill Bridge India')
 
 @section('content')
 
@@ -56,7 +56,7 @@
       <div class="section-header">
         <div class="badge-tag"><i class="fas fa-graduation-cap"></i> {{ $siteSettings['trainings_section_badge'] ?? 'Internship Tracks' }}</div>
         <h2 class="section-title">{{ $siteSettings['trainings_section_title'] ?? 'Seasonal Training Tracks (2026 Batch)' }}</h2>
-        <p class="section-subtitle">Select your branch specialization for 4-Week, 6-Week, or 6-Month industrial internship modules.</p>
+        <p class="section-subtitle">{{ $siteSettings['trainings_section_subtitle'] ?? 'Select your branch specialization for 4-Week, 6-Week, or 6-Month industrial internship modules.' }}</p>
       </div>
 
       <div class="courses-grid">

@@ -17,8 +17,8 @@
     <div class="container">
       <div class="hero-grid" style="align-items: start; gap: 3.5rem;">
         <div>
-          <span class="badge-tag coral-tag" style="text-transform: uppercase;"><i class="fas fa-paper-plane"></i> Direct Inquiry</span>
-          <h2 class="section-title" style="text-align: left;">Send Us a <span class="highlight">Message</span></h2>
+          <span class="badge-tag coral-tag" style="text-transform: uppercase;"><i class="fas fa-paper-plane"></i> {{ $siteSettings['contact_badge_form'] ?? 'Direct Inquiry' }}</span>
+          <h2 class="section-title" style="text-align: left;">{{ $siteSettings['contact_form_title'] ?? 'Send Us a Message' }}</h2>
           <p style="color: var(--slate-body); margin-bottom: 2rem;">{{ $siteSettings['contact_intro_text'] ?? 'Fill out the form below to connect with a senior career counselor within 30 minutes.' }}</p>
 
           <form id="contactPageForm" onsubmit="handleEnrollSubmit(event)" style="background: var(--bg-pure-white); padding: 2.2rem; border-radius: var(--radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-md);">
@@ -75,13 +75,13 @@
               <label class="form-label">Your Message or Inquiry</label>
               <textarea name="message" class="form-control" rows="4" placeholder="Tell us about your learning goals or batch queries..."></textarea>
             </div>
-            <button type="submit" class="btn btn-outline" style="width: 100%;"><i class="fas fa-paper-plane"></i> Submit Inquiry</button>
+            <button type="submit" class="btn btn-outline" style="width: 100%;"><i class="fas fa-paper-plane"></i> {{ $siteSettings['contact_form_submit_label'] ?? 'Submit Inquiry' }}</button>
           </form>
         </div>
 
         <div>
-          <span class="badge-tag" style="background: var(--accent-cyan-light); color: var(--accent-cyan-dark); border-color: rgba(14, 165, 233, 0.25); text-transform: uppercase;"><i class="fas fa-clock"></i> Working Hours & Support</span>
-          <h2 class="section-title" style="text-align: left;">Counseling <span class="highlight">Desk</span></h2>
+          <span class="badge-tag" style="background: var(--accent-cyan-light); color: var(--accent-cyan-dark); border-color: rgba(14, 165, 233, 0.25); text-transform: uppercase;"><i class="fas fa-clock"></i> {{ $siteSettings['contact_badge_hours'] ?? 'Working Hours & Support' }}</span>
+          <h2 class="section-title" style="text-align: left;">{{ $siteSettings['contact_desk_title'] ?? 'Counseling Desk' }}</h2>
 
           <div class="bg-pure-white" style="padding: 2rem; border-radius: var(--radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); margin-bottom: 2rem;">
             <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1.2rem;">

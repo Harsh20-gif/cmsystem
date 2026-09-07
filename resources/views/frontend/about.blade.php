@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', isset($page) ? $page->title . ' | Skill Bridge India Technologies' : 'About Us | Skill Bridge India Technologies')
+@section('title', isset($page) ? $page->title . ' | Skill Bridge India Technologies' : ($siteSettings['about_page_title'] ?? 'About Us | Skill Bridge India Technologies'))
 
 @section('content')
 
@@ -91,7 +91,7 @@
       <!-- What We Do -->
       <div class="mb-5 pb-4 border-bottom">
         <div class="text-center mb-4">
-          <h3 class="fw-bold"><span class="highlight">What We Do</span></h3>
+          <h3 class="fw-bold"><span class="highlight">{{ $siteSettings['about_section_what_we_do'] ?? 'What We Do' }}</span></h3>
         </div>
         <div class="row g-4">
           @for($i = 1; $i <= 3; $i++)
@@ -110,7 +110,7 @@
       <!-- Why Skill Bridge -->
       <div class="row align-items-center mb-5 pb-4 border-bottom">
         <div class="col-lg-5 mb-4 mb-lg-0">
-          <h3 class="fw-bold mb-3"><span class="highlight">Why Skill Bridge</span></h3>
+          <h3 class="fw-bold mb-3"><span class="highlight">{{ $siteSettings['about_section_why_skill_bridge'] ?? 'Why Skill Bridge' }}</span></h3>
           <div class="p-4 rounded" style="background: var(--navy); color: white; border-left: 4px solid var(--accent-orange);">
             <i class="fas fa-quote-left text-accent-orange fs-4 mb-2"></i>
             <p class="fst-italic fs-5 mb-0" style="line-height: 1.6;">{{ $siteSettings['about_overview_why_quote'] ?? 'India has incredible talent. What it needs are more bridges.' }}</p>
@@ -126,7 +126,7 @@
       <!-- Our Values -->
       <div>
         <div class="text-center mb-4">
-          <h3 class="fw-bold"><span class="highlight">Our Values</span></h3>
+          <h3 class="fw-bold"><span class="highlight">{{ $siteSettings['about_section_our_values'] ?? 'Our Values' }}</span></h3>
         </div>
         <div class="row g-4">
           @for($i = 1; $i <= 4; $i++)

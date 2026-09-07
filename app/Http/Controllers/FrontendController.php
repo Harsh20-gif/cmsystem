@@ -4,15 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Course;
+use App\Models\ContentBlock;
 
 class FrontendController extends Controller
 {
-    public function courses()
+    /**
+     * Format courses for JS rendering (shared helper).
+     */
+    private function formatCourses($courses)
     {
-        $courseCategories = \App\Models\CourseCategory::published()->orderBy('order_position')->get();
-        $courses = Course::with(['category', 'modules'])->where('status', 'published')->get();
-
-        $formattedCourses = $courses->map(function ($course) {
+        return $courses->map(function ($course) {
             $syllabus = $course->modules->pluck('title')->toArray();
 
             return [
@@ -33,14 +34,6 @@ class FrontendController extends Controller
                 'syllabus' => count($syllabus) > 0 ? $syllabus : ['Syllabus details available soon.']
             ];
         });
-
-        return view('frontend.courses', compact('courseCategories', 'formattedCourses'));
-    }
-
-    public function gallery()
-    {
-        $albums = \App\Models\GalleryAlbum::with('images')->published()->orderBy('event_date', 'desc')->get();
-        return view('frontend.gallery', compact('albums'));
     }
 
     public function index()
@@ -50,61 +43,98 @@ class FrontendController extends Controller
         $marqueeNotices = \App\Models\Notice::published()->where('type', 'marquee')->latest()->get();
         $boardNotices = \App\Models\Notice::published()->where('type', 'board')->latest()->get();
         $homePage = \App\Models\Page::where('page_key', 'home')->first();
-        $siteSettings = \App\Models\SiteSetting::pluck('setting_value', 'setting_key')->toArray();
-        
+
+        // Content blocks for home page
+        $homeBlocks = ContentBlock::forPage('home');
+
         $courseCategories = \App\Models\CourseCategory::published()->orderBy('order_position')->get();
         $aboutHighlights = \App\Models\HomeAboutHighlight::published()->orderBy('order_position')->get();
         $trainingFeatures = \App\Models\HomeTrainingFeature::published()->orderBy('order_position')->get();
-        
-        $courses = Course::with(['category', 'modules'])->where('status', 'published')->get();
-        $formattedCourses = $courses->map(function ($course) {
-            $syllabus = $course->modules->pluck('title')->toArray();
 
-            return [
-                'id' => $course->slug,
-                'category' => $course->category ? $course->category->slug : 'general',
-                'tag' => $course->placement_support ? 'Job-Guaranteed' : 'Popular',
-                'tagClass' => $course->placement_support ? 'job-guaranteed' : 'popular',
-                'mode' => $course->mode ?? 'Online / Classroom',
-                'title' => $course->title,
-                'desc' => $course->short_description ?? '',
-                'duration' => $course->duration ?? 'N/A',
-                'projects' => 'Real-world Projects',
-                'rating' => '5.0 (Reviews)',
-                'tools' => $course->technologies ?? [],
-                'fee' => $course->fee ?? 'Contact Us',
-                'emi' => '',
-                'image' => $course->thumbnail ? \Illuminate\Support\Facades\Storage::url($course->thumbnail) : asset('frontend/assets/logo_v1.png'),
-                'syllabus' => count($syllabus) > 0 ? $syllabus : ['Syllabus details available soon.']
-            ];
+        $courses = Course::with(['category', 'modules'])->where('status', 'published')->get();
+        $formattedCourses = $this->formatCourses($courses);
+
+        return view('frontend.index', compact(
+            'companies', 'sliders', 'marqueeNotices', 'boardNotices', 'homePage',
+            'courseCategories', 'formattedCourses', 'aboutHighlights', 'trainingFeatures',
+            'homeBlocks'
+        ));
+    }
+
+    public function courses()
+    {
+        $courseCategories = \App\Models\CourseCategory::published()->orderBy('order_position')->get();
+        $courses = Course::with(['category', 'modules'])->where('status', 'published')->get();
+        $formattedCourses = $this->formatCourses($courses);
+
+        return view('frontend.courses', compact('courseCategories', 'formattedCourses'));
+    }
+
+    public function csItCourses()
+    {
+        // Pull CS/IT category courses from the DB instead of hardcoding
+        $courseCategories = \App\Models\CourseCategory::published()->orderBy('order_position')->get();
+        $csItCategory = \App\Models\CourseCategory::where('slug', 'cs-it')->first();
+
+        $courses = Course::with(['category', 'modules'])
+            ->where('status', 'published')
+            ->when($csItCategory, fn($q) => $q->where('category_id', $csItCategory->id))
+            ->get();
+        $formattedCourses = $this->formatCourses($courses);
+
+        return view('frontend.cs-it-courses', compact('courseCategories', 'formattedCourses'));
+    }
+
+    public function coreEngineering()
+    {
+        $courseCategories = \App\Models\CourseCategory::published()->orderBy('order_position')->get();
+
+        // Gather core engineering categories (non-CS/IT)
+        $coreCategories = \App\Models\CourseCategory::published()
+            ->where('slug', '!=', 'cs-it')
+            ->pluck('id');
+
+        $courses = Course::with(['category', 'modules'])
+            ->where('status', 'published')
+            ->whereIn('category_id', $coreCategories)
+            ->get();
+        $formattedCourses = $this->formatCourses($courses);
+
+        // Group courses by category for sectioned display
+        $coursesByCategory = $courses->groupBy(function ($course) {
+            return $course->category ? $course->category->slug : 'general';
         });
 
-        return view('frontend.index', compact('companies', 'sliders', 'marqueeNotices', 'boardNotices', 'homePage', 'courseCategories', 'formattedCourses', 'siteSettings', 'aboutHighlights', 'trainingFeatures'));
+        return view('frontend.core-engineering', compact('courseCategories', 'formattedCourses', 'coursesByCategory'));
     }
 
     public function about()
     {
         $page = \App\Models\Page::where('page_key', 'about')->first();
         $teamMembers = \App\Models\TeamMember::published()->orderBy('order_position')->get();
-        $siteSettings = \App\Models\SiteSetting::pluck('setting_value', 'setting_key')->toArray();
         $aboutFeatures = \App\Models\AboutFeature::published()->orderBy('order_position')->get();
         $aboutFacilityCards = \App\Models\AboutFacilityCard::published()->orderBy('order_position')->get();
-        return view('frontend.about', compact('page', 'teamMembers', 'siteSettings', 'aboutFeatures', 'aboutFacilityCards'));
+        return view('frontend.about', compact('page', 'teamMembers', 'aboutFeatures', 'aboutFacilityCards'));
     }
 
     public function contact()
     {
         $page = \App\Models\Page::where('page_key', 'contact')->first();
-        $siteSettings = \App\Models\SiteSetting::pluck('setting_value', 'setting_key')->toArray();
         $states = config('states');
         $branches = \App\Models\EngineeringBranch::published()->orderBy('order_position')->get();
-        return view('frontend.contact', compact('page', 'siteSettings', 'states', 'branches'));
+        return view('frontend.contact', compact('page', 'states', 'branches'));
     }
 
     public function corporateTraining()
     {
         $trainings = \App\Models\Training::published()->latest()->get();
         return view('frontend.corporate-training', compact('trainings'));
+    }
+
+    public function gallery()
+    {
+        $albums = \App\Models\GalleryAlbum::with('images')->published()->orderBy('event_date', 'desc')->get();
+        return view('frontend.gallery', compact('albums'));
     }
 
     public function placements()
@@ -141,4 +171,3 @@ class FrontendController extends Controller
         return response()->json(['success' => true, 'message' => 'Registration Successful! Our career counselor will call you within 30 minutes.']);
     }
 }
-
