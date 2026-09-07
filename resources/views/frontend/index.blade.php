@@ -32,7 +32,7 @@
         <div class="container hero-grid">
           <div class="hero-content">
             <div class="badge-tag">
-              <i class="fas fa-sparkles"></i> {{ $siteSettings['home_hero_badge'] ?? 'Future-Ready Engineering Skilling' }}
+              <i class="fas fa-sparkles"></i> {{ $siteSettings['home_hero_badge'] ?? 'Future-Ready Engineering Skill' }}
             </div>
             <h1 style="font-size: 2.5rem; line-height: 1.2; margin-bottom: 1rem;">
                 {!! nl2br(e($firstSlider->title)) !!}
@@ -83,7 +83,7 @@
         <div class="container hero-grid">
           <div class="hero-content">
             <div class="badge-tag">
-              <i class="fas fa-sparkles"></i> {{ $siteSettings['home_hero_badge'] ?? 'Future-Ready Engineering Skilling' }}
+              <i class="fas fa-sparkles"></i> {{ $siteSettings['home_hero_badge'] ?? 'Future-Ready Engineering Skill' }}
             </div>
             <h1>
               {{ $siteSettings['home_hero_title1'] ?? 'Build Technical Skills' }} <br><span class="text-orange">{{ $siteSettings['home_hero_title2_orange'] ?? 'Get Certified.' }}</span> <span class="text-emerald">{{ $siteSettings['home_hero_title3_blue'] ?? 'Get Placed.' }}</span>
@@ -260,12 +260,12 @@
   <!-- ==========================================================================
        Virtual Internship Registration Banner Strip
        ========================================================================== -->
-    <section class="registration-strip">
+  <!-- <section class="registration-strip">
     <div class="container strip-inner">
       @if($homePage && !empty(trim(strip_tags($homePage->content))))
           {!! $homePage->content !!}
       @else
-          <!-- Fallback -->
+         
           <div>
             <h2><i class="fas fa-bullhorn text-accent-cyan" style="margin-right: 0.6rem;"></i> Registrations Open
               For Virtual & Industrial Internship Batch <span>2026</span></h2>
@@ -278,8 +278,8 @@
       @endif
     </div>
   </section>
-  
-  @if($boardNotices->count() > 0)
+   -->
+  <!-- @if($boardNotices->count() > 0)
   <section class="section-padding bg-light" style="padding: 3rem 0;">
       <div class="container">
           <div class="section-header text-center">
@@ -307,7 +307,7 @@
           </div>
       </div>
   </section>
-  @endif
+  @endif -->
 
   <!-- ==========================================================================
        Institute Departments & Learning Hub Gateways

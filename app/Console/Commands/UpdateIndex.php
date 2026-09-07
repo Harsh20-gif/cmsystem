@@ -61,7 +61,7 @@ HTML;
         <div class="container hero-grid">
           <div class="hero-content">
             <div class="badge-tag">
-              <i class="fas fa-sparkles"></i> Future-Ready Engineering Skilling
+              <i class="fas fa-sparkles"></i> Future-Ready Engineering Skill
             </div>
             <h1 style="font-size: 2.5rem; line-height: 1.2; margin-bottom: 1rem;">
                 {!! nl2br(e($firstSlider->title)) !!}
