@@ -82,3 +82,14 @@ Route::get('/core-engineering', [\App\Http\Controllers\FrontendController::class
 Route::get('/corporate-training', [\App\Http\Controllers\FrontendController::class, 'corporateTraining'])->name('corporate-training');
 Route::get('/gallery', [\App\Http\Controllers\FrontendController::class, 'gallery'])->name('gallery');
 Route::get('/placements', [\App\Http\Controllers\FrontendController::class, 'placements'])->name('placements');
+
+// Fallback route for storage files (in case symlink is missing on production)
+Route::get('/storage/{path}', function ($path) {
+    $filePath = storage_path('app/public/' . $path);
+    
+    if (file_exists($filePath)) {
+        return response()->file($filePath);
+    }
+    
+    abort(404);
+})->where('path', '.*');
