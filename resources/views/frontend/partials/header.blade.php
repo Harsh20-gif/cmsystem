@@ -15,12 +15,8 @@
      ========================================================================== -->
 <nav class="navbar">
   <div class="container navbar-container">
-    @php
-        $headerLogo = $siteSettings['header_logo'] ?? '';
-        $logoSrc = $headerLogo ? asset('frontend/assets/' . $headerLogo) : asset('frontend/assets/logo.png');
-    @endphp
     <a href="{{ route('home') }}" class="logo-wrapper">
-      <img src="{{ $logoSrc }}" alt="{{ $siteSettings['site_name'] ?? 'Skill Bridge India Technologies' }} Logo" class="logo-img">
+      <img src="{{ asset('frontend/assets/logo.png') }}" alt="{{ $siteSettings['site_name'] ?? 'Skill Bridge India Technologies' }} Logo" class="logo-img">
     </a>
 
     <div class="nav-menu" id="navMenu">
