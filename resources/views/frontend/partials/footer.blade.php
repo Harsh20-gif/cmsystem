@@ -16,7 +16,7 @@
                 <div class="col-12 col-lg-5 col-md-12">
                     @php
                         $footerLogo = $siteSettings['footer_logo'] ?? null;
-                        $defaultLogo = asset('frontend/assets/logo.jpeg');
+                        $defaultLogo = asset('frontend/assets/logo.png');
                     @endphp
                     <img src="{{ $footerLogo ? asset('storage/' . $footerLogo) : $defaultLogo }}" alt="{{ $siteSettings['site_name'] ?? 'Skill Bridge India' }} Logo" class="mb-4" style="height: 60px;">
                     <p class="text-start pe-lg-4 mb-0" style="line-height: 1.8; opacity: 0.9;">

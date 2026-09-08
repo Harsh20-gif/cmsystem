@@ -61,7 +61,7 @@
                         <td class="ps-4">
                             <div class="d-flex align-items-center py-1">
                                 @if($course->thumbnail)
-                                    <img src="{{ Storage::url($course->thumbnail) }}" alt="Thumbnail" class="rounded me-3 shadow-sm border" style="width: 50px; height: 50px; object-fit: cover;">
+                                    <img src="{{ asset('frontend/assets/' . $course->thumbnail) }}" alt="Thumbnail" class="rounded me-3 shadow-sm border" style="width: 50px; height: 50px; object-fit: cover;">
                                 @else
                                     <div class="bg-light rounded me-3 d-flex align-items-center justify-content-center border shadow-sm" style="width: 50px; height: 50px;">
                                         <i class="fas fa-image text-muted opacity-50"></i>

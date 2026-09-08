@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\CourseCategory;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 
 class CourseCategoryController extends Controller
 {
@@ -33,10 +34,14 @@ class CourseCategoryController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'icon' => ['nullable', 'string'],
+            'icon' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,svg', 'max:2048'],
             'order_position' => ['required', 'integer'],
             'status' => ['required', Rule::in(['draft', 'published'])],
         ]);
+
+        if ($request->hasFile('icon')) {
+            $validated['icon'] = $request->file('icon')->store('category', 'public_assets');
+        }
 
         CourseCategory::create($validated);
         return redirect()->route('admin.course-categories.index')->with('success', 'Category created successfully.');
@@ -51,10 +56,17 @@ class CourseCategoryController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'icon' => ['nullable', 'string'],
+            'icon' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,svg', 'max:2048'],
             'order_position' => ['required', 'integer'],
             'status' => ['required', Rule::in(['draft', 'published'])],
         ]);
+
+        if ($request->hasFile('icon')) {
+            if ($courseCategory->icon) {
+                Storage::disk('public_assets')->delete($courseCategory->icon);
+            }
+            $validated['icon'] = $request->file('icon')->store('category', 'public_assets');
+        }
 
         $courseCategory->update($validated);
         return redirect()->route('admin.course-categories.index')->with('success', 'Category updated successfully.');
@@ -64,6 +76,10 @@ class CourseCategoryController extends Controller
     {
         if ($courseCategory->courses()->exists()) {
             return redirect()->route('admin.course-categories.index')->with('error', 'Cannot delete this category because it has active courses assigned to it. Please reassign or delete the courses first.');
+        }
+
+        if ($courseCategory->icon) {
+            Storage::disk('public_assets')->delete($courseCategory->icon);
         }
 
         $courseCategory->delete();

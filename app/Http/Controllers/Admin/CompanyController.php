@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CompanyController extends Controller
 {
@@ -28,10 +29,15 @@ class CompanyController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'website' => ['nullable', 'url', 'max:255'],
-            'logo' => ['nullable', 'string'],
+            'logo' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ]);
 
-        Company::create($validated);
+        $data = $validated;
+        if ($request->hasFile('logo')) {
+            $data['logo'] = $request->file('logo')->store('companies', 'public_assets');
+        }
+
+        Company::create($data);
         return redirect()->route('admin.companies.index')->with('success', 'Company created successfully.');
     }
 
@@ -45,15 +51,26 @@ class CompanyController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'website' => ['nullable', 'url', 'max:255'],
-            'logo' => ['nullable', 'string'],
+            'logo' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ]);
 
-        $company->update($validated);
+        $data = $validated;
+        if ($request->hasFile('logo')) {
+            if ($company->logo) {
+                Storage::disk('public_assets')->delete($company->logo);
+            }
+            $data['logo'] = $request->file('logo')->store('companies', 'public_assets');
+        }
+
+        $company->update($data);
         return redirect()->route('admin.companies.index')->with('success', 'Company updated successfully.');
     }
 
     public function destroy(Company $company)
     {
+        if ($company->logo) {
+            Storage::disk('public_assets')->delete($company->logo);
+        }
         $company->delete();
         return redirect()->route('admin.companies.index')->with('success', 'Company deleted successfully.');
     }

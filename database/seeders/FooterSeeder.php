@@ -40,7 +40,7 @@ class FooterSeeder extends Seeder
         $footerContent = str_replace("{{ route('about') }}",              '/about',              $footerContent);
         $footerContent = str_replace("{{ route('contact') }}",            '/contact',            $footerContent);
         $footerContent = str_replace("{{ route('cs-it-courses') }}",      '/cs-it-courses',      $footerContent);
-        $footerContent = str_replace("{{ asset('frontend/assets/logo_v1.png') }}", '/frontend/assets/logo_v1.png', $footerContent);
+        $footerContent = str_replace("{{ asset('frontend/assets/logo.png') }}", '/frontend/assets/logo.png', $footerContent);
 
         // Remove fallback comment marker
         $footerContent = trim(preg_replace('/<!-- Fallback Footer -->/', '', $footerContent));

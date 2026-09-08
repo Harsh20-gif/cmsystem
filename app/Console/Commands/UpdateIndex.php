@@ -112,7 +112,7 @@ HTML;
         <div class="container hero-grid">
           <div class="hero-content">
             <div class="badge-tag">
-              <i class="fas fa-sparkles"></i> Future-Ready Engineering Skilling
+              <i class="fas fa-sparkles"></i> Future-Ready Engineering Skill
             </div>
             <h1>
               Build Technical Skills <br><span class="text-orange">Get Certified.</span> <span class="text-emerald">Get

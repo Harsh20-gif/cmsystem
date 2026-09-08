@@ -22,7 +22,7 @@
       <div class="partners-ticker" style="margin-bottom: 2rem;">
         @forelse($companies as $company)
           @if($company->logo)
-            <img src="{{ \Illuminate\Support\Facades\Storage::url($company->logo) }}" alt="{{ $company->name }}" class="partner-logo" style="height: 40px; width: auto; object-fit: contain;">
+            <img src="{{ asset('frontend/assets/' . $company->logo) }}" alt="{{ $company->name }}" class="partner-logo" style="height: 40px; width: auto; object-fit: contain;">
           @else
             <span class="partner-logo">{{ $company->name }}</span>
           @endif
@@ -51,7 +51,7 @@
           <div class="student-header">
             {{-- 
             @if($placement->student && $placement->student->photo)
-            <img src="{{ Storage::url($placement->student->photo) }}" alt="{{ $placement->student->name }}" class="student-avatar" style="object-fit: cover;">
+            <img src="{{ asset('frontend/assets/' . $placement->student->photo) }}" alt="{{ $placement->student->name }}" class="student-avatar" style="object-fit: cover;">
             @else
             <img src="{{ asset('frontend/assets/hero.jpg') }}" alt="{{ $placement->student->name ?? 'Student' }}" class="student-avatar" style="object-fit: cover;">
             @endif

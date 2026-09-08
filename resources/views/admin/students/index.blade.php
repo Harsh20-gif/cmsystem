@@ -47,7 +47,7 @@
                         <td class="ps-4">
                             <div class="d-flex align-items-center py-2">
                                 @if($student->photo)
-                                    <img src="{{ Storage::url($student->photo) }}" alt="{{ $student->name }}" class="rounded-circle me-3 border border-2 border-primary p-1 shadow-sm" style="width: 50px; height: 50px; object-fit: cover;">
+                                    <img src="{{ asset('frontend/assets/' . $student->photo) }}" alt="{{ $student->name }}" class="rounded-circle me-3 border border-2 border-primary p-1 shadow-sm" style="width: 50px; height: 50px; object-fit: cover;">
                                 @else
                                     <div class="rounded-circle me-3 border border-2 border-primary d-flex align-items-center justify-content-center bg-primary-subtle text-primary fw-bold shadow-sm" style="width: 50px; height: 50px; font-size: 1.2rem;">
                                         {{ strtoupper(substr($student->name, 0, 1)) }}

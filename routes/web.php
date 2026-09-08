@@ -29,6 +29,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
     Route::resource('gallery-albums', Admin\GalleryAlbumController::class);
     Route::resource('gallery-albums.images', Admin\GalleryImageController::class)->shallow();
+    Route::post('/gallery-albums/{galleryAlbum}/images/from-media', [Admin\GalleryImageController::class, 'storeFromMedia'])->name('gallery-albums.images.from-media');
 
     Route::resource('team-members', Admin\TeamMemberController::class);
     Route::resource('testimonials', Admin\TestimonialController::class);
@@ -82,14 +83,3 @@ Route::get('/core-engineering', [\App\Http\Controllers\FrontendController::class
 Route::get('/corporate-training', [\App\Http\Controllers\FrontendController::class, 'corporateTraining'])->name('corporate-training');
 Route::get('/gallery', [\App\Http\Controllers\FrontendController::class, 'gallery'])->name('gallery');
 Route::get('/placements', [\App\Http\Controllers\FrontendController::class, 'placements'])->name('placements');
-
-// Fallback route for storage files (in case symlink is missing on production)
-Route::get('/storage/{path}', function ($path) {
-    $filePath = storage_path('app/public/' . $path);
-    
-    if (file_exists($filePath)) {
-        return response()->file($filePath);
-    }
-    
-    abort(404);
-})->where('path', '.*');

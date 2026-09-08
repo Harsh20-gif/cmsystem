@@ -12,7 +12,7 @@
     </a>
 </div>
 
-<form action="{{ route('admin.companies.store') }}" method="POST" id="companyForm">
+<form action="{{ route('admin.companies.store') }}" method="POST" id="companyForm" enctype="multipart/form-data">
     @csrf
     
     <div class="row">
@@ -49,8 +49,7 @@
             <x-form-section title="Company Logo" icon="fas fa-image">
                 <div class="row gy-4">
                     <div class="col-12">
-                        <x-media-picker name="logo" id="logo" label="Select Logo" :value="old('logo')" />
-                        @error('logo')<div class="text-danger small mt-1">{{ $message }}</div>@enderror
+                        <input type="file" name="logo" id="logo" class="form-control" accept="image/*">
                     </div>
                 </div>
             </x-form-section>

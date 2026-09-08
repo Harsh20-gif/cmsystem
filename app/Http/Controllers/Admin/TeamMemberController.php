@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\TeamMember;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 
 class TeamMemberController extends Controller
 {
@@ -32,12 +33,16 @@ class TeamMemberController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'designation' => ['required', 'string', 'max:255'],
             'bio' => ['nullable', 'string'],
-            'photo' => ['nullable', 'string'],
+            'photo' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
             'linkedin_url' => ['nullable', 'url', 'max:255'],
             'twitter_url' => ['nullable', 'url', 'max:255'],
             'order_position' => ['required', 'integer'],
             'status' => ['required', Rule::in(['draft', 'published'])],
         ]);
+
+        if ($request->hasFile('photo')) {
+            $validated['photo'] = $request->file('photo')->store('team', 'public_assets');
+        }
 
         TeamMember::create($validated);
         return redirect()->route('admin.team-members.index')->with('success', 'Team member added successfully.');
@@ -54,12 +59,19 @@ class TeamMemberController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'designation' => ['required', 'string', 'max:255'],
             'bio' => ['nullable', 'string'],
-            'photo' => ['nullable', 'string'],
+            'photo' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
             'linkedin_url' => ['nullable', 'url', 'max:255'],
             'twitter_url' => ['nullable', 'url', 'max:255'],
             'order_position' => ['required', 'integer'],
             'status' => ['required', Rule::in(['draft', 'published'])],
         ]);
+
+        if ($request->hasFile('photo')) {
+            if ($teamMember->photo) {
+                Storage::disk('public_assets')->delete($teamMember->photo);
+            }
+            $validated['photo'] = $request->file('photo')->store('team', 'public_assets');
+        }
 
         $teamMember->update($validated);
         return redirect()->route('admin.team-members.index')->with('success', 'Team member updated successfully.');
@@ -67,6 +79,9 @@ class TeamMemberController extends Controller
 
     public function destroy(TeamMember $teamMember)
     {
+        if ($teamMember->photo) {
+            Storage::disk('public_assets')->delete($teamMember->photo);
+        }
         $teamMember->delete();
         return redirect()->route('admin.team-members.index')->with('success', 'Team member deleted successfully.');
     }

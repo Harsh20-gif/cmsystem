@@ -143,7 +143,7 @@
         
         <!-- Updated Branding -->
         <a href="{{ route('admin.dashboard') }}" class="brand">
-            <img src="{{ asset('frontend/assets/logo_v1.png') }}" alt="Logo" class="brand-logo-img">
+            <img src="{{ asset('frontend/assets/logo.png') }}" alt="Logo" class="brand-logo-img">
             <span class="brand-text">Skill Bridge<br>Admin</span>
         </a>
         
@@ -386,5 +386,14 @@
         });
     </script>
     @stack('scripts')
+  <!-- Global broken-image fallback -->
+  <script>
+    document.addEventListener('error', function(e) {
+      if (e.target.tagName === 'IMG' && !e.target.dataset.errored) {
+        e.target.dataset.errored = '1';
+        e.target.src = '{{ asset("frontend/assets/hero.jpg") }}';
+      }
+    }, true);
+  </script>
 </body>
 </html>

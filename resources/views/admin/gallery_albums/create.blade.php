@@ -12,7 +12,7 @@
     </a>
 </div>
 
-<form action="{{ route('admin.gallery-albums.store') }}" method="POST">
+<form action="{{ route('admin.gallery-albums.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
     
     <div class="row">
@@ -55,7 +55,8 @@
             <x-form-section title="Cover Image" icon="fas fa-image">
                 <div class="row gy-4">
                     <div class="col-12">
-                        <x-media-picker name="cover_image" id="cover_image" label="Select Cover Image" :value="old('cover_image')" />
+                        <input type="file" name="cover_image" id="cover_image" class="form-control" accept="image/*">
+                        @error('cover_image')<div class="text-danger small mt-1">{{ $message }}</div>@enderror
                     </div>
                 </div>
             </x-form-section>

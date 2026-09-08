@@ -7,6 +7,7 @@ use App\Models\Course;
 use App\Models\CourseCategory;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 
 class CourseController extends Controller
 {
@@ -43,7 +44,7 @@ class CourseController extends Controller
             'title' => ['required', 'string', 'max:255'],
             'short_description' => ['nullable', 'string'],
             'full_description' => ['nullable', 'string'],
-            'thumbnail' => ['nullable', 'string'],
+            'thumbnail' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
             'duration' => ['nullable', 'string', 'max:255'],
             'mode' => ['nullable', 'string', 'max:255'],
             'eligibility' => ['nullable', 'string'],
@@ -56,6 +57,10 @@ class CourseController extends Controller
             'seo_title' => ['nullable', 'string', 'max:255'],
             'seo_description' => ['nullable', 'string'],
         ]);
+
+        if ($request->hasFile('thumbnail')) {
+            $validated['thumbnail'] = $request->file('thumbnail')->store('course', 'public_assets');
+        }
 
         if (isset($validated['technologies'])) {
             $validated['technologies'] = array_map('trim', explode(',', $validated['technologies']));
@@ -87,7 +92,7 @@ class CourseController extends Controller
             'title' => ['required', 'string', 'max:255'],
             'short_description' => ['nullable', 'string'],
             'full_description' => ['nullable', 'string'],
-            'thumbnail' => ['nullable', 'string'],
+            'thumbnail' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
             'duration' => ['nullable', 'string', 'max:255'],
             'mode' => ['nullable', 'string', 'max:255'],
             'eligibility' => ['nullable', 'string'],
@@ -100,6 +105,13 @@ class CourseController extends Controller
             'seo_title' => ['nullable', 'string', 'max:255'],
             'seo_description' => ['nullable', 'string'],
         ]);
+
+        if ($request->hasFile('thumbnail')) {
+            if ($course->thumbnail) {
+                Storage::disk('public_assets')->delete($course->thumbnail);
+            }
+            $validated['thumbnail'] = $request->file('thumbnail')->store('course', 'public_assets');
+        }
 
         $validated['certification'] = $request->boolean('certification');
         $validated['placement_support'] = $request->boolean('placement_support');
@@ -117,6 +129,9 @@ class CourseController extends Controller
 
     public function destroy(Course $course)
     {
+        if ($course->thumbnail) {
+            Storage::disk('public_assets')->delete($course->thumbnail);
+        }
         $course->delete();
         return redirect()->route('admin.courses.index')->with('success', 'Course deleted successfully.');
     }

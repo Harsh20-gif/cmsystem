@@ -3,7 +3,7 @@
 <div class="student-card">
   <div class="student-header">
     @if($placement->student && $placement->student->photo)
-    <img src="{{ \Illuminate\Support\Facades\Storage::url($placement->student->photo) }}" alt="{{ $placement->student->name }}" class="student-avatar" style="object-fit: cover;">
+    <img src="{{ asset('frontend/assets/' . $placement->student->photo) }}" alt="{{ $placement->student->name }}" class="student-avatar" style="object-fit: cover;">
     @else
     <img src="{{ asset('frontend/assets/hero.jpg') }}" alt="{{ $placement->student->name ?? 'Student' }}" class="student-avatar" style="object-fit: cover;">
     @endif

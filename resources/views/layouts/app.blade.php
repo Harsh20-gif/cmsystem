@@ -70,6 +70,16 @@
         window.addEventListener('pageshow', function() { finishBar(); });
     })();
   </script>
+
+  <!-- Global broken-image fallback -->
+  <script>
+    document.addEventListener('error', function(e) {
+      if (e.target.tagName === 'IMG' && !e.target.dataset.errored) {
+        e.target.dataset.errored = '1';
+        e.target.src = '{{ asset("frontend/assets/hero.jpg") }}';
+      }
+    }, true);
+  </script>
 </body>
 
 </html>

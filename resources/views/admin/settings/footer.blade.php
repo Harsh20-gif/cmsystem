@@ -32,7 +32,13 @@
             <x-form-section title="Brand Column" icon="fas fa-building">
                 <div class="row gy-4">
                     <div class="col-md-4">
-                        <x-media-picker name="footer_logo" id="footer_logo" label="Footer Logo (Optional)" :value="$settings['footer_logo'] ?? ''" />
+                        <label class="form-label fw-semibold">Footer Logo (Optional)</label>
+                        @if(!empty($settings['footer_logo']))
+                            <div class="mb-2">
+                                <img src="{{ asset('frontend/assets/' . $settings['footer_logo']) }}" alt="Footer Logo" class="img-thumbnail" style="max-height: 100px;">
+                            </div>
+                        @endif
+                        <input type="file" name="footer_logo" class="form-control" accept="image/*">
                         <div class="form-text mt-1 text-muted">Leave empty to use main site logo.</div>
                     </div>
                     <div class="col-md-8">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class StudentController extends Controller
 {
@@ -32,10 +33,15 @@ class StudentController extends Controller
             'phone' => ['nullable', 'string', 'max:255'],
             'college' => ['nullable', 'string', 'max:255'],
             'course_enrolled' => ['nullable', 'string', 'max:255'],
-            'photo' => ['nullable', 'string'],
+            'photo' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ]);
 
-        Student::create($validated);
+        $data = $validated;
+        if ($request->hasFile('photo')) {
+            $data['photo'] = $request->file('photo')->store('students', 'public_assets');
+        }
+
+        Student::create($data);
         return redirect()->route('admin.students.index')->with('success', 'Student created successfully.');
     }
 
@@ -52,15 +58,26 @@ class StudentController extends Controller
             'phone' => ['nullable', 'string', 'max:255'],
             'college' => ['nullable', 'string', 'max:255'],
             'course_enrolled' => ['nullable', 'string', 'max:255'],
-            'photo' => ['nullable', 'string'],
+            'photo' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ]);
 
-        $student->update($validated);
+        $data = $validated;
+        if ($request->hasFile('photo')) {
+            if ($student->photo) {
+                Storage::disk('public_assets')->delete($student->photo);
+            }
+            $data['photo'] = $request->file('photo')->store('students', 'public_assets');
+        }
+
+        $student->update($data);
         return redirect()->route('admin.students.index')->with('success', 'Student updated successfully.');
     }
 
     public function destroy(Student $student)
     {
+        if ($student->photo) {
+            Storage::disk('public_assets')->delete($student->photo);
+        }
         $student->delete();
         return redirect()->route('admin.students.index')->with('success', 'Student deleted successfully.');
     }

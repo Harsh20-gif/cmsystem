@@ -40,8 +40,17 @@ return [
 
         'public' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
-            'url' => rtrim(env('APP_URL', 'http://localhost'), '/').'/storage',
+            'root' => public_path('assets'),
+            'url' => rtrim(env('APP_URL', 'http://localhost'), '/').'/assets',
+            'visibility' => 'public',
+            'throw' => false,
+            'report' => false,
+        ],
+
+        'public_assets' => [
+            'driver' => 'local',
+            'root' => public_path('frontend/assets'),
+            'url' => env('APP_URL', 'http://localhost').'/frontend/assets',
             'visibility' => 'public',
             'throw' => false,
             'report' => false,

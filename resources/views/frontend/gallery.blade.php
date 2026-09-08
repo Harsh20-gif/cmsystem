@@ -194,8 +194,8 @@
             @foreach($validAlbums as $album)
                 @foreach($album->images as $image)
                     <div class="col gallery-image-item" data-album-id="{{ $album->id }}">
-                        <div class="gallery-img-wrapper" data-img-src="{{ Str::startsWith($image->image_path, 'http') ? $image->image_path : Storage::url($image->image_path) }}">
-                            <img src="{{ Str::startsWith($image->image_path, 'http') ? $image->image_path : Storage::url($image->image_path) }}" alt="{{ $album->title }} photo" loading="lazy">
+                        <div class="gallery-img-wrapper" data-img-src="{{ Str::startsWith($image->image_path, 'http') ? $image->image_path : asset('frontend/assets/' . $image->image_path) }}">
+                            <img src="{{ Str::startsWith($image->image_path, 'http') ? $image->image_path : asset('frontend/assets/' . $image->image_path) }}" alt="{{ $album->title }} photo" loading="lazy">
                             <div class="gallery-overlay">
                                 <i class="fas fa-search-plus"></i>
                             </div>

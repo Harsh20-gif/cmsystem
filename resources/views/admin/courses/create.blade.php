@@ -21,7 +21,7 @@
     </div>
 </div>
 
-<form action="{{ route('admin.courses.store') }}" method="POST" id="courseForm">
+<form action="{{ route('admin.courses.store') }}" method="POST" id="courseForm" enctype="multipart/form-data">
     @csrf
     
     <div class="row">
@@ -165,7 +165,7 @@
             
             <!-- Media -->
             <x-form-section title="Media" icon="fas fa-image">
-                <x-media-picker name="thumbnail" id="thumbnail" label="Course Thumbnail" :value="old('thumbnail')" />
+                <input type="file" name="thumbnail" id="thumbnail" class="form-control" accept="image/*">
                 @error('thumbnail')<div class="text-danger small mt-1">{{ $message }}</div>@enderror
             </x-form-section>
 

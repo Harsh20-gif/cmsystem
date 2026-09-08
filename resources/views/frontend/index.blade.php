@@ -64,7 +64,7 @@
     
           <div class="hero-visual">
             <div class="hero-image-card">
-              <img src="{{ Storage::url($firstSlider->image) }}" alt="{{ $firstSlider->title ?? 'Skill Bridge Hero' }}">
+              <img src="{{ asset('frontend/assets/' . $firstSlider->image) }}" alt="{{ $firstSlider->title ?? 'Skill Bridge Hero' }}">
             </div>
     
             <div class="floating-badge badge-placement">
@@ -116,7 +116,7 @@
     
           <div class="hero-visual">
             <div class="hero-image-card">
-              <img src="{{ isset($siteSettings['home_hero_image']) ? Storage::url($siteSettings['home_hero_image']) : asset('frontend/assets/hero.jpg') }}" alt="Hero Image">
+              <img src="{{ isset($siteSettings['home_hero_image']) ? asset('frontend/assets/' . $siteSettings['home_hero_image']) : asset('frontend/assets/hero.jpg') }}" alt="Hero Image">
             </div>
     
             <div class="floating-badge badge-placement">
@@ -171,7 +171,7 @@
         </div>
         <div class="col-lg-6">
           <div class="position-relative">
-            <img src="{{ isset($siteSettings['home_about_image']) && !empty($siteSettings['home_about_image']) ? \Illuminate\Support\Facades\Storage::url($siteSettings['home_about_image']) : asset('frontend/assets/hero.jpg') }}" alt="About Skill Bridge" class="img-fluid rounded shadow-lg" style="width: 100%; border: 8px solid white;">
+            <img src="{{ isset($siteSettings['home_about_image']) && !empty($siteSettings['home_about_image']) ? asset('frontend/assets/' . $siteSettings['home_about_image']) : asset('frontend/assets/hero.jpg') }}" alt="About Skill Bridge" class="img-fluid rounded shadow-lg" style="width: 100%; border: 8px solid white;">
             <!-- Decorative elements -->
             <div style="position: absolute; bottom: -20px; right: -20px; background: var(--accent-orange); width: 100px; height: 100px; border-radius: 50%; z-index: -1;"></div>
             <div style="position: absolute; top: -20px; left: -20px; background: var(--navy); width: 80px; height: 80px; border-radius: 10px; z-index: -1; transform: rotate(15deg);"></div>
@@ -260,12 +260,12 @@
   <!-- ==========================================================================
        Virtual Internship Registration Banner Strip
        ========================================================================== -->
-  <!-- <section class="registration-strip">
+    <!-- <section class="registration-strip">
     <div class="container strip-inner">
       @if($homePage && !empty(trim(strip_tags($homePage->content))))
           {!! $homePage->content !!}
       @else
-         
+          
           <div>
             <h2><i class="fas fa-bullhorn text-accent-cyan" style="margin-right: 0.6rem;"></i> Registrations Open
               For Virtual & Industrial Internship Batch <span>2026</span></h2>
@@ -278,8 +278,8 @@
       @endif
     </div>
   </section>
-   -->
-  <!-- @if($boardNotices->count() > 0)
+  
+  @if($boardNotices->count() > 0)
   <section class="section-padding bg-light" style="padding: 3rem 0;">
       <div class="container">
           <div class="section-header text-center">
@@ -391,7 +391,7 @@
   <!-- ==========================================================================
        Interactive Skill Quiz Widget Section
        ========================================================================== -->
-  <section class="quiz-section section-padding" id="quiz">
+  <!-- <section class="quiz-section section-padding" id="quiz">
     <div class="container">
       <div class="quiz-container">
         <div class="quiz-header">
@@ -401,7 +401,7 @@
           <p>Take our 30-second skill assessment to find your perfect job-guaranteed learning path!</p>
         </div>
 
-        <!-- Quiz Step 1 -->
+        
         <div class="quiz-step active" id="quizStep1">
           <div class="quiz-question">1. What is your primary career goal or engineering branch?</div>
           <div class="quiz-options">
@@ -428,7 +428,7 @@
           </div>
         </div>
 
-        <!-- Quiz Step 2 -->
+        
         <div class="quiz-step" id="quizStep2">
           <div class="quiz-question">2. What is your current educational background?</div>
           <div class="quiz-options">
@@ -451,7 +451,7 @@
           </div>
         </div>
 
-        <!-- Quiz Step 3 -->
+      
         <div class="quiz-step" id="quizStep3">
           <div class="quiz-question">3. What training mode do you prefer?</div>
           <div class="quiz-options">
@@ -466,7 +466,7 @@
           </div>
         </div>
 
-        <!-- Quiz Result -->
+       
         <div class="quiz-step" id="quizResultStep">
           <div class="quiz-result-card">
             <i class="fas fa-trophy result-icon"></i>
@@ -489,7 +489,7 @@
 
       </div>
     </div>
-  </section>
+  </section> -->
 
   <!-- ==========================================================================
        Why Choose Us Section
@@ -551,7 +551,7 @@
       <div class="partners-ticker">
         @forelse($companies as $company)
           @if($company->logo)
-            <img src="{{ \Illuminate\Support\Facades\Storage::url($company->logo) }}" alt="{{ $company->name }}" class="partner-logo" style="height: 40px; width: auto; object-fit: contain;">
+            <img src="{{ asset('frontend/assets/' . $company->logo) }}" alt="{{ $company->name }}" class="partner-logo" style="height: 40px; width: auto; object-fit: contain;">
           @else
             <span class="partner-logo">{{ $company->name }}</span>
           @endif

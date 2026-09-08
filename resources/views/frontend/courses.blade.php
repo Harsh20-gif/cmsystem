@@ -20,7 +20,7 @@
         @foreach($courseCategories as $category)
         <button class="btn btn-outline filter-btn" data-filter="{{ $category->slug }}" style="padding: 0.7rem 1.4rem;">
           @if($category->icon && \Illuminate\Support\Str::contains($category->icon, ['/', '.png', '.jpg', '.jpeg', '.svg', '.webp']))
-              <img src="{{ \Illuminate\Support\Facades\Storage::url($category->icon) }}" alt="" style="width: 16px; height: 16px; object-fit: contain; display: inline-block; vertical-align: middle; margin-right: 0.2rem;">
+              <img src="{{ asset('frontend/assets/' . $category->icon) }}" alt="" style="width: 16px; height: 16px; object-fit: contain; display: inline-block; vertical-align: middle; margin-right: 0.2rem;">
             @else
               <i class="{{ $category->icon ?? 'fas fa-book' }}"></i>
             @endif {{ $category->name }}

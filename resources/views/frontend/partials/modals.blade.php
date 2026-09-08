@@ -14,8 +14,8 @@
 @include('frontend.partials.enroll_modal')
 
 <!-- Toast Notification -->
-<div class="toast-notification" id="toastNotification">
+<!-- <div class="toast-notification" id="toastNotification">
   <i class="fas fa-check-circle heading-md text-accent-cyan"></i>
   <span id="toastText">Action successful!</span>
-</div>
+</div> -->
 

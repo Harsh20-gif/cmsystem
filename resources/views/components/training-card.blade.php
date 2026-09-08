@@ -2,7 +2,7 @@
 
 <div class="course-card">
   @if($training->image)
-  <img src="{{ \Illuminate\Support\Facades\Storage::url($training->image) }}" alt="{{ $training->title }}" class="course-img" style="width: 100%; height: 200px; object-fit: cover;">
+  <img src="{{ asset('frontend/assets/' . $training->image) }}" alt="{{ $training->title }}" class="course-img" style="width: 100%; height: 200px; object-fit: cover;">
   @endif
   <div class="course-body">
     <h3 class="course-title">{{ $training->title }}</h3>

@@ -30,7 +30,7 @@ class FrontendController extends Controller
                 'tools' => $course->technologies ?? [],
                 'fee' => $course->fee ?? 'Contact Us',
                 'emi' => '',
-                'image' => $course->thumbnail ? \Illuminate\Support\Facades\Storage::url($course->thumbnail) : asset('frontend/assets/logo_v1.png'),
+                'image' => $course->thumbnail ? \Illuminate\Support\Facades\Storage::url($course->thumbnail) : asset('frontend/assets/logo.png'),
                 'syllabus' => count($syllabus) > 0 ? $syllabus : ['Syllabus details available soon.']
             ];
         });

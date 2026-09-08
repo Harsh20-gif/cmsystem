@@ -23,7 +23,7 @@
 <div class="tab-content" id="courseTabsContent">
     <!-- Basic Details Tab -->
     <div class="tab-pane fade show active" id="details" role="tabpanel">
-        <form action="{{ route('admin.courses.update', $course) }}" method="POST" id="courseForm">
+        <form action="{{ route('admin.courses.update', $course) }}" method="POST" id="courseForm" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             
@@ -168,7 +168,12 @@
                     
                     <!-- Media -->
                     <x-form-section title="Media" icon="fas fa-image">
-                        <x-media-picker name="thumbnail" id="thumbnail" label="Course Thumbnail" :value="old('thumbnail', $course->thumbnail)" />
+                        @if($course->thumbnail)
+                            <div class="mb-3">
+                                <img src="{{ asset('frontend/assets/' . $course->thumbnail) }}" class="img-fluid rounded border" style="max-height: 100px;">
+                            </div>
+                        @endif
+                        <input type="file" name="thumbnail" id="thumbnail" class="form-control" accept="image/*">
                         @error('thumbnail')<div class="text-danger small mt-1">{{ $message }}</div>@enderror
                     </x-form-section>
 

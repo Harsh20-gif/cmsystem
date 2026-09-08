@@ -12,7 +12,7 @@
     </a>
 </div>
 
-<form action="{{ route('admin.course-categories.update', $courseCategory) }}" method="POST">
+<form action="{{ route('admin.course-categories.update', $courseCategory) }}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PUT')
     
@@ -64,7 +64,12 @@
             <x-form-section title="Category Icon" icon="fas fa-image">
                 <div class="row gy-4">
                     <div class="col-12">
-                        <x-media-picker name="icon" id="icon" label="Select Icon Image" :value="old('icon', $courseCategory->icon)" />
+                        @if($courseCategory->icon)
+                            <div class="mb-3">
+                                <img src="{{ asset('frontend/assets/' . $courseCategory->icon) }}" class="img-fluid rounded border" style="max-height: 100px;">
+                            </div>
+                        @endif
+                        <input type="file" name="icon" id="icon" class="form-control" accept="image/*">
                         @error('icon')<div class="text-danger small mt-1">{{ $message }}</div>@enderror
                     </div>
                 </div>

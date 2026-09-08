@@ -30,7 +30,7 @@ class MediaController extends Controller
         ]);
 
         $file = $request->file('file');
-        $path = $file->store('media', 'public');
+        $path = $file->store('media', 'public_assets');
 
         $media = Media::create([
             'file_path' => $path,
@@ -48,7 +48,7 @@ class MediaController extends Controller
 
     public function destroy(Media $medium)
     {
-        Storage::disk('public')->delete($medium->file_path);
+        Storage::disk('public_assets')->delete($medium->file_path);
         $medium->delete();
         
         return back()->with('success', 'Media deleted successfully.');

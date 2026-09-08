@@ -7,6 +7,7 @@ use App\Models\Training;
 use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 
 class TrainingController extends Controller
 {
@@ -45,10 +46,14 @@ class TrainingController extends Controller
             'trainer' => ['nullable', 'string', 'max:255'],
             'seats' => ['nullable', 'integer'],
             'description' => ['nullable', 'string'],
-            'image' => ['nullable', 'string'],
+            'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
             'registration_status' => ['required', Rule::in(['open', 'closed'])],
             'status' => ['required', Rule::in(['draft', 'published', 'archived'])],
         ]);
+
+        if ($request->hasFile('image')) {
+            $validated['image'] = $request->file('image')->store('trainings', 'public_assets');
+        }
 
         Training::create($validated);
         return redirect()->route('admin.trainings.index')->with('success', 'Training created successfully.');
@@ -74,10 +79,17 @@ class TrainingController extends Controller
             'trainer' => ['nullable', 'string', 'max:255'],
             'seats' => ['nullable', 'integer'],
             'description' => ['nullable', 'string'],
-            'image' => ['nullable', 'string'],
+            'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
             'registration_status' => ['required', Rule::in(['open', 'closed'])],
             'status' => ['required', Rule::in(['draft', 'published', 'archived'])],
         ]);
+
+        if ($request->hasFile('image')) {
+            if ($training->image) {
+                Storage::disk('public_assets')->delete($training->image);
+            }
+            $validated['image'] = $request->file('image')->store('trainings', 'public_assets');
+        }
 
         $training->update($validated);
         return redirect()->route('admin.trainings.index')->with('success', 'Training updated successfully.');
@@ -85,6 +97,9 @@ class TrainingController extends Controller
 
     public function destroy(Training $training)
     {
+        if ($training->image) {
+            Storage::disk('public_assets')->delete($training->image);
+        }
         $training->delete();
         return redirect()->route('admin.trainings.index')->with('success', 'Training deleted successfully.');
     }

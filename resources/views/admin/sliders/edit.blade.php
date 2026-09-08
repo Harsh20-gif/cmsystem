@@ -9,7 +9,7 @@
 </div>
 
 <div class="admin-card p-4">
-    <form action="{{ route('admin.sliders.update', $slider) }}" method="POST">
+    <form action="{{ route('admin.sliders.update', $slider) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="row g-4">
@@ -47,7 +47,13 @@
             </div>
 
             <div class="col-md-12">
-                <x-media-picker name="image" id="image" label="Slider Image" :value="old('image', $slider->image)" />
+                <label class="form-label">Slider Image</label>
+                @if($slider->image)
+                    <div class="mb-2">
+                        <img src="{{ asset('frontend/assets/' . $slider->image) }}" alt="Slider Image" class="img-thumbnail" style="max-height: 150px;">
+                    </div>
+                @endif
+                <input type="file" name="image" id="image" class="form-control" accept="image/*">
             </div>
 
             <div class="col-12 mt-4">

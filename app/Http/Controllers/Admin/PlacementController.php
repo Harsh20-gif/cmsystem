@@ -50,7 +50,7 @@ class PlacementController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $validated['image_path'] = $request->file('image')->store('placements', 'public');
+            $validated['image_path'] = $request->file('image')->store('placements', 'public_assets');
         }
         unset($validated['image']);
         
@@ -82,9 +82,9 @@ class PlacementController extends Controller
 
         if ($request->hasFile('image')) {
             if ($placement->image_path) {
-                Storage::disk('public')->delete($placement->image_path);
+                Storage::disk('public_assets')->delete($placement->image_path);
             }
-            $validated['image_path'] = $request->file('image')->store('placements', 'public');
+            $validated['image_path'] = $request->file('image')->store('placements', 'public_assets');
         }
         unset($validated['image']);
         
@@ -98,7 +98,7 @@ class PlacementController extends Controller
     public function destroy(Placement $placement)
     {
         if ($placement->image_path) {
-            Storage::disk('public')->delete($placement->image_path);
+            Storage::disk('public_assets')->delete($placement->image_path);
         }
         $placement->delete();
         return redirect()->route('admin.placements.index')->with('success', 'Placement deleted successfully.');

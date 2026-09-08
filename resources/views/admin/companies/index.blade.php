@@ -46,7 +46,7 @@
                     <tr>
                         <td class="ps-4 py-3">
                             @if($company->logo)
-                                <img src="{{ Storage::url($company->logo) }}" alt="{{ $company->name }}" class="rounded border border-2 border-primary border-opacity-10 shadow-sm bg-white" style="width: 50px; height: 50px; object-fit: cover;">
+                                <img src="{{ asset('frontend/assets/' . $company->logo) }}" alt="{{ $company->name }}" class="rounded border border-2 border-primary border-opacity-10 shadow-sm bg-white" style="width: 50px; height: 50px; object-fit: cover;">
                             @else
                                 <div class="rounded bg-light text-muted d-flex align-items-center justify-content-center shadow-sm border" style="width: 50px; height: 50px;">
                                     <i class="fas fa-building fs-5 opacity-50"></i>

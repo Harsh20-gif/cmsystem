@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\SiteSetting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class SiteSettingController extends Controller
 {
@@ -22,11 +23,19 @@ class SiteSettingController extends Controller
 
         // Handle image uploads
         if ($request->hasFile('hero_image')) {
-            $path = $request->file('hero_image')->store('settings', 'public');
+            $oldHero = SiteSetting::where('setting_key', 'home_hero_image')->value('setting_value');
+            if ($oldHero) {
+                Storage::disk('public_assets')->delete($oldHero);
+            }
+            $path = $request->file('hero_image')->store('settings', 'public_assets');
             $data['home_hero_image'] = $path;
         }
         if ($request->hasFile('about_image')) {
-            $path = $request->file('about_image')->store('settings', 'public');
+            $oldAbout = SiteSetting::where('setting_key', 'home_about_image')->value('setting_value');
+            if ($oldAbout) {
+                Storage::disk('public_assets')->delete($oldAbout);
+            }
+            $path = $request->file('about_image')->store('settings', 'public_assets');
             $data['home_about_image'] = $path;
         }
 
@@ -112,7 +121,11 @@ class SiteSettingController extends Controller
 
         // Handle image upload
         if ($request->hasFile('footer_logo')) {
-            $path = $request->file('footer_logo')->store('settings', 'public');
+            $oldLogo = SiteSetting::where('setting_key', 'footer_logo')->value('setting_value');
+            if ($oldLogo) {
+                Storage::disk('public_assets')->delete($oldLogo);
+            }
+            $path = $request->file('footer_logo')->store('settings', 'public_assets');
             $data['footer_logo'] = $path;
         }
 
@@ -162,11 +175,19 @@ class SiteSettingController extends Controller
 
         // Handle image uploads
         if ($request->hasFile('about_intro_image')) {
-            $path = $request->file('about_intro_image')->store('settings', 'public');
+            $oldIntro = SiteSetting::where('setting_key', 'about_intro_image')->value('setting_value');
+            if ($oldIntro) {
+                Storage::disk('public_assets')->delete($oldIntro);
+            }
+            $path = $request->file('about_intro_image')->store('settings', 'public_assets');
             $data['about_intro_image'] = $path;
         }
         if ($request->hasFile('about_hero_bg')) {
-            $path = $request->file('about_hero_bg')->store('settings', 'public');
+            $oldBg = SiteSetting::where('setting_key', 'about_hero_bg')->value('setting_value');
+            if ($oldBg) {
+                Storage::disk('public_assets')->delete($oldBg);
+            }
+            $path = $request->file('about_hero_bg')->store('settings', 'public_assets');
             $data['about_hero_bg'] = $path;
         }
 

@@ -58,7 +58,7 @@
                         <td class="ps-4">
                             <div class="d-flex align-items-center">
                                 @if($testimonial->photo)
-                                    <img src="{{ Storage::url($testimonial->photo) }}" class="rounded-circle me-3 border border-2 border-orange" style="width: 48px; height: 48px; object-fit: cover; padding: 2px;">
+                                    <img src="{{ asset('frontend/assets/' . $testimonial->photo) }}" class="rounded-circle me-3 border border-2 border-orange" style="width: 48px; height: 48px; object-fit: cover; padding: 2px;">
                                 @else
                                     <div class="bg-light rounded-circle me-3 d-flex align-items-center justify-content-center text-secondary border border-2 border-orange" style="width: 48px; height: 48px; padding: 2px;">
                                         <i class="fas fa-user text-muted"></i>

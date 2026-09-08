@@ -127,7 +127,13 @@
                 <x-form-section title="Hero Image & Badges" icon="fas fa-image">
                     <div class="row gy-4">
                         <div class="col-md-12 mb-3">
-                            <x-media-picker name="hero_image" id="hero_image" label="Hero Main Image" :value="$settings['home_hero_image'] ?? ''" />
+                            <label class="form-label fw-semibold">Hero Main Image</label>
+                            @if(!empty($settings['home_hero_image']))
+                                <div class="mb-2">
+                                    <img src="{{ asset('frontend/assets/' . $settings['home_hero_image']) }}" alt="Hero Image" class="img-thumbnail" style="max-height: 150px;">
+                                </div>
+                            @endif
+                            <input type="file" name="hero_image" class="form-control" accept="image/*">
                         </div>
                         
                         <div class="col-md-6">
@@ -264,7 +270,7 @@
                             <label class="form-label fw-semibold">About Image (Optional)</label>
                             @if(!empty($settings['home_about_image']))
                                 <div class="mb-2">
-                                    <img src="{{ \Illuminate\Support\Facades\Storage::url($settings['home_about_image']) }}" alt="About Image" class="img-thumbnail" style="max-height: 150px;">
+                                    <img src="{{ asset('frontend/assets/' . $settings['home_about_image']) }}" alt="About Image" class="img-thumbnail" style="max-height: 150px;">
                                 </div>
                             @endif
                             <input type="file" name="about_image" class="form-control" accept="image/*">

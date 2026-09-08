@@ -15,7 +15,7 @@
         @forelse($media as $m)
         <div class="col-md-2 col-sm-4 col-6">
             <div class="card h-100 position-relative">
-                <img src="{{ Storage::url($m->file_path) }}" class="card-img-top" alt="{{ $m->file_name }}" style="height: 120px; object-fit: cover;">
+                <img src="{{ asset('frontend/assets/' . $m->file_path) }}" class="card-img-top" alt="{{ $m->file_name }}" style="height: 120px; object-fit: cover;">
                 <div class="card-body p-2 text-center">
                     <small class="text-truncate d-block" title="{{ $m->file_name }}">{{ $m->file_name }}</small>
                 </div>

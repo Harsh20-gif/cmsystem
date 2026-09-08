@@ -46,7 +46,7 @@
                 <!-- Cover Image -->
                 <div class="ratio ratio-4x3 bg-light">
                     @if($album->cover_image)
-                        <img src="{{ Storage::url($album->cover_image) }}" class="object-fit-cover w-100 h-100" alt="{{ $album->title }}">
+                        <img src="{{ asset('frontend/assets/' . $album->cover_image) }}" class="object-fit-cover w-100 h-100" alt="{{ $album->title }}">
                     @else
                         <div class="d-flex align-items-center justify-content-center w-100 h-100">
                             <i class="fas fa-image text-muted fa-3x opacity-25"></i>

@@ -12,7 +12,7 @@
     </a>
 </div>
 
-<form action="{{ route('admin.pages.update', $page) }}" method="POST">
+<form action="{{ route('admin.pages.update', $page) }}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PUT')
     
@@ -59,7 +59,12 @@
 
             <x-form-section title="Featured Image" icon="fas fa-image">
                 <div class="col-12">
-                    <x-media-picker name="featured_image" id="featured_image" label="" :value="old('featured_image', $page->featured_image)" />
+                    @if($page->featured_image)
+                        <div class="mb-2">
+                            <img src="{{ asset('frontend/assets/' . $page->featured_image) }}" alt="Featured Image" class="img-thumbnail" style="max-height: 150px;">
+                        </div>
+                    @endif
+                    <input type="file" name="featured_image" id="featured_image" class="form-control" accept="image/*">
                 </div>
             </x-form-section>
 

@@ -2,7 +2,7 @@
 
 <div class="course-card">
   <div class="course-thumbnail">
-    <img src="{{ $course->image ? \Illuminate\Support\Facades\Storage::url($course->image) : asset('frontend/assets/hero.jpg') }}" alt="{{ $course->title }}">
+    <img src="{{ $course->thumbnail ? asset('frontend/assets/' . $course->thumbnail) : asset('frontend/assets/hero.jpg') }}" alt="{{ $course->title }}">
     <span class="course-tag {{ strtolower($course->tag) == 'popular' ? 'popular' : 'job-guaranteed' }}">{{ $course->tag ?? 'Course' }}</span>
     <span class="course-mode"><i class="fas fa-laptop"></i> {{ $course->mode ?? 'Online / Classroom' }}</span>
   </div>

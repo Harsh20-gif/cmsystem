@@ -62,7 +62,7 @@
         </div>
 
         <div class="hero-image-card">
-          <img src="{{ !empty($siteSettings['about_intro_image']) ? \Illuminate\Support\Facades\Storage::url($siteSettings['about_intro_image']) : asset('frontend/assets/hero.jpg') }}" alt="Skill Bridge India Facility">
+          <img src="{{ !empty($siteSettings['about_intro_image']) ? asset('frontend/assets/' . $siteSettings['about_intro_image']) : asset('frontend/assets/hero.jpg') }}" alt="Skill Bridge India Facility">
         </div>
       </div>
     </div>
@@ -244,7 +244,7 @@
         <div class="feature-card" style="text-align: center; padding: 2rem 1.5rem;">
           <div style="width: 120px; height: 120px; border-radius: 50%; overflow: hidden; margin: 0 auto 1.5rem auto; border: 3px solid var(--accent-cyan); box-shadow: var(--shadow-sm);">
             @if($member->photo)
-              <img src="{{ \Illuminate\Support\Facades\Storage::url($member->photo) }}" alt="{{ $member->name }}" style="width: 100%; height: 100%; object-fit: cover;">
+              <img src="{{ asset('frontend/assets/' . $member->photo) }}" alt="{{ $member->name }}" style="width: 100%; height: 100%; object-fit: cover;">
             @else
               <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: var(--bg-surface); color: var(--navy-dark); font-size: 2rem; font-weight: bold;">
                 {{ substr($member->name, 0, 1) }}

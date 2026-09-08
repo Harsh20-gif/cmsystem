@@ -57,7 +57,7 @@
                         <td class="ps-4">
                             <div class="d-flex align-items-center py-2">
                                 @if($placement->student->photo)
-                                    <img src="{{ Storage::url($placement->student->photo) }}" alt="{{ $placement->student->name }}" class="rounded-circle me-3 border border-2 border-primary p-1 shadow-sm" style="width: 45px; height: 45px; object-fit: cover;">
+                                    <img src="{{ asset('frontend/assets/' . $placement->student->photo) }}" alt="{{ $placement->student->name }}" class="rounded-circle me-3 border border-2 border-primary p-1 shadow-sm" style="width: 45px; height: 45px; object-fit: cover;">
                                 @else
                                     <div class="rounded-circle me-3 border border-2 border-primary d-flex align-items-center justify-content-center bg-primary-subtle text-primary fw-bold shadow-sm" style="width: 45px; height: 45px; font-size: 1.1rem;">
                                         {{ strtoupper(substr($placement->student->name, 0, 1)) }}
@@ -74,7 +74,7 @@
                         <td>
                             <div class="d-flex align-items-center">
                                 @if($placement->company->logo)
-                                    <img src="{{ Storage::url($placement->company->logo) }}" alt="{{ $placement->company->name }}" class="rounded border border-2 border-primary border-opacity-10 shadow-sm bg-white me-2" style="width: 40px; height: 40px; object-fit: cover;">
+                                    <img src="{{ asset('frontend/assets/' . $placement->company->logo) }}" alt="{{ $placement->company->name }}" class="rounded border border-2 border-primary border-opacity-10 shadow-sm bg-white me-2" style="width: 40px; height: 40px; object-fit: cover;">
                                 @else
                                     <div class="rounded bg-light text-muted d-flex align-items-center justify-content-center shadow-sm border me-2" style="width: 40px; height: 40px;">
                                         <i class="fas fa-building fs-6 opacity-50"></i>

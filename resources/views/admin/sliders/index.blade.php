@@ -25,7 +25,7 @@
                 <tr>
                     <td>
                         <div class="d-flex align-items-center">
-                            <img src="{{ Storage::url($slider->image) }}" class="rounded me-3" style="width: 80px; height: 50px; object-fit: cover;">
+                            <img src="{{ asset('frontend/assets/' . $slider->image) }}" class="rounded me-3" style="width: 80px; height: 50px; object-fit: cover;">
                             <div>
                                 <strong>{{ $slider->title ?? 'No Title' }}</strong>
                             </div>

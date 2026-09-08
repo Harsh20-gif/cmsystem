@@ -12,7 +12,7 @@
     </a>
 </div>
 
-<form action="{{ route('admin.trainings.update', $training) }}" method="POST">
+<form action="{{ route('admin.trainings.update', $training) }}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PUT')
     
@@ -57,9 +57,16 @@
                         @error('course_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     
-                    <div class="col-12">
-                        <x-media-picker name="image" id="image" label="Training Image (Banner)" :value="old('image', $training->image)" />
-                    </div>
+                        <label class="form-label fw-semibold">
+                            <i class="fas fa-image text-muted me-1"></i> Training Image (Banner)
+                        </label>
+                        @if($training->image)
+                            <div class="mb-3">
+                                <img src="{{ asset('frontend/assets/' . $training->image) }}" class="img-fluid rounded border" style="max-height: 100px;">
+                            </div>
+                        @endif
+                        <input type="file" name="image" id="image" class="form-control" accept="image/*">
+                        @error('image')<div class="text-danger small mt-1">{{ $message }}</div>@enderror
 
                     <div class="col-12">
                         <label class="form-label fw-semibold">

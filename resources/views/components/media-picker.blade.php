@@ -15,7 +15,7 @@
 
         <div id="{{ $id }}_preview_container" style="display: {{ $value ? 'block' : 'none' }}">
             <div class="position-relative d-inline-block">
-                <img id="{{ $id }}_preview" src="{{ $value ? Storage::url($value) : '' }}" class="img-fluid rounded shadow-sm object-fit-cover" style="max-height: 140px; max-width: 100%;">
+                <img id="{{ $id }}_preview" src="{{ $value ? asset('frontend/assets/' . $value) : '' }}" class="img-fluid rounded shadow-sm object-fit-cover" style="max-height: 140px; max-width: 100%;">
                 <button type="button" class="btn btn-sm btn-danger position-absolute top-0 start-100 translate-middle rounded-circle shadow" style="width: 28px; height: 28px; padding: 0; display: flex; align-items: center; justify-content: center;" onclick="clearMedia('{{ $id }}')" title="Remove Image">
                     <i class="fas fa-times"></i>
                 </button>

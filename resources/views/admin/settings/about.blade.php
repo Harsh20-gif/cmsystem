@@ -78,7 +78,7 @@
                         <label class="form-label fw-bold">Section Image</label>
                         @if(!empty($settings['about_intro_image']))
                             <div class="mb-2">
-                                <img src="{{ \Illuminate\Support\Facades\Storage::url($settings['about_intro_image']) }}" alt="Intro Image" class="img-thumbnail" style="max-height: 150px;">
+                                <img src="{{ asset('frontend/assets/' . $settings['about_intro_image']) }}" alt="Intro Image" class="img-thumbnail" style="max-height: 150px;">
                             </div>
                         @endif
                         <input type="file" name="about_intro_image" class="form-control" accept="image/*">

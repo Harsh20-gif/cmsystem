@@ -28,7 +28,7 @@
 <div class="tab-content" id="albumTabsContent">
     <!-- Album Details Tab -->
     <div class="tab-pane fade show active" id="details" role="tabpanel">
-        <form action="{{ route('admin.gallery-albums.update', $galleryAlbum) }}" method="POST">
+        <form action="{{ route('admin.gallery-albums.update', $galleryAlbum) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             
@@ -71,9 +71,13 @@
                     <!-- Media Section -->
                     <x-form-section title="Cover Image" icon="fas fa-image">
                         <div class="row gy-4">
-                            <div class="col-12">
-                                <x-media-picker name="cover_image" id="cover_image" label="Select Cover Image" :value="old('cover_image', $galleryAlbum->cover_image)" />
-                            </div>
+                                @if($galleryAlbum->cover_image)
+                                    <div class="mb-3">
+                                        <img src="{{ asset('frontend/assets/' . $galleryAlbum->cover_image) }}" class="img-fluid rounded border" style="max-height: 100px;">
+                                    </div>
+                                @endif
+                                <input type="file" name="cover_image" id="cover_image" class="form-control" accept="image/*">
+                                @error('cover_image')<div class="text-danger small mt-1">{{ $message }}</div>@enderror
                         </div>
                     </x-form-section>
                     
@@ -101,13 +105,14 @@
 
     <!-- Images Tab -->
     <div class="tab-pane fade" id="images" role="tabpanel">
+        <!-- Upload New Image -->
         <x-form-section title="Upload New Image" icon="fas fa-cloud-upload-alt">
-            <form action="{{ route('admin.gallery-albums.images.store', $galleryAlbum) }}" method="POST">
+            <form action="{{ route('admin.gallery-albums.images.store', $galleryAlbum) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row g-3 align-items-end">
-                    <div class="col-lg-5 col-12">
-                        <x-media-picker name="image_path" id="new_image" label="Select Image from Library" />
-                    </div>
+                        <label class="form-label fw-semibold">Select Image <span class="text-danger">*</span></label>
+                        <input type="file" name="image_path" id="new_image" class="form-control" accept="image/*" required>
+                        @error('image_path')<div class="text-danger small mt-1">{{ $message }}</div>@enderror
                     <div class="col-lg-4 col-md-6 col-12">
                         <label class="form-label fw-semibold">Caption <small class="text-muted fw-normal">(Optional)</small></label>
                         <input type="text" name="caption" class="form-control" placeholder="Image Caption">
@@ -125,15 +130,52 @@
             </form>
         </x-form-section>
 
+        <!-- Pick from Media Library -->
+        <x-form-section title="Or Pick from Media Library" icon="fas fa-photo-video">
+            @php $mediaItems = \App\Models\Media::latest()->get(); @endphp
+            @if($mediaItems->isEmpty())
+                <p class="text-muted">No media uploaded yet. <a href="{{ route('admin.media.index') }}">Upload media here</a>.</p>
+            @else
+                {{-- Hidden form submitted when a media item is clicked --}}
+                <form id="mediaPickForm" action="{{ route('admin.gallery-albums.images.from-media', $galleryAlbum) }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="media_path" id="mediaPickPath">
+                    <input type="hidden" name="caption" id="mediaPickCaption">
+                    <input type="hidden" name="order_position" value="{{ $galleryAlbum->images->count() + 1 }}">
+                </form>
+
+                <p class="text-muted small mb-3"><i class="fas fa-hand-pointer me-1"></i> Click any image below to add it to this album.</p>
+                <div class="row row-cols-2 row-cols-md-4 row-cols-lg-6 g-3" id="mediaPickerGrid">
+                    @foreach($mediaItems as $m)
+                    <div class="col">
+                        <div class="card border-0 shadow-sm rounded-3 overflow-hidden media-pick-thumb"
+                             style="cursor:pointer;"
+                             data-path="{{ $m->file_path }}"
+                             data-name="{{ $m->file_name }}"
+                             title="Click to add: {{ $m->file_name }}">
+                            <div class="ratio ratio-1x1 bg-light">
+                                <img src="{{ asset('frontend/assets/' . $m->file_path) }}" class="object-fit-cover w-100 h-100" alt="{{ $m->file_name }}">
+                            </div>
+                            <div class="card-body p-1 text-center">
+                                <small class="text-truncate d-block" style="font-size:0.7rem;">{{ $m->file_name }}</small>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            @endif
+        </x-form-section>
+
+
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 gy-4 gx-4">
             @forelse($galleryAlbum->images as $image)
             <div class="col">
                 <div class="card h-100 shadow-sm border-0 rounded-4 overflow-hidden">
                     <div class="ratio ratio-4x3 bg-light">
-                        <img src="{{ Storage::url($image->image_path) }}" class="object-fit-cover w-100 h-100" alt="Gallery Image">
+                        <img src="{{ asset('frontend/assets/' . $image->image_path) }}" class="object-fit-cover w-100 h-100" alt="Gallery Image">
                     </div>
                     <div class="card-body p-3 bg-light">
-                        <form action="{{ route('admin.gallery-images.update', $image) }}" method="POST">
+                        <form action="{{ route('admin.images.update', $image) }}" method="POST">
                             @csrf
                             @method('PUT')
                             <div class="mb-3">
@@ -153,7 +195,7 @@
                         <button type="button" class="btn btn-sm btn-outline-danger w-100 delete-btn" data-id="img-{{ $image->id }}" data-title="this image">
                             <i class="fas fa-trash-alt me-1"></i> Remove Image
                         </button>
-                        <form id="delete-form-img-{{ $image->id }}" action="{{ route('admin.gallery-images.destroy', $image) }}" method="POST" class="d-none">
+                        <form id="delete-form-img-{{ $image->id }}" action="{{ route('admin.images.destroy', $image) }}" method="POST" class="d-none">
                             @csrf
                             @method('DELETE')
                         </form>
@@ -238,6 +280,29 @@
                 form.parentNode.replaceChild(clone, form);
                 clone.submit();
             }
+        });
+
+        // Media Library Picker - click to add to album
+        document.querySelectorAll('.media-pick-thumb').forEach(function(card) {
+            card.addEventListener('click', function() {
+                const path = this.getAttribute('data-path');
+                const name = this.getAttribute('data-name');
+
+                // Visual feedback
+                document.querySelectorAll('.media-pick-thumb').forEach(c => c.classList.remove('border', 'border-2', 'border-primary'));
+                this.classList.add('border', 'border-2', 'border-primary');
+
+                // Fill hidden form
+                document.getElementById('mediaPickPath').value = path;
+                document.getElementById('mediaPickCaption').value = name.replace(/\.[^.]+$/, ''); // filename without extension as default caption
+
+                // Confirm + submit
+                if (confirm('Add "' + name + '" to this album?')) {
+                    document.getElementById('mediaPickForm').submit();
+                } else {
+                    this.classList.remove('border', 'border-2', 'border-primary');
+                }
+            });
         });
     });
 </script>

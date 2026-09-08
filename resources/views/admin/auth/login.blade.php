@@ -204,7 +204,7 @@
 
     <div class="login-card">
         <div class="text-center mb-4">
-            <img src="{{ asset('frontend/assets/logo_v1.png') }}" alt="Skill Bridge India Logo" class="brand-logo">
+            <img src="{{ asset('frontend/assets/logo.png') }}" alt="Skill Bridge India Logo" class="brand-logo">
             <h2 class="brand-title fw-bold">Skill Bridge India</h2>
         </div>
 

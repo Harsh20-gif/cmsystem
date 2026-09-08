@@ -5,7 +5,7 @@
   <div class="container top-bar-content" style="justify-content: flex-end;">
     <div class="top-info">
       <div class="top-info-item"><i class="fas fa-phone" style="color: #0ea5e9;"></i> <span><strong>{{ $siteSettings['header_phone'] ?? '+91 8467912807' }}</strong></span></div>
-      <div class="top-info-item"><i class="fas fa-envelope" style="color: #0ea5e9;"></i> <span>{{ $siteSettings['header_email'] ?? 'info@skillbridgeindiatechnology.com' }}</span></div>
+      <div class="top-info-item"><i class="fas fa-envelope" style="color: #0ea5e9;"></i> <span>info@skillbridgeindiatechnologies.com</span></div>
     </div>
   </div>
 </div>
@@ -17,7 +17,7 @@
   <div class="container navbar-container">
     @php
         $headerLogo = $siteSettings['header_logo'] ?? '';
-        $logoSrc = $headerLogo ? \Illuminate\Support\Facades\Storage::url($headerLogo) : asset('frontend/assets/logo_v1.png');
+        $logoSrc = $headerLogo ? asset('frontend/assets/' . $headerLogo) : asset('frontend/assets/logo.png');
     @endphp
     <a href="{{ route('home') }}" class="logo-wrapper">
       <img src="{{ $logoSrc }}" alt="{{ $siteSettings['site_name'] ?? 'Skill Bridge India Technologies' }} Logo" class="logo-img">
@@ -32,7 +32,7 @@
           @foreach($courseCategories as $category)
           <a href="{{ route('courses') }}?category={{ $category->slug }}" class="dropdown-item-custom">
             @if($category->icon && \Illuminate\Support\Str::contains($category->icon, ['/', '.png', '.jpg', '.jpeg', '.svg', '.webp']))
-            <img src="{{ \Illuminate\Support\Facades\Storage::url($category->icon) }}" alt="" style="width: 16px; height: 16px; object-fit: contain; display: inline-block; vertical-align: middle; margin-right: 0.2rem;">
+            <img src="{{ asset('frontend/assets/' . $category->icon) }}" alt="" style="width: 16px; height: 16px; object-fit: contain; display: inline-block; vertical-align: middle; margin-right: 0.2rem;">
             @else
             <i class="{{ $category->icon ?? 'fas fa-book' }}"></i>
             @endif {{ $category->name }}

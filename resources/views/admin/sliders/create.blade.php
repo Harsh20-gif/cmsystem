@@ -9,7 +9,7 @@
 </div>
 
 <div class="admin-card p-4">
-    <form action="{{ route('admin.sliders.store') }}" method="POST">
+    <form action="{{ route('admin.sliders.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="row g-4">
             <div class="col-md-6">
@@ -46,7 +46,8 @@
             </div>
 
             <div class="col-md-12">
-                <x-media-picker name="image" id="image" label="Slider Image" :value="old('image')" />
+                <label class="form-label">Slider Image <span class="text-danger">*</span></label>
+                <input type="file" name="image" id="image" class="form-control" accept="image/*" required>
             </div>
 
             <div class="col-12 mt-4">

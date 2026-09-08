@@ -34,7 +34,7 @@ class SiteSettingsSeeder extends Seeder
             // ===== HOME PAGE =====
             'home_page_title' => 'Skill Bridge India Technologies | BTech Training & Placement',
             'home_marquee_label' => 'Updates:',
-            'home_hero_badge' => 'Future-Ready Engineering Skilling',
+            'home_hero_badge' => 'Future-Ready Engineering Skill',
             'home_hero_feature1' => '100% Placement Assistance',
             'home_hero_feature2' => 'Live Industrial Projects',
             'home_hero_cta_explore_label' => 'Explore Now',

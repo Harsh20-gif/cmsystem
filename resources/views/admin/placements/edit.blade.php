@@ -82,7 +82,7 @@
                     <div class="position-relative mt-2" style="border: 2px dashed #cbd5e1; border-radius: 8px; padding: {{ $placement->image_path ? '1rem' : '2rem' }}; text-align: center; cursor: pointer; transition: all 0.3s ease; background-color: #f8fafc;" onclick="document.getElementById('imageUpload').click()" id="dropzone">
                         
                         <div id="imagePreviewContainer" class="{{ $placement->image_path ? '' : 'd-none' }}">
-                            <img id="imagePreview" src="{{ $placement->image_path ? Storage::url($placement->image_path) : '' }}" alt="Preview" style="max-width: 100%; max-height: 200px; border-radius: 4px; object-fit: contain;">
+                            <img id="imagePreview" src="{{ $placement->image_path ? asset('frontend/assets/' . $placement->image_path) : '' }}" alt="Preview" style="max-width: 100%; max-height: 200px; border-radius: 4px; object-fit: contain;">
                             <p class="text-muted small mt-2 mb-0">Click to change image</p>
                         </div>
                         
@@ -132,7 +132,7 @@
             reader.readAsDataURL(input.files[0]);
         } else {
             // Revert back to original DB image if any, otherwise hide
-            const origSrc = "{{ $placement->image_path ? Storage::url($placement->image_path) : '' }}";
+            const origSrc = "{{ $placement->image_path ? asset('frontend/assets/' . $placement->image_path) : '' }}";
             if(origSrc) {
                 previewImage.src = origSrc;
                 previewContainer.classList.remove('d-none');

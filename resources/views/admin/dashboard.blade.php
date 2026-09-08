@@ -113,7 +113,7 @@
                                     <td class="p-3">
                                         <div class="d-flex align-items-center">
                                             @if($student->photo)
-                                                <img src="{{ Storage::url($student->photo) }}" class="rounded-circle me-3" style="width: 40px; height: 40px; object-fit: cover;">
+                                                <img src="{{ asset('frontend/assets/' . $student->photo) }}" class="rounded-circle me-3" style="width: 40px; height: 40px; object-fit: cover;">
                                             @else
                                                 <div class="bg-light rounded-circle me-3 d-flex align-items-center justify-content-center text-secondary" style="width: 40px; height: 40px;">
                                                     <i class="fas fa-user"></i>
